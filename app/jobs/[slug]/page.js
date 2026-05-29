@@ -1,5 +1,6 @@
 import { getAllJobs, getJobBySlug, timeAgo, exactDate, companyHue, BP } from "../../../lib/jobs.js";
 import { getCategory } from "../../../ingest/niche.config.mjs";
+import { kebab } from "../../../lib/derive.js";
 import { notFound } from "next/navigation";
 
 const SITE = process.env.SITE_URL || "https://warpjobs.com";
@@ -78,7 +79,7 @@ export default async function JobPage({ params }) {
         <div>
           <h1>{job.title}</h1>
           <div className="facts">
-            <span className="fact co">{job.company}</span>
+            <a className="fact co" href={`${BP}/company/${kebab(job.company)}/`}>{job.company}</a>
             {job.remote ? <span className="fact rem">Remote</span> : job.locShort ? <span className="fact">{job.locShort}</span> : null}
             {job.salText ? <span className="fact sal">{job.salText}</span> : null}
             {job.postedAt ? <span className="fact dim">posted {exactDate(job.postedAt)} · {timeAgo(job.ts)} ago</span> : null}

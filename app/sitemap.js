@@ -1,4 +1,4 @@
-import { getAllJobs, getCategoriesLite } from "../lib/jobs.js";
+import { getAllJobs, getCategoriesLite, getCompaniesLite } from "../lib/jobs.js";
 
 export const dynamic = "force-static";
 
@@ -7,9 +7,12 @@ const SITE = process.env.SITE_URL || "https://warpjobs.com";
 export default function sitemap() {
   const jobs = getAllJobs();
   const cats = getCategoriesLite();
+  const cos = getCompaniesLite();
   return [
     { url: `${SITE}/`, changeFrequency: "daily", priority: 1 },
+    { url: `${SITE}/companies/`, changeFrequency: "daily", priority: 0.6 },
     ...cats.map((c) => ({ url: `${SITE}/${c.slug}/`, changeFrequency: "daily", priority: 0.8 })),
+    ...cos.map((c) => ({ url: `${SITE}/company/${c.slug}/`, changeFrequency: "daily", priority: 0.6 })),
     ...jobs.map((j) => ({
       url: `${SITE}/jobs/${j.slug}/`,
       lastModified: j.updatedAt || j.postedAt || undefined,
