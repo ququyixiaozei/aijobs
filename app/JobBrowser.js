@@ -42,9 +42,22 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
   const [stars, toggleStar] = useLocalSet("aijobs:stars");
   const [visited, , addVisited] = useLocalSet("aijobs:visited");
   const inputRef = useRef(null);
+  const didInit = useRef(false);
 
   useEffect(() => {
     try { const d = localStorage.getItem("aijobs:density"); if (d) setDensity(d); } catch {}
+    try {
+      const p = new URLSearchParams(window.location.search);
+      if (p.get("q")) setQ(p.get("q"));
+      if (p.get("region")) setRegions(new Set(p.get("region").split(",").filter(Boolean)));
+      if (p.get("level")) setLevels(new Set(p.get("level").split(",").filter(Boolean)));
+      if (p.get("visa") === "1") setVisaOnly(true);
+      if (p.get("sal")) setMinSal(Number(p.get("sal")) || 0);
+      if (p.get("since")) setRecencyDays(Number(p.get("since")) || 0);
+      if (["salary", "company"].includes(p.get("sort"))) setSort(p.get("sort"));
+      if (p.get("saved") === "1") setStarredOnly(true);
+    } catch {}
+    didInit.current = true;
     const onKey = (e) => {
       if (e.key === "/" && document.activeElement !== inputRef.current) {
         e.preventDefault(); inputRef.current && inputRef.current.focus();
@@ -53,6 +66,22 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  // Mirror filter state into the URL (Back restores filters + links are shareable).
+  useEffect(() => {
+    if (!didInit.current) return;
+    const p = new URLSearchParams();
+    if (q) p.set("q", q);
+    if (regions.size) p.set("region", [...regions].join(","));
+    if (levels.size) p.set("level", [...levels].join(","));
+    if (visaOnly) p.set("visa", "1");
+    if (minSal) p.set("sal", String(minSal));
+    if (recencyDays) p.set("since", String(recencyDays));
+    if (sort !== "new") p.set("sort", sort);
+    if (starredOnly) p.set("saved", "1");
+    const qs = p.toString();
+    try { window.history.replaceState(null, "", window.location.pathname + (qs ? "?" + qs : "")); } catch {}
+  }, [q, regions, levels, visaOnly, minSal, recencyDays, sort, starredOnly]);
 
   const setDens = (d) => { setDensity(d); try { localStorage.setItem("aijobs:density", d); } catch {} };
   const toggleRegion = (r) => setRegions((p) => { const n = new Set(p); n.has(r) ? n.delete(r) : n.add(r); return n; });

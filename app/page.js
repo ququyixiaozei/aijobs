@@ -17,6 +17,11 @@ export default function Home() {
     alternateName: "AI Infra Jobs",
     url: SITE + "/",
     description: "Curated GPU, CUDA, ML-systems, inference and performance engineering jobs at AI labs and infrastructure startups.",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: { "@type": "EntryPoint", urlTemplate: SITE + "/?q={search_term_string}" },
+      "query-input": "required name=search_term_string",
+    },
   };
   return (
     <main>
