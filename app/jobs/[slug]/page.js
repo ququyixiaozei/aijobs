@@ -60,7 +60,7 @@ export default async function JobPage({ params }) {
           <div className="facts">
             <span className="fact co">{job.company}</span>
             {job.remote ? <span className="fact rem">Remote</span> : job.locShort ? <span className="fact">{job.locShort}</span> : null}
-            {job.salary ? <span className="fact sal">{job.salary}</span> : null}
+            {job.salText ? <span className="fact sal">{job.salText}</span> : null}
             {job.postedAt ? <span className="fact dim">posted {exactDate(job.postedAt)} · {timeAgo(job.ts)} ago</span> : null}
           </div>
         </div>
