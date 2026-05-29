@@ -1,4 +1,4 @@
-import { getAllJobs, getJobBySlug, timeAgo, BP } from "../../../lib/jobs.js";
+import { getAllJobs, getJobBySlug, timeAgo, exactDate, companyHue, BP } from "../../../lib/jobs.js";
 import { notFound } from "next/navigation";
 
 export const revalidate = 3600;
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
   if (!job) return { title: "Job not found" };
   return {
     title: `${job.title} · ${job.company}`,
-    description: `${job.title} at ${job.company}${job.location ? ` (${job.location})` : ""}.`,
+    description: `${job.title} at ${job.company}${job.locShort ? ` (${job.locShort})` : ""}.`,
   };
 }
 
@@ -38,9 +38,11 @@ export default async function JobPage({ params }) {
     employmentType: "FULL_TIME",
     identifier: { "@type": "PropertyValue", name: job.company, value: String(job.sourceId) },
     hiringOrganization: { "@type": "Organization", name: job.company },
-    ...(job.location
-      ? { jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: job.location } } }
-      : { jobLocationType: "TELECOMMUTE" }),
+    ...(job.remote
+      ? { jobLocationType: "TELECOMMUTE" }
+      : job.locShort
+      ? { jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: job.locShort } } }
+      : {}),
     url: job.url,
   };
 
@@ -48,20 +50,33 @@ export default async function JobPage({ params }) {
     <main className="detail">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <p><a href={`${BP}/`} className="back">← all roles</a></p>
-      <h1>{job.title}</h1>
-      <p className="meta">
-        <span className="co">{job.company}</span>
-        {job.location ? ` · ${job.location}` : ""}
-        {job.department ? ` · ${job.department}` : ""}
-        {job.postedAt ? ` · ${timeAgo(job.postedAt)}` : ""}
-      </p>
+
+      <div className="detail-head">
+        <span className="mark lg" style={{ background: `hsl(${companyHue(job.company)} 42% 36%)` }} aria-hidden="true">
+          {(job.company[0] || "?").toUpperCase()}
+        </span>
+        <div>
+          <h1>{job.title}</h1>
+          <div className="facts">
+            <span className="fact co">{job.company}</span>
+            {job.remote ? <span className="fact rem">Remote</span> : job.locShort ? <span className="fact">{job.locShort}</span> : null}
+            {job.salary ? <span className="fact sal">{job.salary}</span> : null}
+            {job.postedAt ? <span className="fact dim">posted {exactDate(job.postedAt)} · {timeAgo(job.ts)} ago</span> : null}
+          </div>
+        </div>
+      </div>
+
       <p>
         <a className="apply" href={job.url} target="_blank" rel="noopener noreferrer">
           Apply at {job.company} →
         </a>
       </p>
+
       {job.descriptionHtml ? (
-        <article className="prose" dangerouslySetInnerHTML={{ __html: job.descriptionHtml }} />
+        <>
+          <h2 className="jdh">Full description</h2>
+          <article className="prose" dangerouslySetInnerHTML={{ __html: job.descriptionHtml }} />
+        </>
       ) : (
         <p className="empty">See the full description on the company page.</p>
       )}
