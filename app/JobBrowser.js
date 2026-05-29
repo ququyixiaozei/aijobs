@@ -27,7 +27,7 @@ function useLocalSet(key) {
 
 export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt }) {
   const [q, setQ] = useState("");
-  const [cat, setCat] = useState(initialCat);
+  const cat = initialCat; // category is a real page/URL (/[category]/) — crawlable, not client state
   const [regions, setRegions] = useState(() => new Set());
   const [visaOnly, setVisaOnly] = useState(false);
   const [minSal, setMinSal] = useState(0);
@@ -108,15 +108,16 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
           <button className={"chip" + (density === "comfortable" ? " active" : "")} onClick={() => setDens("comfortable")}>comfortable</button>
         </div>
 
-        <div className="cats">
-          <button className={"pill" + (cat === "" ? " active" : "")} onClick={() => setCat("")}>All <b>{jobs.length}</b></button>
+        {/* Real links to crawlable category pages (SEO internal linking) — not JS-only filters */}
+        <nav className="cats" aria-label="Browse by specialty">
+          <a className={"pill" + (cat === "" ? " active" : "")} href={`${BP}/`}>All <b>{jobs.length}</b></a>
           {cats.map((c) => (
-            <button key={c.slug} className={"pill" + (cat === c.slug ? " active" : "")} onClick={() => setCat((v) => (v === c.slug ? "" : c.slug))}>{c.name} <b>{c.count}</b></button>
+            <a key={c.slug} className={"pill" + (cat === c.slug ? " active" : "")} href={`${BP}/${c.slug}/`}>{c.name} <b>{c.count}</b></a>
           ))}
-        </div>
+        </nav>
       </div>
 
-      <div className="result-meta">
+      <div className="result-meta" aria-live="polite">
         {results.length} role{results.length === 1 ? "" : "s"}
         {generatedAt ? ` · refreshed ${new Date(generatedAt).toISOString().slice(0, 16).replace("T", " ")} UTC` : ""}
       </div>

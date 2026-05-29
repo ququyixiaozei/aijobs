@@ -1,5 +1,5 @@
 import "./globals.css";
-import { BP, getMeta } from "../lib/jobs.js";
+import { BP, getMeta, getCategoriesLite } from "../lib/jobs.js";
 
 const SITE = process.env.SITE_URL || "https://warpjobs.com";
 
@@ -46,6 +46,7 @@ const REPO = "https://github.com/ququyixiaozei/aijobs";
 
 export default function RootLayout({ children }) {
   const built = getMeta().generatedAt;
+  const cats = getCategoriesLite();
   return (
     <html lang="en">
       <head>
@@ -73,6 +74,12 @@ export default function RootLayout({ children }) {
             <p>
               Auto-refreshed daily via CI{built ? ` · last build ${new Date(built).toISOString().slice(0, 16).replace("T", " ")} UTC` : ""}. Subscribe:{" "}
               <a href={`${BP}/feed.xml`}>RSS</a> · <a href={`${BP}/jobs.json`}>JSON</a>.
+            </p>
+            <p className="foot-cats">
+              Specialties:{" "}
+              {cats.map((c, i) => (
+                <span key={c.slug}>{i ? " · " : ""}<a href={`${BP}/${c.slug}/`}>{c.name}</a></span>
+              ))}
             </p>
             <p>
               Stale link, or a company to add? <a href={`${REPO}/issues`} target="_blank" rel="noopener noreferrer">Open an issue</a>.

@@ -1,5 +1,8 @@
 import { getAllJobs, getJobBySlug, timeAgo, exactDate, companyHue, BP } from "../../../lib/jobs.js";
+import { getCategory } from "../../../ingest/niche.config.mjs";
 import { notFound } from "next/navigation";
+
+const SITE = process.env.SITE_URL || "https://warpjobs.com";
 
 export const revalidate = 3600;
 
@@ -11,9 +14,11 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const job = getJobBySlug(slug);
   if (!job) return { title: "Job not found" };
+  const where = job.remote ? "Remote" : job.locShort || "";
   return {
     title: `${job.title} · ${job.company}`,
-    description: `${job.title} at ${job.company}${job.locShort ? ` (${job.locShort})` : ""}.`,
+    description: `${job.title} at ${job.company}.${where ? ` ${where}.` : ""}${job.salText ? ` ${job.salText}.` : ""} Apply directly on the company site.`,
+    alternates: { canonical: `/jobs/${slug}/` },
   };
 }
 
@@ -28,6 +33,8 @@ export default async function JobPage({ params }) {
   const job = getJobBySlug(slug);
   if (!job) notFound();
 
+  const cat = job.cats && job.cats.length ? getCategory(job.cats[0]) : null;
+
   const jsonLd = {
     "@context": "https://schema.org/",
     "@type": "JobPosting",
@@ -38,6 +45,9 @@ export default async function JobPage({ params }) {
     employmentType: "FULL_TIME",
     identifier: { "@type": "PropertyValue", name: job.company, value: String(job.sourceId) },
     hiringOrganization: { "@type": "Organization", name: job.company },
+    ...(job.salMin
+      ? { baseSalary: { "@type": "MonetaryAmount", currency: "USD", value: { "@type": "QuantitativeValue", minValue: job.salMin * 1000, maxValue: (job.salMax || job.salMin) * 1000, unitText: "YEAR" } } }
+      : {}),
     ...(job.remote
       ? { jobLocationType: "TELECOMMUTE" }
       : job.locShort
@@ -45,10 +55,20 @@ export default async function JobPage({ params }) {
       : {}),
     url: job.url,
   };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "All roles", item: SITE + "/" },
+      ...(cat ? [{ "@type": "ListItem", position: 2, name: cat.name, item: `${SITE}/${cat.slug}/` }] : []),
+      { "@type": "ListItem", position: cat ? 3 : 2, name: job.title, item: `${SITE}/jobs/${slug}/` },
+    ],
+  };
 
   return (
     <main className="detail">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <p><a href={`${BP}/`} className="back">← all roles</a></p>
 
       <div className="detail-head">

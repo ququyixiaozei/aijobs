@@ -2,7 +2,7 @@ import { getAllJobs, getCategoriesLite } from "../lib/jobs.js";
 
 export const dynamic = "force-static";
 
-const SITE = process.env.SITE_URL || "https://example.com";
+const SITE = process.env.SITE_URL || "https://warpjobs.com";
 
 export default function sitemap() {
   const jobs = getAllJobs();

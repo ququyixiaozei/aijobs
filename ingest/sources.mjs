@@ -62,7 +62,7 @@ export async function fetchLever(token) {
     postedAt: j.createdAt ? new Date(j.createdAt).toISOString() : null,
     updatedAt: j.createdAt ? new Date(j.createdAt).toISOString() : null,
     department: j.categories?.team || j.categories?.department || "",
-    descriptionHtml: j.descriptionPlain || j.description || "",
+    descriptionHtml: j.description || j.descriptionPlain || "",
   }));
 }
 

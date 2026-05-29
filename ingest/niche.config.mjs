@@ -31,10 +31,14 @@ export function matchesNiche(title = "") {
 
 // Long-tail SEO category/landing pages. Clone with the niche.
 export const categories = [
-  { slug: "gpu-jobs", name: "GPU & CUDA Engineering Jobs", match: /gpu|cuda/i },
-  { slug: "ml-systems-jobs", name: "ML Systems & Infrastructure Jobs", match: /ml systems|machine learning systems|ml infrastructure|machine learning infrastructure/i },
-  { slug: "inference-jobs", name: "Inference & Model Serving Jobs", match: /inference|serving|vllm|throughput|latency/i },
-  { slug: "performance-engineering-jobs", name: "Performance & Kernel Engineering Jobs", match: /performance|kernel|compiler|optimization|triton/i },
+  { slug: "gpu-jobs", name: "GPU & CUDA Engineering Jobs", match: /gpu|cuda/i,
+    blurb: "Hands-on GPU and CUDA roles — kernel development, GPU programming and accelerator software at AI labs and infrastructure companies." },
+  { slug: "ml-systems-jobs", name: "ML Systems & Infrastructure Jobs", match: /ml systems|machine learning systems|ml infrastructure|machine learning infrastructure/i,
+    blurb: "Engineering the systems that train and serve large models — distributed training, ML platforms and infrastructure at frontier labs." },
+  { slug: "inference-jobs", name: "Inference & Model Serving Jobs", match: /inference|serving|vllm|throughput|latency/i,
+    blurb: "Running models in production — inference engines, model serving, and latency/throughput optimization (vLLM, TensorRT and similar)." },
+  { slug: "performance-engineering-jobs", name: "Performance & Kernel Engineering Jobs", match: /performance|kernel|compiler|optimization|triton/i,
+    blurb: "Wringing performance out of hardware — kernels, compilers, Triton and low-level optimization for ML workloads." },
 ];
 
 export function getCategory(slug) {

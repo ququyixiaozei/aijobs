@@ -1,6 +1,6 @@
 export const dynamic = "force-static";
 
-const SITE = process.env.SITE_URL || "https://example.com";
+const SITE = process.env.SITE_URL || "https://warpjobs.com";
 
 export default function robots() {
   return {
