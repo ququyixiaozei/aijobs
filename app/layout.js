@@ -60,6 +60,7 @@ export default function RootLayout({ children }) {
               ai-infra-jobs
               <span className="sub">/ gpu · ml-systems</span>
             </a>
+            <a className="post-role" href={`${REPO}/issues/new?labels=job-post&title=${encodeURIComponent("Post a role: ")}`} target="_blank" rel="noopener noreferrer">Post a role →</a>
           </div>
         </header>
 

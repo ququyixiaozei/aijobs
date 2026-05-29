@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  kebab, isRemote, locShort, regionOf, parseSalary, hasVisa, companyColor, timeAgo,
+  kebab, isRemote, locShort, regionOf, parseSalary, hasVisa, companyColor, timeAgo, deriveLevel,
 } from "../lib/derive.js";
 
 test("kebab normalizes punctuation/whitespace (drives dedup keys + slugs)", () => {
@@ -48,6 +48,15 @@ test("hasVisa", () => {
 test("companyColor is deterministic", () => {
   assert.equal(companyColor("Anthropic"), companyColor("Anthropic"));
   assert.ok(companyColor("Anthropic").startsWith("hsl("));
+});
+
+test("deriveLevel maps titles (and ignores 'Member of Technical Staff')", () => {
+  assert.equal(deriveLevel("Senior Software Engineer"), "senior");
+  assert.equal(deriveLevel("Staff Engineer, GPU"), "staff");
+  assert.equal(deriveLevel("Principal ML Compiler Engineer"), "staff");
+  assert.equal(deriveLevel("Engineering Manager, Inference"), "manager");
+  assert.equal(deriveLevel("Member of Technical Staff, Inference"), ""); // not "staff"
+  assert.equal(deriveLevel("CUDA Kernel Engineer"), "");
 });
 
 test("timeAgo buckets (now injectable for determinism)", () => {

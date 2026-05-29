@@ -4,6 +4,9 @@ import { useState, useMemo, useEffect, useRef } from "react";
 const BP = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const REGIONS = ["US", "EU", "UK", "Remote", "APAC"];
 const SAL_STEPS = [0, 200, 300, 400];
+const LEVELS = [["senior", "senior"], ["staff", "staff+"], ["manager", "manager"]];
+const RECENCY = [[0, "any time"], [7, "≤7d"], [30, "≤30d"]];
+const DAY = 86400000;
 
 function useLocalSet(key) {
   const [set, setSet] = useState(() => new Set());
@@ -31,6 +34,8 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
   const [regions, setRegions] = useState(() => new Set());
   const [visaOnly, setVisaOnly] = useState(false);
   const [minSal, setMinSal] = useState(0);
+  const [levels, setLevels] = useState(() => new Set());
+  const [recencyDays, setRecencyDays] = useState(0);
   const [sort, setSort] = useState("new");
   const [starredOnly, setStarredOnly] = useState(false);
   const [density, setDensity] = useState("compact"); // B-22: dense by default (heavy scanners)
@@ -51,6 +56,9 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
 
   const setDens = (d) => { setDensity(d); try { localStorage.setItem("aijobs:density", d); } catch {} };
   const toggleRegion = (r) => setRegions((p) => { const n = new Set(p); n.has(r) ? n.delete(r) : n.add(r); return n; });
+  const toggleLevel = (l) => setLevels((p) => { const n = new Set(p); n.has(l) ? n.delete(l) : n.add(l); return n; });
+  const anyFilter = q || regions.size || visaOnly || minSal || levels.size || recencyDays || starredOnly;
+  const clearAll = () => { setQ(""); setRegions(new Set()); setVisaOnly(false); setMinSal(0); setLevels(new Set()); setRecencyDays(0); setStarredOnly(false); };
 
   const results = useMemo(() => {
     const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
@@ -59,6 +67,8 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
       if (regions.size && !regions.has(j.region)) return false;
       if (visaOnly && !j.visa) return false;
       if (minSal && !(j.salMin >= minSal)) return false;
+      if (levels.size && !levels.has(j.level)) return false;
+      if (recencyDays && !(j.ts && Date.now() - j.ts <= recencyDays * DAY)) return false;
       if (starredOnly && !stars.has(j.slug)) return false;
       if (tokens.length) {
         const hay = (j.title + " " + j.company + " " + (j.locations || []).join(" ")).toLowerCase();
@@ -72,7 +82,7 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
       new: (a, b) => b.ts - a.ts,
     }[sort];
     return [...r].sort(cmp);
-  }, [jobs, q, cat, regions, visaOnly, minSal, starredOnly, stars, sort]);
+  }, [jobs, q, cat, regions, visaOnly, minSal, levels, recencyDays, starredOnly, stars, sort]);
 
   return (
     <div className={"browser " + density}>
@@ -94,18 +104,27 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
             <button key={s} className={"chip" + (minSal === s ? " active" : "")} onClick={() => setMinSal(s)}>{s ? `$${s}K+` : "$ any"}</button>
           ))}
           <span className="sep" />
+          {LEVELS.map(([v, label]) => (
+            <button key={v} className={"chip" + (levels.has(v) ? " active" : "")} aria-pressed={levels.has(v)} onClick={() => toggleLevel(v)}>{label}</button>
+          ))}
+          <span className="sep" />
+          {RECENCY.map(([d, label]) => (
+            <button key={d} className={"chip" + (recencyDays === d ? " active" : "")} onClick={() => setRecencyDays(d)}>{label}</button>
+          ))}
+          <span className="sep" />
           <button className={"chip" + (starredOnly ? " active" : "")} aria-pressed={starredOnly} onClick={() => setStarredOnly((v) => !v)}>★ saved{stars.size ? ` ${stars.size}` : ""}</button>
+          {anyFilter ? <button className="chip clear" onClick={clearAll}>✕ clear</button> : null}
         </div>
 
         {/* View group */}
         <div className="group view">
           <span className="glabel">view</span>
           {["new", "salary", "company"].map((s) => (
-            <button key={s} className={"chip" + (sort === s ? " active" : "")} onClick={() => setSort(s)}>{s === "new" ? "newest" : s}</button>
+            <button key={s} className={"chip" + (sort === s ? " active" : "")} aria-pressed={sort === s} onClick={() => setSort(s)}>{s === "new" ? "newest" : s}</button>
           ))}
           <span className="sep" />
-          <button className={"chip" + (density === "compact" ? " active" : "")} onClick={() => setDens("compact")}>compact</button>
-          <button className={"chip" + (density === "comfortable" ? " active" : "")} onClick={() => setDens("comfortable")}>comfortable</button>
+          <button className={"chip" + (density === "compact" ? " active" : "")} aria-pressed={density === "compact"} onClick={() => setDens("compact")}>compact</button>
+          <button className={"chip" + (density === "comfortable" ? " active" : "")} aria-pressed={density === "comfortable"} onClick={() => setDens("comfortable")}>comfortable</button>
         </div>
 
         {/* Real links to crawlable category pages (SEO internal linking) — not JS-only filters */}

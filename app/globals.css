@@ -132,3 +132,9 @@ button { font-family: inherit; cursor: pointer; }
   .jc { grid-area: c; } .js { grid-area: s; text-align: right; } .jl { grid-area: l; white-space: normal; } .jd { grid-area: d; text-align: right; }
   .hero h1 { font-size: 23px; } .detail h1 { font-size: 21px; }
 }
+
+/* Header "Post a role" CTA + clear-filters chip (Phase B) */
+.post-role { margin-left: auto; font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; transition: all .12s; white-space: nowrap; }
+.post-role:hover { color: var(--accent); border-color: var(--accent); }
+.chip.clear { color: var(--fg-3); border-style: dashed; }
+.chip.clear:hover { color: var(--accent-bright); border-color: var(--accent); }
