@@ -16,10 +16,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # github.io project-page preview. When you add a custom domain: set NEXT_PUBLIC_BASE_PATH to ''
-      # and SITE_URL to https://yourdomain.com, and re-add a CNAME step.
-      NEXT_PUBLIC_BASE_PATH: /aijobs
-      SITE_URL: https://ququyixiaozei.github.io/aijobs
+      # custom domain at root (warpjobs.com) — no basePath
+      SITE_URL: https://warpjobs.com
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,6 +36,7 @@ jobs:
           git commit -m "chore: refresh jobs feed" || echo "no changes"
           git push || echo "nothing to push"
       - run: npm run build
+      - run: echo "warpjobs.com" > out/CNAME    # GitHub Pages custom domain
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with: { path: ./out }

@@ -57,8 +57,8 @@ npm run dev
 
 ## 步骤 5 · 设置 Git 身份(只需一次,用化名保持匿名)
 ```powershell
-git config --global user.name "your-handle"
-git config --global user.email "your-handle@users.noreply.github.com"
+git config --global user.name "no-work"
+git config --global user.email "no-work@users.noreply.github.com"
 ```
 
 ## 步骤 6 · 建本地仓库并提交第一版
