@@ -75,6 +75,7 @@ export default async function JobPage({ params }) {
       {job.descriptionHtml ? (
         <>
           <h2 className="jdh">Full description</h2>
+          {/* descriptionHtml is allowlist-sanitized at the ingest boundary (ingest/sanitize.mjs) — never raw ATS HTML */}
           <article className="prose" dangerouslySetInnerHTML={{ __html: job.descriptionHtml }} />
         </>
       ) : (

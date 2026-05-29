@@ -1,0 +1,16 @@
+version: 2
+updates:
+  # npm deps — grouped into one weekly PR to keep noise low on a solo project
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      npm-all:
+        patterns: ["*"]
+  # GitHub Actions versions — supply-chain hygiene for the deploy workflow
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

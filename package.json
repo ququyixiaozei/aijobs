@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=18.18" },
+  "engines": {
+    "node": ">=18.18"
+  },
   "scripts": {
     "ingest": "node ingest/run.mjs",
     "dev": "next dev",
@@ -14,6 +16,10 @@
   "dependencies": {
     "next": "^15.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "sanitize-html": "^2.17.4"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
   }
 }

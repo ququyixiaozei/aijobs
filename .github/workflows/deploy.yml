@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: "20" }
-      - run: npm install
+      - run: npm ci
       - name: Unit tests (gate — broken logic blocks deploy)
         run: npm test
       - name: Refresh jobs feed (US runner reaches all ATSs)

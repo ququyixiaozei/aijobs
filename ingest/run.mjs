@@ -7,6 +7,7 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { fetchers } from "./sources.mjs";
 import { companies } from "./companies.mjs";
 import { matchesNiche, niche } from "./niche.config.mjs";
+import { sanitizeJobHtml } from "./sanitize.mjs";
 
 async function run() {
   const all = [];
@@ -19,7 +20,13 @@ async function run() {
       const raw = await fn(c.token);
       const matched = raw
         .filter((j) => matchesNiche(j.title))
-        .map((j) => ({ ...j, company: c.name, companyToken: c.token, source: c.ats }));
+        .map((j) => ({
+          ...j,
+          company: c.name,
+          companyToken: c.token,
+          source: c.ats,
+          descriptionHtml: sanitizeJobHtml(j.descriptionHtml), // untrusted ATS HTML → allowlist
+        }));
       all.push(...matched);
       report.push(`OK   ${c.name} [${c.ats}/${c.token}]: ${raw.length} jobs → ${matched.length} ${niche.slug}`);
     } catch (e) {

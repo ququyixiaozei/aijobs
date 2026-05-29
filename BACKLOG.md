@@ -3,6 +3,16 @@
 Single source of truth for what's done / pending. Status: ✅ done · 🔧 in progress · ⏳ deferred (needs ongoing infra) · 🧊 later.
 **Convention:** every change references its id in the commit message, e.g. `fix(B-21): salary column placeholder`.
 
+## Security & launch hardening (2026-05-30)
+| id | item | status |
+|----|------|--------|
+| B-46 | Sanitize untrusted third-party job HTML at ingest (allowlist `ingest/sanitize.mjs`) + 6 CI security-regression tests (`test/sanitize.test.mjs`) — closes stored-XSS via ATS descriptions | ✅ |
+| B-47 | CSP via `<meta http-equiv>` (default-src self, object-src none, base-uri self) + referrer policy + `SECURITY.md` (honest re: GH-Pages can't set headers → no frame-ancestors/HSTS/X-CTO) | ✅ |
+| B-48 | Supply chain: `overrides` pin postcss → **0 vulns**; CI `npm install`→`npm ci` (reproducible); `dependabot.yml` (npm + github-actions weekly); verified first-party `actions/*` + least-priv perms | ✅ |
+| B-49 | Open Graph + Twitter card + `metadataBase` for clean link unfurls when shared (promo) | ✅ |
+| B-50 | Custom OG share **image** (PNG) for richer cards | 🧊 needs a design asset; text card works for now |
+| B-51 | IndexNow auto-ping in deploy workflow (Bing/Yandex instant indexing) | ⏳ wire after launch |
+
 ## Current sprint — design critique round 3 (2026-05-29)
 | id | item | status |
 |----|------|--------|
@@ -35,4 +45,5 @@ Single source of truth for what's done / pending. Status: ✅ done · 🔧 in pr
 | B-41 | TypeScript migration | when the surface stabilizes — don't risk a mid-flight rewrite of a working site |
 | B-42 | ESLint/Prettier config + CI lint step | low-risk; add next (build already typechecks) |
 | B-43 | Monetization: self-serve employer paid post (Payoneer/MoR) | only after real SEO traffic exists (decisions D071) |
-| B-44 | Custom domain + Search Console (start the validation clock) | user action — buy domain → switch basePath to root |
+| B-44 | Custom domain **warpjobs.com** | ✅ wired (root build, cname, DNS live, serving over HTTP). ⏳ HTTPS cert still provisioning (~1h+; same-day domain, normal up to 24h). Re-check: `gh api repos/ququyixiaozei/aijobs/pages --jq .https_certificate.state`; when non-null/approved: `gh api --method PUT repos/ququyixiaozei/aijobs/pages -f https_enforced=true`. |
+| B-45 | Search Console + submit sitemap (start the validation clock) | ✅ domain verified + sitemap accepted (over HTTP). Re-confirm fetch over HTTPS once cert green. |
