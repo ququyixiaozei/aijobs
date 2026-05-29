@@ -1,8 +1,8 @@
 {
   "niche": "ai-infra",
   "name": "AI Infrastructure & GPU Engineering Jobs",
-  "generatedAt": "2026-05-29T12:14:48.838Z",
-  "count": 147,
+  "generatedAt": "2026-05-29T12:35:48.584Z",
+  "count": 143,
   "jobs": [
     {
       "sourceId": "ash-anyscale-1cf38233-8aa0-47f8-9d85-65ce27bc3047",
@@ -149,20 +149,6 @@
       "company": "CoreWeave",
       "companyToken": "coreweave",
       "source": "greenhouse"
-    },
-    {
-      "sourceId": "ash-cursor-e46dd189-16d2-4a0f-bfb8-207eb403f92f",
-      "title": "Data Scientist, Performance and Reliability",
-      "url": "https://jobs.ashbyhq.com/cursor/e46dd189-16d2-4a0f-bfb8-207eb403f92f",
-      "location": "San Francisco",
-      "postedAt": "2026-05-05T00:00:02.031+00:00",
-      "updatedAt": "2026-05-05T00:00:02.031+00:00",
-      "department": "Data",
-      "descriptionHtml": "<p style=\"min-height:1.5em\">Our mission is to automate coding. The first step in our journey is to build the best tool for professional programmers, using a combination of inventive research, design, and engineering. Our organization is very flat, and our team is small and talent dense. We particularly like people who are truth-seeking, passionate, and creative. We enjoy spirited debate, crazy ideas, and shipping code.</p><p style=\"min-height:1.5em\"><strong>About the role</strong></p><p style=\"min-height:1.5em\">Cursor is building the best way to develop software with AI. As an early member of our data science team, you'll help define the way the company uses data to make decisions and deliver a high quality experience to millions of users across billions of user&lt;&gt;AI interactions.</p><p style=\"min-height:1.5em\"></p><p style=\"min-height:1.5em\"><strong>What you’ll do</strong></p><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Design and operationalize metrics that measure the stability of product surfaces and the agent harness</p></li><li><p style=\"min-height:1.5em\">Build a measurement and rollout framework to prevent, detect, and root cause performance regressions</p></li><li><p style=\"min-height:1.5em\">Partner with engineers on data tooling that enables self-serve analysis</p></li><li><p style=\"min-height:1.5em\">Identify performance and reliability experiences that disproportionately cause user frustration</p></li></ul><p style=\"min-height:1.5em\"></p><p style=\"min-height:1.5em\"><strong>You may be a fit if</strong></p><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">You have 5+ years of experience as a data scientist at a high growth company</p></li><li><p style=\"min-height:1.5em\">You’ve operationalized a north star performance metric across a pillar</p></li><li><p style=\"min-height:1.5em\">You have experience building and operationalizing data tooling for non-data users</p></li><li><p style=\"min-height:1.5em\">You enjoy working directly with engineering on measurement and strategy</p></li><li><p style=\"min-height:1.5em\">You’re experienced in experimentation and causal inference</p></li><li><p style=\"min-height:1.5em\">You're happy to work across the stack and help us build the foundations of data at Cursor</p></li></ul>",
-      "remote": false,
-      "company": "Cursor",
-      "companyToken": "cursor",
-      "source": "ashby"
     },
     {
       "sourceId": "gh-graphcore-8533907002",
@@ -452,34 +438,6 @@
       "company": "Nebius",
       "companyToken": "nebius",
       "source": "greenhouse"
-    },
-    {
-      "sourceId": "ash-cursor-e3966cb2-c584-4c8a-9d25-1309af31b3a9",
-      "title": "Engineering Manager, Model Routing & Inference",
-      "url": "https://jobs.ashbyhq.com/cursor/e3966cb2-c584-4c8a-9d25-1309af31b3a9",
-      "location": "San Francisco",
-      "postedAt": "2026-04-07T04:35:44.617+00:00",
-      "updatedAt": "2026-04-07T04:35:44.617+00:00",
-      "department": "Foundations",
-      "descriptionHtml": "<p style=\"min-height:1.5em\">Our mission is to automate coding. The first step in our journey is to build the best tool for professional programmers, using a combination of inventive research, design, and engineering. Our organization is very flat, and our team is small and talent dense. We particularly like people who are truth-seeking, passionate, and creative. We enjoy spirited debate, crazy ideas, and shipping code.</p><h3>About the Role</h3><p style=\"min-height:1.5em\">You will lead the Model Routing &amp; Inference team at Cursor, owning the inference platform that powers every AI interaction in the product. This team owns the full inference path: making Cursor's AI faster, more reliable, and more cost-effective at a scale few teams in the world get to operate at. Every agent session, every tab completion, and every chat message flows through your stack.</p><p style=\"min-height:1.5em\">You'll set technical direction for cluster management, inference optimization, and traffic egress, building the platform that lets the rest of the company move fast without worrying about provider complexity. You'll lead a team of strong engineers, set strong direction for the business, and make the calls that balance latency, cost, reliability, and user experience across millions of daily requests.</p><p style=\"min-height:1.5em\"></p><h3><strong>What you’ll do</strong></h3><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Building and evolving our inference gateway, a single abstraction over every provider's API semantics, so model onboarding becomes a config change.</p></li><li><p style=\"min-height:1.5em\">Building the systems that dynamically select the best model for each request based on cost, latency, and quality.</p></li><li><p style=\"min-height:1.5em\">Managing GPU cluster utilization and capacity planning across providers, optimizing for cost and performance.</p></li><li><p style=\"min-height:1.5em\">Designing routing backpressure and admission control so traffic spikes don't cascade into providers.</p></li><li><p style=\"min-height:1.5em\">Hiring and growing the team: sourcing, interviewing, and closing top inference and systems talent, while developing your engineers through coaching, mentorship, and high-leverage project assignments.</p></li></ul><h3>You may be a fit if</h3><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">You have led engineering teams building high-throughput, low-latency distributed systems, especially in inference serving, traffic routing, or real-time data pipelines.</p></li><li><p style=\"min-height:1.5em\">You're comfortable reasoning about cost/performance tradeoffs at scale (GPU utilization, provider economics, capacity planning) and making decisions with incomplete information.</p></li><li><p style=\"min-height:1.5em\">You have strong software engineering fundamentals and enjoy shipping production systems that handle millions of requests.</p></li><li><p style=\"min-height:1.5em\">Experience with model serving frameworks (vLLM, TensorRT-LLM, TGI), load balancing, or building resilient multi-provider architectures is a plus.</p></li><li><p style=\"min-height:1.5em\">You make good calls in the gray area: weighing reliability, cost, latency, and user experience when there isn't a single \"right\" answer.</p></li></ul><p style=\"min-height:1.5em\">#LI-DNI</p>",
-      "remote": false,
-      "company": "Cursor",
-      "companyToken": "cursor",
-      "source": "ashby"
-    },
-    {
-      "sourceId": "ash-cursor-45c815b0-5100-4934-8558-0e750b8aed79",
-      "title": "Software Engineer, Model Routing & Inference",
-      "url": "https://jobs.ashbyhq.com/cursor/45c815b0-5100-4934-8558-0e750b8aed79",
-      "location": "New York",
-      "postedAt": "2026-04-07T04:19:55.390+00:00",
-      "updatedAt": "2026-04-07T04:19:55.390+00:00",
-      "department": "Foundations",
-      "descriptionHtml": "<p style=\"min-height:1.5em\">Our mission is to automate coding. The first step in our journey is to build the best tool for professional programmers, using a combination of inventive research, design, and engineering. Our organization is very flat, and our team is small and talent dense. We particularly like people who are truth-seeking, passionate, and creative. We enjoy spirited debate, crazy ideas, and shipping code.</p><h2><strong>About the Role</strong></h2><p style=\"min-height:1.5em\">As a Software Engineer on the <strong>Model Routing &amp; Inference</strong> team at Cursor, you'll build the inference platform that powers every AI interaction in the product. </p><p style=\"min-height:1.5em\">This team owns the full inference path: making Cursor's AI faster, more reliable, and more cost-effective at a scale few teams in the world get to operate at. Every agent session, every tab completion, and every chat message flows through your stack.</p><p style=\"min-height:1.5em\"></p><h3>Example projects include...</h3><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Building and evolving our inference gateway, a single abstraction over every provider's API semantics, so model onboarding becomes a config change.</p></li><li><p style=\"min-height:1.5em\">Designing intelligent cross-provider failover so no single provider outage causes user-visible degradation.</p></li><li><p style=\"min-height:1.5em\">Designing routing backpressure and admission control so traffic spikes don't cascade into providers.</p></li></ul><p style=\"min-height:1.5em\"></p><h2>You may be a fit if</h2><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">You have deep experience building high-throughput, low-latency distributed systems, especially in inference serving, traffic routing, or real-time data pipelines.</p></li><li><p style=\"min-height:1.5em\">You're comfortable reasoning about cost/performance tradeoffs at scale (GPU utilization, provider economics, capacity planning).</p></li><li><p style=\"min-height:1.5em\">You have strong software engineering fundamentals and enjoy shipping production systems that handle millions of requests.</p></li><li><p style=\"min-height:1.5em\">You make good calls in the gray area: weighing reliability, cost, latency, and user experience when there isn't a single \"right\" answer.</p></li></ul><p style=\"min-height:1.5em\"></p><h2>Applying</h2><p style=\"min-height:1.5em\">If there appears to be a fit, we'll reach to schedule 2-3 short technicals. After, we'll schedule an onsite in our office, where you'll work on a small project, discuss ideas, and meet the team.</p><p style=\"min-height:1.5em\"></p><p style=\"min-height:1.5em\">#LI-DNI</p>",
-      "remote": false,
-      "company": "Cursor",
-      "companyToken": "cursor",
-      "source": "ashby"
     },
     {
       "sourceId": "gh-sambanovasystems-5850439004",
@@ -912,20 +870,6 @@
       "company": "RunPod",
       "companyToken": "runpod",
       "source": "greenhouse"
-    },
-    {
-      "sourceId": "ash-cursor-c66cde5e-9cb6-4a2e-a330-9323e1edf2a9",
-      "title": "Software Engineer, ML Infrastructure",
-      "url": "https://jobs.ashbyhq.com/cursor/c66cde5e-9cb6-4a2e-a330-9323e1edf2a9",
-      "location": "San Francisco",
-      "postedAt": "2026-01-27T22:51:35.240+00:00",
-      "updatedAt": "2026-01-27T22:51:35.240+00:00",
-      "department": "Machine Learning",
-      "descriptionHtml": "<p style=\"min-height:1.5em\">Our mission is to automate coding. The first step in our journey is to build the best tool for professional programmers, using a combination of inventive research, design, and engineering. Our organization is very flat, and our team is small and talent dense. We particularly like people who are truth-seeking, passionate, and creative. We enjoy spirited debate, crazy ideas, and shipping code.</p><h1><strong>About the role</strong></h1><p style=\"min-height:1.5em\">The ML Infrastructure team builds large-scale compute, storage, and software infrastructure to support Cursor’s work building the world’s best agentic coding model. We’re looking for strong engineers who are interested in building high-performance infrastructure and the software to support it. This role works closely with ML researchers and engineers to enable their work through improvements to our training framework, systems reliability/performance, and developer experience.</p><p style=\"min-height:1.5em\"></p><h2><strong>What you’ll do</strong></h2><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Collaborate with ML researchers to improve the throughput and reliability of training</p></li><li><p style=\"min-height:1.5em\">Work with OEMs, cloud service providers, and others to plan and build cutting-edge GPU infrastructure</p></li><li><p style=\"min-height:1.5em\">Improve the density and scalability of compute environments to enable increasingly large RL workloads</p></li><li><p style=\"min-height:1.5em\">Create software and systems to automate building, monitoring, and running GPU clusters</p></li><li><p style=\"min-height:1.5em\">Build workload scheduling and data movement systems to support Cursor’s growing training footprint</p></li></ul><h2><strong>You may be a fit if</strong></h2><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">A strong background in systems and infrastructure-focused software engineering, particularly in Python, Typescript, Rust, and Golang</p></li><li><p style=\"min-height:1.5em\">Experience with distributed storage and networking infrastructure, particularly on Linux systems across cloud and bare metal environments</p></li><li><p style=\"min-height:1.5em\">Exposure to large-scale systems and their unique challenges, ideally across thousands of nodes with significant resource footprints.</p></li><li><p style=\"min-height:1.5em\">Production use of infrastructure-as-code and configuration management, across hosts and Kubernetes</p></li></ul><h2>Nice to have</h2><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Operational exposure to Nvidia GPUs with Infiniband or RoCE, particularly with Blackwell and Hopper-class hardware</p></li><li><p style=\"min-height:1.5em\">Exposure to Ray, Slurm, or other common compute and runtime schedulers</p></li></ul><p style=\"min-height:1.5em\">#LI-DNI</p>",
-      "remote": false,
-      "company": "Cursor",
-      "companyToken": "cursor",
-      "source": "ashby"
     },
     {
       "sourceId": "gh-coreweave-4647603006",
