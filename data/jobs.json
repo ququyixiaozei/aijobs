@@ -1,8 +1,8 @@
 {
   "niche": "ai-infra",
   "name": "AI Infrastructure & GPU Engineering Jobs",
-  "generatedAt": "2026-05-29T11:04:23.715Z",
-  "count": 147,
+  "generatedAt": "2026-05-29T11:31:27.564Z",
+  "count": 145,
   "jobs": [
     {
       "sourceId": "ash-anyscale-1cf38233-8aa0-47f8-9d85-65ce27bc3047",
@@ -1611,20 +1611,6 @@
       "source": "greenhouse"
     },
     {
-      "sourceId": "ash-character-13006848-6a69-4467-9274-5d54e80b965d",
-      "title": "Machine Learning Infrastructure Engineer",
-      "url": "https://jobs.ashbyhq.com/character/13006848-6a69-4467-9274-5d54e80b965d",
-      "location": "Redwood City, CA",
-      "postedAt": "2025-04-24T17:17:46.443+00:00",
-      "updatedAt": "2025-04-24T17:17:46.443+00:00",
-      "department": "Technical Staff - ML",
-      "descriptionHtml": "<p style=\"min-height:1.5em\"></p><h1><strong>About the role</strong></h1><p style=\"min-height:1.5em\">We’re looking for seasoned ML Infrastructure engineers with experience designing, building and maintaining training and serving infrastructure for ML research.</p><p style=\"min-height:1.5em\"></p><p style=\"min-height:1.5em\"><strong>Responsibilities</strong>:</p><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Provide infrastructure support to our ML research and product</p></li><li><p style=\"min-height:1.5em\">Build tooling to diagnose cluster issues and hardware failures</p></li><li><p style=\"min-height:1.5em\">Monitor deployments, manage experiments, and generally support our research</p></li><li><p style=\"min-height:1.5em\">Maximize GPU allocation and utilization for both serving and training</p><p style=\"min-height:1.5em\"></p></li></ul><p style=\"min-height:1.5em\"><strong>Requirements:</strong></p><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">4+ years of experience supporting the infrastructure within an ML environment</p></li><li><p style=\"min-height:1.5em\">Experience in developing tools used to diagnose ML infrastructure problems and failures</p></li><li><p style=\"min-height:1.5em\">Experience with cloud platforms (e.g., Compute Engine, Kubernetes, Cloud Storage)</p></li><li><p style=\"min-height:1.5em\">Experience working with GPUs</p><p style=\"min-height:1.5em\"></p></li></ul><p style=\"min-height:1.5em\"><strong>Nice to have</strong></p><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Experience with large GPU clusters and high-performance computing/networking</p></li><li><p style=\"min-height:1.5em\">Experience with supporting large language model training</p></li><li><p style=\"min-height:1.5em\">Experience with ML frameworks like Pytorch/TensorFlow/JAX</p></li><li><p style=\"min-height:1.5em\">Experience with GPU kernel development</p><p style=\"min-height:1.5em\"></p></li></ul><p style=\"min-height:1.5em\"></p><p style=\"min-height:1.5em\"></p><h2><strong>About Character.AI</strong></h2><p style=\"min-height:1.5em\"><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://Character.AI\"><u>Character.AI</u></a> empowers people to connect, learn and tell stories through interactive entertainment. Over 20 million people visit <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://Character.AI\"><u>Character.AI</u></a> every month, using our technology to supercharge their creativity and imagination. Our platform lets users engage with tens of millions of characters, enjoy unlimited conversations, and embark on infinite adventure<em>s.</em></p><p style=\"min-height:1.5em\"><br />In just two years, we achieved unicorn status and were honored as Google Play's AI App of the Year—a testament to our innovative technology and visionary approach.</p><p style=\"min-height:1.5em\"><br />Join us and be a part of establishing this new entertainment paradigm while shaping the future of Consumer AI!<br /></p><p style=\"min-height:1.5em\"><em>At Character, we value diversity and welcome applicants from all backgrounds. As an equal opportunity employer, we firmly uphold a non-discrimination policy based on race, religion, national origin, gender, sexual orientation, age, veteran status, or disability. Your unique perspectives are vital to our success.</em></p>",
-      "remote": true,
-      "company": "Character.AI",
-      "companyToken": "character",
-      "source": "ashby"
-    },
-    {
       "sourceId": "gh-fireworksai-4000408009",
       "title": "Member of Technical Staff, AI Training Infrastructure",
       "url": "https://job-boards.greenhouse.io/fireworksai/jobs/4000408009",
@@ -1714,20 +1700,6 @@
       "remote": false,
       "company": "Cartesia",
       "companyToken": "cartesia",
-      "source": "ashby"
-    },
-    {
-      "sourceId": "ash-character-3ab40c3d-63bd-4634-a126-5a3d25d3263b",
-      "title": "Research Engineer, ML Systems (All Industry Levels)",
-      "url": "https://jobs.ashbyhq.com/character/3ab40c3d-63bd-4634-a126-5a3d25d3263b",
-      "location": "Redwood City, CA",
-      "postedAt": "2024-11-20T17:50:30.978+00:00",
-      "updatedAt": "2024-11-20T17:50:30.978+00:00",
-      "department": "Technical Staff - ML",
-      "descriptionHtml": "<h2><strong>About the role and team</strong></h2><p style=\"min-height:1.5em\">Joining us as a Research Engineer on the ML Systems team, you’ll be working on cutting-edge ML training and inference systems, optimizing the performance and efficiency of our GPU clusters, and developing new technologies that fine-tune leading consumer AI models with a data flywheel, and serve 20K+ QPS in production with LLMs. Your work will directly contribute to our groundbreaking advancements in AI, helping shape an era where technology is not just a tool, but a companion in our daily lives. At <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://Character.AI\"><u>Character.AI</u></a>, your talent, creativity, and expertise will not just be valued—they will be the catalyst for change in an AI-driven future.</p><h2></h2><h2>What you'll do</h2><p style=\"min-height:1.5em\">The ML Systems team is responsible for the research and deployment of systems that efficiently utilize GPU for AI-enabled products. </p><p style=\"min-height:1.5em\">As a research engineer, you will work across teams and our technical stack to improve our training performance and inference runtime. You will get to shape the conversational experience of millions of users per day.</p><p style=\"min-height:1.5em\">Example projects:</p><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Write efficient Triton kernels and tune them for our specific models and hardware</p></li><li><p style=\"min-height:1.5em\">Develop prefix-aware routing algorithms to improve serving cache hit rate</p></li><li><p style=\"min-height:1.5em\">Train and distill LLMs to improve latency while preserving accuracy and engagements</p></li><li><p style=\"min-height:1.5em\">Build an efficient and scalable distributed RLHF stack powering the model innovations</p></li><li><p style=\"min-height:1.5em\">Develop systems for efficient multimodal (image gen/video gen) model training &amp; inference</p></li></ul><p style=\"min-height:1.5em\"></p><h2>Who you are</h2><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">\"All Industry Levels\": at least PhD (or equivalent) research experience</p></li><li><p style=\"min-height:1.5em\">Write clear and clean production system code</p></li><li><p style=\"min-height:1.5em\">Strong understanding of modern machine learning techniques (reinforcement learning, transformers, etc)</p></li><li><p style=\"min-height:1.5em\">Track record of exceptional research or creative ML systems projects</p></li><li><p style=\"min-height:1.5em\">Comfortable writing model development code (PyTorch) for either training or inference</p></li></ul><p style=\"min-height:1.5em\"></p><h2><strong>Nice to Have</strong></h2><ul style=\"min-height:1.5em\"><li><p style=\"min-height:1.5em\">Experience training large models in a distributed setting utilizing PyTorch distributed, DeepSpeed, Megatron.</p></li><li><p style=\"min-height:1.5em\">Experience working with GPUs &amp; collectives (training, serving, debugging) and writing kernels (Triton, CUDA, CUTLASS).</p></li><li><p style=\"min-height:1.5em\">Experience with LLM inference systems and literature such as vLLM and FlashAttention.</p></li><li><p style=\"min-height:1.5em\">Familiarity with ML deployment and orchestration (Kubernetes, Docker, cloud)</p></li><li><p style=\"min-height:1.5em\">Publications in relevant academic journals or conferences in the field of machine learning and systems</p></li></ul><p style=\"min-height:1.5em\"></p><p style=\"min-height:1.5em\"></p><h2><strong>About Character.AI</strong></h2><p style=\"min-height:1.5em\"><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://Character.AI\"><u>Character.AI</u></a> empowers people to connect, learn and tell stories through interactive entertainment. Over 20 million people visit <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://Character.AI\"><u>Character.AI</u></a> every month, using our technology to supercharge their creativity and imagination. Our platform lets users engage with tens of millions of characters, enjoy unlimited conversations, and embark on infinite adventure<em>s.</em></p><p style=\"min-height:1.5em\"><br />In just two years, we achieved unicorn status and were honored as Google Play's AI App of the Year—a testament to our innovative technology and visionary approach.</p><p style=\"min-height:1.5em\"><br />Join us and be a part of establishing this new entertainment paradigm while shaping the future of Consumer AI!<br /></p><p style=\"min-height:1.5em\"><em>At Character, we value diversity and welcome applicants from all backgrounds. As an equal opportunity employer, we firmly uphold a non-discrimination policy based on race, religion, national origin, gender, sexual orientation, age, veteran status, or disability. Your unique perspectives are vital to our success.</em></p>",
-      "remote": true,
-      "company": "Character.AI",
-      "companyToken": "character",
       "source": "ashby"
     },
     {
