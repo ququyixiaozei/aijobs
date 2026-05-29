@@ -1,4 +1,4 @@
-import { getAllJobs, getMeta, getCategories, timeAgo } from "../lib/jobs.js";
+import { getAllJobs, getMeta, getCategories, timeAgo, BP } from "../lib/jobs.js";
 
 export const revalidate = 3600; // ISR: refresh hourly
 
@@ -25,7 +25,7 @@ export default function Home() {
 
       <nav className="cats">
         {cats.map((c) => (
-          <a key={c.slug} href={`/${c.slug}`} className="pill">{c.name}</a>
+          <a key={c.slug} href={`${BP}/${c.slug}/`} className="pill">{c.name}</a>
         ))}
       </nav>
 
@@ -35,7 +35,7 @@ export default function Home() {
         <ul className="jobs">
           {jobs.map((j) => (
             <li key={j.slug}>
-              <a className="job" href={`/jobs/${j.slug}`}>
+              <a className="job" href={`${BP}/jobs/${j.slug}/`}>
                 <div className="title">{j.title}</div>
                 <div className="meta">
                   <span className="co">{j.company}</span>

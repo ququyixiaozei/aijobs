@@ -1,4 +1,4 @@
-import { getAllJobs, getJobBySlug, timeAgo } from "../../../lib/jobs.js";
+import { getAllJobs, getJobBySlug, timeAgo, BP } from "../../../lib/jobs.js";
 import { notFound } from "next/navigation";
 
 export const revalidate = 3600;
@@ -47,7 +47,7 @@ export default async function JobPage({ params }) {
   return (
     <main className="detail">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <p><a href="/" className="back">← all roles</a></p>
+      <p><a href={`${BP}/`} className="back">← all roles</a></p>
       <h1>{job.title}</h1>
       <p className="meta">
         <span className="co">{job.company}</span>

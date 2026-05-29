@@ -1,4 +1,4 @@
-import { getCategories, getJobsByCategory, timeAgo } from "../../lib/jobs.js";
+import { getCategories, getJobsByCategory, timeAgo, BP } from "../../lib/jobs.js";
 import { getCategory } from "../../ingest/niche.config.mjs";
 import { notFound } from "next/navigation";
 
@@ -28,7 +28,7 @@ export default async function CategoryPage({ params }) {
   return (
     <main>
       <section className="hero">
-        <p><a href="/" className="back">← all roles</a></p>
+        <p><a href={`${BP}/`} className="back">← all roles</a></p>
         <h1>{c.name}</h1>
         <div className="stat"><b>{jobs.length}</b> open roles</div>
       </section>
@@ -39,7 +39,7 @@ export default async function CategoryPage({ params }) {
         <ul className="jobs">
           {jobs.map((j) => (
             <li key={j.slug}>
-              <a className="job" href={`/jobs/${j.slug}`}>
+              <a className="job" href={`${BP}/jobs/${j.slug}/`}>
                 <div className="title">{j.title}</div>
                 <div className="meta">
                   <span className="co">{j.company}</span>

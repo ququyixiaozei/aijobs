@@ -1,4 +1,5 @@
 import "./globals.css";
+import { BP } from "../lib/jobs.js";
 
 export const metadata = {
   title: "AI Infra Jobs — GPU, CUDA & ML-Systems Engineering Roles",
@@ -12,7 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <header className="site-header">
           <div className="container">
-            <a href="/" className="brand">
+            <a href={`${BP}/`} className="brand">
               <span className="dot" />
               ai-infra-jobs
               <span className="sub">/ gpu · ml-systems</span>

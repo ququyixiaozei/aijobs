@@ -1,0 +1,50 @@
+name: deploy
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "0 6 * * *"      # daily 06:00 UTC: refresh jobs + redeploy
+  workflow_dispatch: {}
+permissions:
+  contents: write            # commit refreshed jobs.json
+  pages: write               # deploy to Pages
+  id-token: write            # Pages OIDC
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # github.io project-page preview. When you add a custom domain: set NEXT_PUBLIC_BASE_PATH to ''
+      # and SITE_URL to https://yourdomain.com, and re-add a CNAME step.
+      NEXT_PUBLIC_BASE_PATH: /aijobs
+      SITE_URL: https://ququyixiaozei.github.io/aijobs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: npm install
+      - name: Refresh jobs feed (US runner reaches all ATSs)
+        run: node ingest/run.mjs
+      - name: Commit refreshed feed
+        continue-on-error: true
+        run: |
+          git config user.name "ingest-bot"
+          git config user.email "ingest@users.noreply.github.com"
+          git add data/jobs.json
+          git commit -m "chore: refresh jobs feed" || echo "no changes"
+          git push || echo "nothing to push"
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: ./out }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
