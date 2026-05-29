@@ -8,7 +8,8 @@
     "ingest": "node ingest/run.mjs",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "node --test"
   },
   "dependencies": {
     "next": "^15.1.0",

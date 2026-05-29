@@ -33,13 +33,13 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
   const [minSal, setMinSal] = useState(0);
   const [sort, setSort] = useState("new");
   const [starredOnly, setStarredOnly] = useState(false);
-  const [density, setDensity] = useState("comfortable");
+  const [density, setDensity] = useState("compact"); // B-22: dense by default (heavy scanners)
   const [stars, toggleStar] = useLocalSet("aijobs:stars");
   const [visited, , addVisited] = useLocalSet("aijobs:visited");
   const inputRef = useRef(null);
 
   useEffect(() => {
-    try { setDensity(localStorage.getItem("aijobs:density") || "comfortable"); } catch {}
+    try { const d = localStorage.getItem("aijobs:density"); if (d) setDensity(d); } catch {}
     const onKey = (e) => {
       if (e.key === "/" && document.activeElement !== inputRef.current) {
         e.preventDefault(); inputRef.current && inputRef.current.focus();
@@ -54,7 +54,7 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
 
   const results = useMemo(() => {
     const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
-    let r = jobs.filter((j) => {
+    const r = jobs.filter((j) => {
       if (cat && !(j.cats || []).includes(cat)) return false;
       if (regions.size && !regions.has(j.region)) return false;
       if (visaOnly && !j.visa) return false;
@@ -81,31 +81,31 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
           placeholder="Search title, company, location    ( / )"
           onChange={(e) => setQ(e.target.value)} aria-label="Search roles" />
 
-        <div className="control-row">
+        {/* Filter group */}
+        <div className="group">
+          <span className="glabel">filter</span>
           {REGIONS.map((r) => (
             <button key={r} className={"chip" + (regions.has(r) ? " active" : "")} aria-pressed={regions.has(r)} onClick={() => toggleRegion(r)}>{r}</button>
           ))}
-          <button className={"chip" + (visaOnly ? " active" : "")} aria-pressed={visaOnly} onClick={() => setVisaOnly((v) => !v)}>visa sponsor</button>
+          <span className="sep" />
+          <button className={"chip" + (visaOnly ? " active" : "")} aria-pressed={visaOnly} onClick={() => setVisaOnly((v) => !v)}>visa</button>
+          <span className="sep" />
+          {SAL_STEPS.map((s) => (
+            <button key={s} className={"chip" + (minSal === s ? " active" : "")} onClick={() => setMinSal(s)}>{s ? `$${s}K+` : "$ any"}</button>
+          ))}
+          <span className="sep" />
+          <button className={"chip" + (starredOnly ? " active" : "")} aria-pressed={starredOnly} onClick={() => setStarredOnly((v) => !v)}>★ saved{stars.size ? ` ${stars.size}` : ""}</button>
         </div>
 
-        <div className="control-row">
-          <span className="lbl">salary</span>
-          {SAL_STEPS.map((s) => (
-            <button key={s} className={"chip" + (minSal === s ? " active" : "")} onClick={() => setMinSal(s)}>{s ? `$${s}K+` : "any"}</button>
-          ))}
-          <span className="spacer" />
-          <span className="lbl">sort</span>
+        {/* View group */}
+        <div className="group view">
+          <span className="glabel">view</span>
           {["new", "salary", "company"].map((s) => (
             <button key={s} className={"chip" + (sort === s ? " active" : "")} onClick={() => setSort(s)}>{s === "new" ? "newest" : s}</button>
           ))}
-        </div>
-
-        <div className="control-row">
-          <button className={"chip" + (starredOnly ? " active" : "")} aria-pressed={starredOnly} onClick={() => setStarredOnly((v) => !v)}>★ saved{stars.size ? ` ${stars.size}` : ""}</button>
-          <span className="spacer" />
-          <span className="lbl">density</span>
-          <button className={"chip" + (density === "comfortable" ? " active" : "")} onClick={() => setDens("comfortable")}>comfortable</button>
+          <span className="sep" />
           <button className={"chip" + (density === "compact" ? " active" : "")} onClick={() => setDens("compact")}>compact</button>
+          <button className={"chip" + (density === "comfortable" ? " active" : "")} onClick={() => setDens("comfortable")}>comfortable</button>
         </div>
 
         <div className="cats">
@@ -127,11 +127,11 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
             <button className={"star" + (stars.has(j.slug) ? " on" : "")} aria-label={stars.has(j.slug) ? "Unsave" : "Save"} aria-pressed={stars.has(j.slug)} onClick={() => toggleStar(j.slug)}>★</button>
             <a className={"rowlink" + (visited.has(j.slug) ? " visited" : "")} href={`${BP}/jobs/${j.slug}/`} title={j.title} onClick={() => addVisited(j.slug)}>
               <span className="mark" style={{ background: j.color }} aria-hidden="true">{(j.company[0] || "?").toUpperCase()}</span>
-              <span className="jt">{j.isToday ? <span className="newdot" title="posted today" /> : null}{j.title}</span>
+              <span className="jt">{j.title}</span>
               <span className="jc">{j.company}</span>
               <span className="jl">{j.locations[0] || (j.remote ? "Remote" : "—")}{j.locations.length > 1 ? <span className="more">+{j.locations.length - 1}</span> : null}</span>
-              <span className="js">{j.sal}</span>
-              <span className="jd">{j.age}</span>
+              <span className={"js" + (j.sal ? "" : " none")}>{j.sal || "—"}</span>
+              <span className={"jd" + (j.age === "today" ? " today" : "")}>{j.age}</span>
             </a>
           </div>
         ))}

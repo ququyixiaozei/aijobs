@@ -25,6 +25,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: "20" }
       - run: npm install
+      - name: Unit tests (gate — broken logic blocks deploy)
+        run: npm test
       - name: Refresh jobs feed (US runner reaches all ATSs)
         run: node ingest/run.mjs
       - name: Commit refreshed feed
