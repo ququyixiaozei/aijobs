@@ -31,8 +31,7 @@ export function matchesNiche(title = "") {
 
 // Long-tail SEO category/landing pages. Clone with the niche.
 export const categories = [
-  { slug: "gpu-jobs", name: "GPU Engineering Jobs", match: /gpu/i },
-  { slug: "cuda-jobs", name: "CUDA Engineering Jobs", match: /cuda/i },
+  { slug: "gpu-jobs", name: "GPU & CUDA Engineering Jobs", match: /gpu|cuda/i },
   { slug: "ml-systems-jobs", name: "ML Systems & Infrastructure Jobs", match: /ml systems|machine learning systems|ml infrastructure|machine learning infrastructure/i },
   { slug: "inference-jobs", name: "Inference & Model Serving Jobs", match: /inference|serving|vllm|throughput|latency/i },
   { slug: "performance-engineering-jobs", name: "Performance & Kernel Engineering Jobs", match: /performance|kernel|compiler|optimization|triton/i },
