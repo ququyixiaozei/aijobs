@@ -1,5 +1,5 @@
 import JobBrowser from "./JobBrowser.js";
-import { getBrowserJobs, getCategoriesLite, getMeta } from "../lib/jobs.js";
+import { getBrowserJobs, getCategoriesLite, getMeta, BP } from "../lib/jobs.js";
 import { ld } from "../lib/jsonld.js";
 
 const SITE = process.env.SITE_URL || "https://warpjobs.com";
@@ -31,7 +31,8 @@ export default function Home() {
         <h1>AI Infrastructure &amp; GPU Engineering Jobs</h1>
         <p>
           {meta.count} open GPU, CUDA, ML-systems, inference &amp; performance engineering roles from{" "}
-          {meta.companyCount} AI labs and infrastructure companies — one board, refreshed daily.
+          {meta.companyCount} AI labs and infrastructure companies — one board, refreshed daily.{" "}
+          <a className="hero-link" href={`${BP}/companies-hiring/`}>See who&apos;s hiring →</a>
         </p>
       </section>
       <JobBrowser jobs={jobs} cats={cats} generatedAt={meta.generatedAt} />

@@ -138,3 +138,62 @@ button { font-family: inherit; cursor: pointer; }
 .post-role:hover { color: var(--accent); border-color: var(--accent); }
 .chip.clear { color: var(--fg-3); border-style: dashed; }
 .chip.clear:hover { color: var(--accent-bright); border-color: var(--accent); }
+
+/* ── SEO data-hub surfaces (companies-hiring, region/level/remote hubs, enriched category/company) ── */
+.hero-link { color: var(--accent); font-family: var(--font-mono); font-size: 13px; white-space: nowrap; }
+.hero-link:hover { color: var(--accent-bright); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Dataset-stat strip */
+.statstrip { margin: var(--s4) 0; }
+.stats { display: flex; flex-wrap: wrap; gap: 0; margin: 0; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+.stats > div { flex: 1 1 auto; min-width: 92px; padding: 8px 14px; border-right: 1px solid var(--border); }
+.stats > div:last-child { border-right: 0; }
+.stats dt { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg-3); margin: 0 0 2px; }
+.stats dd { margin: 0; font-family: var(--font-mono); font-size: 18px; font-weight: 650; color: var(--fg); letter-spacing: -0.01em; }
+.stats dd .sub { font-size: 12px; font-weight: 500; color: var(--fg-2); }
+.statcats { display: flex; flex-wrap: wrap; gap: var(--s1); margin-top: var(--s2); }
+.statnote { margin: var(--s2) 0 0; font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); line-height: 1.5; }
+
+/* Editorial prose blocks (curated, non-template) */
+.editorial { max-width: var(--readw); margin: var(--s4) 0; }
+.editorial p { margin: 0 0 var(--s3); color: var(--fg-2); line-height: 1.7; }
+.editorial strong { color: var(--fg); font-weight: 600; }
+.editorial em { color: var(--fg); font-style: italic; }
+.editorial a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.editorial a:hover { color: var(--accent-bright); }
+.tophiring { font-family: var(--font-mono); font-size: 12.5px; color: var(--fg-3); line-height: 1.9; }
+.tophiring .lbl { color: var(--fg-3); }
+.tophiring a { color: var(--fg-2); text-decoration: none; }
+.tophiring a:hover { color: var(--accent); }
+.tophiring a b { color: var(--fg-3); font-weight: 600; }
+
+/* Companies-hiring leaderboard table */
+.lbwrap { overflow-x: auto; margin: var(--s4) 0; border: 1px solid var(--border); border-radius: var(--r); }
+.leaderboard { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12.5px; }
+.leaderboard th { text-align: right; padding: 8px 10px; color: var(--fg-3); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; border-bottom: 1px solid var(--border-strong); white-space: nowrap; }
+.leaderboard th.lb-co { text-align: left; }
+.leaderboard td { padding: 6px 10px; text-align: right; border-bottom: 1px solid var(--border); color: var(--fg-2); white-space: nowrap; }
+.leaderboard tr:last-child td { border-bottom: 0; }
+.leaderboard tbody tr:hover td { background: var(--bg-elev); }
+.leaderboard td.lb-co { text-align: left; }
+.leaderboard td.lb-co a { color: var(--fg); font-weight: 600; }
+.leaderboard td.lb-co a:hover { color: var(--accent-bright); }
+.leaderboard .lb-n b { color: var(--accent-bright); font-weight: 700; }
+.leaderboard .z { color: var(--fg-3); opacity: .35; }
+.hubnav { font-family: var(--font-mono); font-size: 12.5px; color: var(--fg-3); margin: var(--s4) 0; line-height: 1.9; }
+.hubnav a { color: var(--fg-2); }
+.hubnav a:hover { color: var(--accent); }
+
+/* Related-roles block on job detail pages */
+.related { max-width: var(--readw); margin-top: var(--s6); }
+.related ul { list-style: none; margin: var(--s2) 0 0; padding: 0; }
+.related li { border-bottom: 1px solid var(--border); }
+.related li a { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 12px; align-items: baseline; padding: 6px 4px; }
+.related li a:hover { background: var(--bg-elev); }
+.related .rt { font-weight: 550; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.related li a:hover .rt { color: var(--accent-bright); }
+.related .rc { font-family: var(--font-mono); font-size: 12px; color: var(--fg-2); }
+.related .rl { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); }
+.related-more { margin-top: var(--s3); font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); }
+.related-more a { color: var(--fg-2); text-decoration: underline; text-underline-offset: 2px; }
+.related-more a:hover { color: var(--accent); }

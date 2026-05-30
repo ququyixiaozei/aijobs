@@ -20,6 +20,31 @@ Single source of truth for what's done / pending. Status: ✅ done · 🔧 in pr
 | B-61 | Custom OG share image (PNG) | 🧊 needs a design asset (text card works now) |
 | B-62 | Light theme | 🧊 low priority (audience skews dark) |
 
+## Pre-promotion security audit + IndexNow (2026-05-30)
+> Adversarial multi-agent audit (25 agents) before promotion. Verdict: static arch eliminates whole attack classes; **one real bug found+fixed**; rest is operational (user) or accepted static-host limits.
+
+| id | item | status |
+|----|------|--------|
+| B-63 | **Stored-XSS fix**: job title/url broke out of JSON-LD `<script>` (JSON.stringify doesn't escape `<`; sanitizer only covered description). `lib/jsonld.js ld()` escapes `<`/`>`/`&` at all 5 JSON-LD sinks + CI regression test `test/jsonld.test.mjs` + ingest url http(s) allowlist + SECURITY.md corrected. **Verified live in build (`&` in JSON-LD).** | ✅ |
+| B-64 | **IndexNow** auto-indexing: `public/<key>.txt` + `ingest/indexnow.mjs` (reads out/sitemap.xml → pings api.indexnow.org) + deploy.yml step. Bing/Yandex instant-index on every deploy, zero human action (Google unaffected). | ✅ |
+| B-65 | **Operational hardening (USER, audit-recommended, user-deprioritized 2026-05-30)**: phishing-resistant 2FA on email+GitHub+Namecheap; Namecheap registrar lock; domain auto-renew. User accepts the residual risk; my one EV-based rec = **Namecheap 2FA + registrar lock** (domain theft = irreversible single point of failure). Not a code blocker. | ⏳ user-deferred |
+| B-66 | Pin GitHub Actions to commit SHAs (Dependabot keeps current); optional CAA + DNSSEC; login/uptime/CT monitoring | 🧊 low, later |
+
+## SEO depth pass — programmatic data-hubs + doorway guardrails (2026-05-30, D085)
+> HN/Reddit deferred (D084) → pivot to pure SEO accumulation. Two independent research workflows agreed: with only ~115 jobs the win is **depth, not a keyword-permutation farm**. Built the few defensible data-hub pages + the defensive index hygiene that was the biggest live risk. All build/HTML-verified; visual spot-check still wanted.
+
+| id | item | status |
+|----|------|--------|
+| B-67 | **Flagship `/companies-hiring`** data-hub: live leaderboard (company × per-specialty × remote/visa/salary) + 2-para editorial analysis + dataset stat-strip. The "which companies are hiring" view GFJ structurally can't replicate. Pure aggregation over existing corpus, zero new data. | ✅ |
+| B-68 | **Doorway/thin-content guardrails (biggest live fix)**: `isIndexableCompany(<4)` / `isIndexableSlice(<10)` = ONE shared threshold for both per-page `robots:noindex,follow` AND sitemap pruning (no drift). Sitemap dropped ~15 thin company wrappers (23→8 indexed) + ml-systems (8<10). Verified live: thin pages `noindex,follow`, indexed pages clean. | ✅ |
+| B-69 | **Category pages enriched**: StatStrip (roles/companies/salary band/visa/remote) + distinct per-category editorial (in `niche.config`, non-template) + top-companies links. ml-systems auto-noindex while <10. | ✅ |
+| B-70 | **Company hubs enriched**: hiring snapshot (specialty/level/salary band/visa) + one dataset-derived context line; thin (<4-job) hubs noindex,follow + out of sitemap. | ✅ |
+| B-71 | **New hub pages**: `/region/europe` (EU+UK, 21 — UK-only was 9<floor so folded), `/level/senior` (29), `/level/staff` (24), `/remote` (12, self-policing noindex if <10). Each = stat-strip + curated editorial + crawlable list; footer + home + companies-hiring wire them (no orphans). | ✅ |
+| B-72 | **JobPosting correctness**: `validThrough` was `postedAt+30` → most listings marked EXPIRED (invalid for Google); now `postedAt+90` floored at `now+7d` (always future) + `addressCountry` via `countryOf()` (GFJ hygiene). | ✅ |
+| B-73 | **Anti feed-republishing**: related-roles block on `/jobs/[slug]` (same company, then same specialty) + links up to company/category/who's-hiring — value layer over raw ATS HTML. | ✅ |
+| B-74 | `llms.txt` (LLM/AI-Overview discovery, aligned with curated-content thesis) + `StatStrip` component + `statsFor()` aggregator + 6 new CI tests (statsFor/thresholds/countryOf). | ✅ |
+| B-75 | **Deferred — earn with GSC data first**: `/gpu-kernel-jobs` (11 roles but heavy overlap w/ gpu+perf = doorway risk); ItemList JSON-LD on hub pages; a UK-specific page once UK clears the floor; more awesome-list PRs (letavocado/MichelML/resource-stream — verify relevance first). | 🧊 later |
+
 ## Security & launch hardening (2026-05-30)
 | id | item | status |
 |----|------|--------|

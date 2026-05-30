@@ -1,5 +1,6 @@
 import JobBrowser from "../../JobBrowser.js";
-import { getJobsByCompany, getCompaniesLite, getCompanyBySlug, getMeta, BP } from "../../../lib/jobs.js";
+import { getJobsByCompany, getCompaniesLite, getCompanyBySlug, getMeta, statsFor, isIndexableCompany, robotsFor, BP } from "../../../lib/jobs.js";
+import StatStrip from "../../StatStrip.js";
 import { ld } from "../../../lib/jsonld.js";
 import { notFound } from "next/navigation";
 
@@ -20,6 +21,8 @@ export async function generateMetadata({ params }) {
     title: `${c.name} — GPU & ML-Systems Jobs · WarpJobs`,
     description: `Open GPU, CUDA, ML-systems, inference and performance engineering roles at ${c.name}. Refreshed daily; apply directly on ${c.name}'s site.`,
     alternates: { canonical: `/company/${slug}/` },
+    // single-/low-job company wrappers stay live+follow but out of the index (thin)
+    robots: robotsFor(isIndexableCompany(c.count)),
   };
 }
 
@@ -29,6 +32,8 @@ export default async function CompanyPage({ params }) {
   if (!c) notFound();
   const jobs = getJobsByCompany(slug);
   const meta = getMeta();
+  const stats = statsFor(jobs);
+  const top = stats.byCat[0];
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -50,6 +55,24 @@ export default async function CompanyPage({ params }) {
           refreshed daily — each links to {c.name}&apos;s own application page.
         </p>
       </section>
+
+      {c.count >= 2 ? (
+        <>
+          <StatStrip stats={stats} showCats />
+          {top ? (
+            <section className="editorial">
+              <p>
+                {c.name}&apos;s open engineering roles here skew toward{" "}
+                <a href={`${BP}/${top.slug}/`}>{top.name.replace(" Jobs", "").toLowerCase()}</a>
+                {" "}({top.n} of {c.count}){stats.salCount ? `, and ${stats.salCount} disclose a salary band ($${stats.salLo}K–$${stats.salHi}K)` : ""}
+                {stats.visa ? `; ${stats.visa} mention visa sponsorship or relocation` : ""}. Apply on {c.name}&apos;s
+                own site — WarpJobs links out and never handles applications.
+              </p>
+            </section>
+          ) : null}
+        </>
+      ) : null}
+
       <JobBrowser jobs={jobs} cats={[]} generatedAt={meta.generatedAt} />
     </main>
   );

@@ -1,6 +1,6 @@
-import { getAllJobs, getJobBySlug, timeAgo, exactDate, companyHue, BP } from "../../../lib/jobs.js";
+import { getAllJobs, getJobBySlug, getBrowserJobs, timeAgo, exactDate, companyHue, BP } from "../../../lib/jobs.js";
 import { getCategory } from "../../../ingest/niche.config.mjs";
-import { kebab } from "../../../lib/derive.js";
+import { kebab, countryOf } from "../../../lib/derive.js";
 import { ld } from "../../../lib/jsonld.js";
 import { notFound } from "next/navigation";
 
@@ -24,10 +24,16 @@ export async function generateMetadata({ params }) {
   };
 }
 
+// A posting stays in our feed until it ages out of the 90-day freshness window, so
+// validThrough must be FUTURE-dated — postedAt+30 marked most listings expired (and
+// thus invalid for Google) since the bulk are older than 30 days. Floor at now+7d so
+// even a near-stale posting reads as live.
+const DAY_MS = 86400000;
 function validThrough(postedAt) {
-  const base = postedAt ? new Date(postedAt) : new Date();
-  base.setDate(base.getDate() + 30);
-  return base.toISOString();
+  const posted = postedAt ? new Date(postedAt).getTime() : Date.now();
+  const ninety = posted + 90 * DAY_MS;
+  const floor = Date.now() + 7 * DAY_MS;
+  return new Date(Math.max(ninety, floor)).toISOString();
 }
 
 export default async function JobPage({ params }) {
@@ -36,6 +42,22 @@ export default async function JobPage({ params }) {
   if (!job) notFound();
 
   const cat = job.cats && job.cats.length ? getCategory(job.cats[0]) : null;
+
+  // Related roles — same company first, then same specialty. Gives the leaf page a
+  // value layer + internal links upward (anti "scraped-feed republishing").
+  const pool = getBrowserJobs();
+  const seen = new Set([slug]);
+  const related = [];
+  for (const j of pool) {
+    if (related.length >= 8) break;
+    if (seen.has(j.slug)) continue;
+    if (j.company === job.company) { related.push(j); seen.add(j.slug); }
+  }
+  for (const j of pool) {
+    if (related.length >= 8) break;
+    if (seen.has(j.slug)) continue;
+    if ((j.cats || []).some((c) => (job.cats || []).includes(c))) { related.push(j); seen.add(j.slug); }
+  }
 
   const jsonLd = {
     "@context": "https://schema.org/",
@@ -53,7 +75,16 @@ export default async function JobPage({ params }) {
     ...(job.remote
       ? { jobLocationType: "TELECOMMUTE" }
       : job.locShort
-      ? { jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: job.locShort } } }
+      ? {
+          jobLocation: {
+            "@type": "Place",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: job.locShort,
+              ...(countryOf(job.location) ? { addressCountry: countryOf(job.location) } : {}),
+            },
+          },
+        }
       : {}),
     url: job.url,
   };
@@ -103,6 +134,28 @@ export default async function JobPage({ params }) {
       ) : (
         <p className="empty">See the full description on the company page.</p>
       )}
+
+      {related.length ? (
+        <nav className="related" aria-label="Related roles">
+          <h2 className="jdh">Related roles</h2>
+          <ul>
+            {related.map((j) => (
+              <li key={j.slug}>
+                <a href={`${BP}/jobs/${j.slug}/`}>
+                  <span className="rt">{j.title}</span>
+                  <span className="rc">{j.company}</span>
+                  <span className="rl">{j.locations[0] || (j.remote ? "Remote" : "—")}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="related-more">
+            More: <a href={`${BP}/company/${kebab(job.company)}/`}>all roles at {job.company}</a>
+            {cat ? <> · <a href={`${BP}/${cat.slug}/`}>{cat.name}</a></> : null}
+            {" · "}<a href={`${BP}/companies-hiring/`}>who&apos;s hiring</a>
+          </p>
+        </nav>
+      ) : null}
     </main>
   );
 }

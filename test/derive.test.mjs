@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  kebab, isRemote, locShort, regionOf, parseSalary, hasVisa, companyColor, timeAgo, deriveLevel,
+  kebab, isRemote, locShort, regionOf, parseSalary, hasVisa, companyColor, timeAgo, deriveLevel, countryOf,
 } from "../lib/derive.js";
 
 test("kebab normalizes punctuation/whitespace (drives dedup keys + slugs)", () => {
@@ -57,6 +57,15 @@ test("deriveLevel maps titles (and ignores 'Member of Technical Staff')", () => 
   assert.equal(deriveLevel("Engineering Manager, Inference"), "manager");
   assert.equal(deriveLevel("Member of Technical Staff, Inference"), ""); // not "staff"
   assert.equal(deriveLevel("CUDA Kernel Engineer"), "");
+});
+
+test("countryOf maps locations to ISO codes for JobPosting (or '' when unsure)", () => {
+  assert.equal(countryOf("San Francisco, CA"), "US");
+  assert.equal(countryOf("London, United Kingdom"), "GB");
+  assert.equal(countryOf("Paris, France"), "FR");
+  assert.equal(countryOf("Amsterdam, Netherlands"), "NL");
+  assert.equal(countryOf("Tokyo, Japan"), "JP");
+  assert.equal(countryOf("Atlantis"), ""); // no false guess
 });
 
 test("timeAgo buckets (now injectable for determinism)", () => {

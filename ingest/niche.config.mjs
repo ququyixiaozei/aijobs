@@ -32,13 +32,21 @@ export function matchesNiche(title = "") {
 // Long-tail SEO category/landing pages. Clone with the niche.
 export const categories = [
   { slug: "gpu-jobs", name: "GPU & CUDA Engineering Jobs", match: /gpu|cuda/i,
-    blurb: "Hands-on GPU and CUDA roles — kernel development, GPU programming and accelerator software at AI labs and infrastructure companies." },
+    blurb: "Hands-on GPU and CUDA roles — kernel development, GPU programming and accelerator software at AI labs and infrastructure companies.",
+    editorial:
+      "GPU and CUDA roles are the hardware-adjacent end of this stack: writing and tuning kernels, chasing occupancy and memory bandwidth on a specific architecture, and building the GPU programming layers everything above depends on. They cluster at the companies closest to the metal — accelerator startups designing their own silicon and the GPU-cloud providers running fleets at scale — where a few percent of kernel performance turns directly into training cost. CUDA/C++ depth, profiler fluency (Nsight, rocprof) and comfort reading PTX/SASS tend to matter more here than framework familiarity." },
   { slug: "ml-systems-jobs", name: "ML Systems & Infrastructure Jobs", match: /ml systems|machine learning systems|ml infrastructure|machine learning infrastructure/i,
-    blurb: "Engineering the systems that train and serve large models — distributed training, ML platforms and infrastructure at frontier labs." },
+    blurb: "Engineering the systems that train and serve large models — distributed training, ML platforms and infrastructure at frontier labs.",
+    editorial:
+      "ML-systems and infrastructure roles are about the machinery that trains and serves large models rather than the models themselves: distributed-training frameworks, data and checkpoint pipelines, scheduling, and the platform glue that lets research run reliably across thousands of accelerators. They concentrate at frontier labs and platform companies, where the bottleneck is rarely a single GPU and almost always coordination — fault tolerance across week-long runs, throughput at cluster scale, and the gap between 40% and 60% hardware utilization. Distributed-systems instinct usually outweighs deep kernel knowledge in these roles." },
   { slug: "inference-jobs", name: "Inference & Model Serving Jobs", match: /inference|serving|vllm|throughput|latency/i,
-    blurb: "Running models in production — inference engines, model serving, and latency/throughput optimization (vLLM, TensorRT and similar)." },
+    blurb: "Running models in production — inference engines, model serving, and latency/throughput optimization (vLLM, TensorRT and similar).",
+    editorial:
+      "Inference and model-serving roles own the production side: getting trained models to answer fast and cheaply under real traffic. That means serving engines and runtimes (vLLM, TensorRT-LLM and the like), continuous batching and KV-cache strategy, quantization, and the latency/throughput trade-offs that decide unit economics for anyone shipping an LLM product. They concentrate at the labs and inference-platform startups whose revenue is literally tokens-per-second — so the work rewards people who reason fluently about both model internals and the systems that run them." },
   { slug: "performance-engineering-jobs", name: "Performance & Kernel Engineering Jobs", match: /performance|kernel|compiler|optimization|triton/i,
-    blurb: "Wringing performance out of hardware — kernels, compilers, Triton and low-level optimization for ML workloads." },
+    blurb: "Wringing performance out of hardware — kernels, compilers, Triton and low-level optimization for ML workloads.",
+    editorial:
+      "Performance and kernel-engineering roles are the optimization core of this niche — compilers, custom kernels (often Triton), graph-level transforms, and the low-level work of making a given workload run measurably faster on given hardware. It is consistently the largest specialty on this board, which tracks the moment: every accelerator company and serving stack is now competing on efficiency. These roles favor people who profile before they optimize, who are comfortable at the IR/compiler layer, and who treat a benchmark regression as a bug to be bisected." },
 ];
 
 export function getCategory(slug) {

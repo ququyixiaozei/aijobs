@@ -77,9 +77,14 @@ export default function RootLayout({ children }) {
               <a href={`${BP}/feed.xml`}>RSS</a> · <a href={`${BP}/jobs.json`}>JSON</a>.
             </p>
             <p className="foot-cats">
-              Browse: <a href={`${BP}/companies/`}>All companies</a> ·{" "}
+              Browse: <a href={`${BP}/companies-hiring/`}>Who&apos;s hiring</a> · <a href={`${BP}/companies/`}>All companies</a> ·{" "}
+              <a href={`${BP}/remote/`}>Remote</a> · <a href={`${BP}/region/europe/`}>Europe</a> ·{" "}
+              <a href={`${BP}/level/senior/`}>Senior</a> · <a href={`${BP}/level/staff/`}>Staff</a>
+            </p>
+            <p className="foot-cats">
+              Specialties:{" "}
               {cats.map((c, i) => (
-                <span key={c.slug}>{i ? " · " : ""}<a href={`${BP}/${c.slug}/`}>{c.name}</a></span>
+                <span key={c.slug}>{i ? " · " : ""}<a href={`${BP}/${c.slug}/`}>{c.name.replace(" Jobs", "")}</a></span>
               ))}
             </p>
             <p>
