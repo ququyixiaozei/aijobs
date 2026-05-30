@@ -45,6 +45,22 @@ Single source of truth for what's done / pending. Status: ✅ done · 🔧 in pr
 | B-74 | `llms.txt` (LLM/AI-Overview discovery, aligned with curated-content thesis) + `StatStrip` component + `statsFor()` aggregator + 6 new CI tests (statsFor/thresholds/countryOf). | ✅ |
 | B-75 | **Deferred — earn with GSC data first**: `/gpu-kernel-jobs` (11 roles but heavy overlap w/ gpu+perf = doorway risk); ItemList JSON-LD on hub pages; a UK-specific page once UK clears the floor; more awesome-list PRs (letavocado/MichelML/resource-stream — verify relevance first). | 🧊 later |
 
+## Adversarial review — 10-point external critique (2026-05-31, D086)
+> Each critique verified against the live data BEFORE acting (some were real bugs, one was already-correct, two are genuinely user-gated). Data: 11 Nebius jobs had 11 distinct postedAt days but ONE updatedAt day → the "today" bug was confirmed real.
+
+| id | item | status |
+|----|------|--------|
+| B-76 | **Date integrity (#2/#6)**: `dateOf` preferred `updatedAt` (ATS last-modified, bulk-touched → everything "today"). Now display + sort use `postedDateOf` (real first-published); a separate `activeDateOf` drives freshness so active-but-old posts aren't dropped. Nebius now shows 18d/1mo/2mo/3mo, not all "today". | ✅ |
+| B-77 | **Salary integrity (#3)**: placeholder-wide ranges (`isBroadSalary`, ≥2.3×, e.g. Tenstorrent $100K–$500K=5×, 15/68 jobs) are flagged → excluded from salary sort/filter (a $400K+ filter no longer captures them) and from JobPosting `baseSalary`; dimmed + `~`/`·broad` marked in UI; stats band computed from reliable ranges only. | ✅ |
+| B-78 | **First-screen diversity (#6)**: default order was one company blanketing the top (the `updatedAt` ties). Fixed by B-76 (real dates scatter them) + `spreadByCompany` cap of ≤2 consecutive rows per company. Verified first-15 now span ~12 companies. | ✅ |
+| B-79 | **Brand consistency (#1)**: was split — OG/domain "WarpJobs" vs header/title "ai-infra-jobs". Unified the human wordmark to **"AI Infra Jobs"** everywhere (titles, OG, JSON-LD, llms.txt, README, company body); `warpjobs.com` kept as the domain. (Whether to keep that domain given the warp.dev collision = a user strategic call; 1-line revert if they prefer "WarpJobs".) | ✅ |
+| B-80 | **Privacy precision (#10)**: verified there is ZERO analytics/cookies in the app (only localStorage for ★saved/visited/density). Footer reworded to say exactly that + GitHub-Pages host-logging caveat — GDPR-defensible, no longer an over-absolute claim. | ✅ |
+| B-81 | **Dedup (#5)**: VERIFIED already working — raw 10 exact-title dup groups → **0 leaks** after dedup. The "duplicates" seen are genuinely distinct reqs (e.g. "…Performance & Reliability" vs "…**Analysis**", or 4 distinct Anthropic inference roles); merging them would HIDE real jobs. No change — correct as-is. | ✅ verified |
+| B-82 | **Level filter (#7)**: `deriveLevel` is title-regex (handles Sr/Senior/Staff/Principal). "Member of Technical Staff" is deliberately left UN-levelled (it spans new-grad→senior at the labs) — forcing a level = guessing (rejected). Honest limitation: the filter matches explicit-level titles, isn't exhaustive (~44% un-levelled). Kept honest, not over-claimed. | ✅ verified |
+| B-83 | **Concentration (#4)**: real — top-6 = 67% of 115, 7 singletons. Already exposed by the `/companies-hiring` leaderboard (per-company counts) shipped in D085; the board's true shape is visible, not hidden behind "23 companies". | ✅ addressed |
+| B-84 | **SEO indexing (#8)**: JobPosting JSON-LD is on every job page (validThrough+addressCountry fixed in D085). New-domain indexing takes weeks regardless; **submitting the sitemap in Google Search Console is the user's gating step** (needs their Google account) — can't be automated. | ⏳ user-gated |
+| B-85 | **Recruiter intake (#9)**: GitHub-issue is fine for the *technical* seeker-side feedback (stale link / add company — that audience uses GitHub, and it's the most anonymity-compatible zero-backend option). The *recruiter* "Post a role" flow genuinely shouldn't need GitHub → proper fix is a free hosted form (Tally/Formspree) = a one-time user setup. Flagged, not fake-fixed. | ⏳ user-gated |
+
 ## Security & launch hardening (2026-05-30)
 | id | item | status |
 |----|------|--------|
