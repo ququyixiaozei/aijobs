@@ -1,6 +1,7 @@
 import { getAllJobs, getJobBySlug, timeAgo, exactDate, companyHue, BP } from "../../../lib/jobs.js";
 import { getCategory } from "../../../ingest/niche.config.mjs";
 import { kebab } from "../../../lib/derive.js";
+import { ld } from "../../../lib/jsonld.js";
 import { notFound } from "next/navigation";
 
 const SITE = process.env.SITE_URL || "https://warpjobs.com";
@@ -68,8 +69,8 @@ export default async function JobPage({ params }) {
 
   return (
     <main className="detail">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ld(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ld(breadcrumbLd) }} />
       <p><a href={`${BP}/`} className="back">← all roles</a></p>
 
       <div className="detail-head">

@@ -1,5 +1,6 @@
 import JobBrowser from "./JobBrowser.js";
 import { getBrowserJobs, getCategoriesLite, getMeta } from "../lib/jobs.js";
+import { ld } from "../lib/jsonld.js";
 
 const SITE = process.env.SITE_URL || "https://warpjobs.com";
 
@@ -25,7 +26,7 @@ export default function Home() {
   };
   return (
     <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ld(websiteLd) }} />
       <section className="hero">
         <h1>AI Infrastructure &amp; GPU Engineering Jobs</h1>
         <p>

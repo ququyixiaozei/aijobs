@@ -26,6 +26,7 @@ async function run() {
           companyToken: c.token,
           source: c.ats,
           descriptionHtml: sanitizeJobHtml(j.descriptionHtml), // untrusted ATS HTML → allowlist
+          url: /^https?:\/\//i.test(j.url || "") ? j.url : "", // defense-in-depth: only http(s) apply links
         }));
       all.push(...matched);
       report.push(`OK   ${c.name} [${c.ats}/${c.token}]: ${raw.length} jobs → ${matched.length} ${niche.slug}`);

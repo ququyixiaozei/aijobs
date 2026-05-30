@@ -1,5 +1,6 @@
 import JobBrowser from "../../JobBrowser.js";
 import { getJobsByCompany, getCompaniesLite, getCompanyBySlug, getMeta, BP } from "../../../lib/jobs.js";
+import { ld } from "../../../lib/jsonld.js";
 import { notFound } from "next/navigation";
 
 const SITE = process.env.SITE_URL || "https://warpjobs.com";
@@ -40,7 +41,7 @@ export default async function CompanyPage({ params }) {
 
   return (
     <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ld(breadcrumbLd) }} />
       <section className="hero">
         <p><a href={`${BP}/companies/`} className="back">← all companies</a></p>
         <h1>{c.name}</h1>

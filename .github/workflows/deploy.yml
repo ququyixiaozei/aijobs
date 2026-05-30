@@ -36,6 +36,9 @@ jobs:
           git commit -m "chore: refresh jobs feed" || echo "no changes"
           git push || echo "nothing to push"
       - run: npm run build
+      - name: Ping IndexNow (Bing/Yandex instant indexing — no-op for Google)
+        continue-on-error: true
+        run: node ingest/indexnow.mjs
       - run: echo "warpjobs.com" > out/CNAME    # GitHub Pages custom domain
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

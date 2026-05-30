@@ -22,6 +22,16 @@ tracking pixels, or phishing markup onto the `warpjobs.com` origin.
 - This is covered by **security regression tests** (`test/sanitize.test.mjs`)
   that run in the CI gate — a change that reopens the XSS vector fails the
   build before deploy.
+- **Beyond the description:** the description is the only third-party value
+  rendered *as HTML*. Other third-party fields (job **title**, apply **url**)
+  are not HTML but are embedded in the JobPosting / Breadcrumb **JSON-LD**
+  `<script>` blocks. Since `JSON.stringify` does **not** escape `<`, a title or
+  url containing `</script>…` would otherwise break out of the script element
+  and run inline JS — a stored-XSS vector the HTML sanitizer alone does **not**
+  cover. All JSON-LD is therefore serialized through `lib/jsonld.js` (`ld()`),
+  which escapes `<`/`>`/`&` so no field can break out, guarded by
+  `test/jsonld.test.mjs` in the CI gate. The apply `url` is additionally
+  restricted to `http(s)` at ingest.
 
 ### 2. Transport security
 - HTTPS is provided by GitHub Pages (Let's Encrypt). "Enforce HTTPS" (HTTP→HTTPS
@@ -30,14 +40,20 @@ tracking pixels, or phishing markup onto the `warpjobs.com` origin.
 ### 3. Content-Security-Policy (defense-in-depth) — partial by host constraint
 - A CSP is delivered via `<meta http-equiv>` in the root layout: `default-src
   'self'`, `object-src 'none'`, `base-uri 'self'`, and same-origin-only
-  script/style/img/connect. This blocks loading external scripts/objects and
-  `<base>` hijacking on top of the sanitizer above.
+  script/style/img/connect. It blocks loading **external** scripts/objects and
+  `<base>` hijacking.
+- **It does NOT stop an injected *inline* script.** Static export has no server
+  to issue per-request nonces, so `script-src` must include `'unsafe-inline'`.
+  The real XSS controls are therefore the **ingest HTML sanitizer** and the
+  **JSON-LD output escaping** (§1) — *not* the CSP. The CSP is a secondary layer
+  that limits blast radius (no external exfiltration host, no `<base>` hijack).
 - **Known limitation:** GitHub Pages cannot set custom HTTP response headers.
   Directives that only work as a *header* — `frame-ancestors` (clickjacking),
-  `X-Frame-Options`, `X-Content-Type-Options` — therefore cannot be enforced
-  here. `script-src` must include `'unsafe-inline'` because static export has
-  no server to issue per-request nonces. These are accepted trade-offs of the
-  static-host choice; the sanitizer is the real XSS control.
+  `X-Frame-Options`, `X-Content-Type-Options`, header-based HSTS preload —
+  cannot be enforced here. Near-zero impact for this site: no auth, sessions,
+  cookies, or PII, so there is nothing to steal via clickjacking/MIME-sniffing;
+  the worst case is a forged copy of a public board. Accepted trade-off of
+  static hosting.
 
 ### 4. Supply chain
 - Dependencies are pinned via `package-lock.json`; CI installs with `npm ci`
