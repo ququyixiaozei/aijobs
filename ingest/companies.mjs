@@ -1,11 +1,20 @@
 // ── COMPANY SEED LIST ─────────────────────────────────────────────
 // ats: 'greenhouse' | 'lever' | 'ashby'  ·  token = the board slug in the ATS URL.
-// Original 27 verified live 2026-05-29. +38 candidates added 2026-05-31 (D086 partner
-// cycle: multi-agent live token-verification — each board fetched OK and showed >=1
-// niche-keyword title). The daily CI (US runner) reaches every ATS and applies the
-// strict niche filter (matchesNiche); a seed that yields 0 niche jobs just produces no
-// page (harmless) and is pruned after the first CI ingest confirms real yields.
-// Token gotchas are noted inline (case / suffix / dot matter).
+// All tokens fetch live. The daily CI (US runner) applies the strict niche filter
+// (matchesNiche); only GPU/CUDA/ML-systems/inference/performance roles reach the site,
+// so the live board stays on-theme regardless of a company's other openings.
+//   • 27 original verified 2026-05-29.
+//   • +28 added 2026-05-31 (D086 partner cycle, multi-agent live-verify): 15 yield
+//     niche roles today (Cerebras, OpenAI, d-Matrix, Inworld, FriendliAI, MatX, Fal,
+//     Perplexity, Cohere, Thinking Machines, EnCharge, Parasail, Modal, Crusoe, Krea);
+//     the rest are genuine AI-infra / frontier-lab / GPU-cloud cos held as WATCH-SEEDS
+//     (0 niche today only due to the 90-day freshness window or current openings; the
+//     daily ingest auto-surfaces their roles when freshly posted).
+// Pruned (fundamentally off-niche talent — would dilute a GPU board, re-add only if they
+//   open a real GPU/ML-systems software team): vector-DB (Pinecone/Zilliz/LanceDB),
+//   data/eval (Chalk/Braintrust), silicon physical-design (Axelera), generative-media
+//   product (Suno/Pika), speech API (AssemblyAI), data query engine (Eventual/Daft).
+// Token gotchas noted inline (case / suffix / dot matter).
 
 export const companies = [
   // ── Greenhouse ──
@@ -30,12 +39,11 @@ export const companies = [
   { name: "EnCharge AI",       ats: "greenhouse", token: "enchargeai36",     verified: true }, // note: '36' suffix
   { name: "Fal",               ats: "greenhouse", token: "fal",              verified: true },
   { name: "Thinking Machines", ats: "greenhouse", token: "thinkingmachines", verified: true },
-  { name: "Black Forest Labs", ats: "greenhouse", token: "blackforestlabs",  verified: true },
-  { name: "World Labs",        ats: "greenhouse", token: "worldlabs",        verified: true },
+  { name: "Black Forest Labs", ats: "greenhouse", token: "blackforestlabs",  verified: true }, // watch-seed
+  { name: "World Labs",        ats: "greenhouse", token: "worldlabs",        verified: true }, // watch-seed
   { name: "MatX",              ats: "greenhouse", token: "matx",             verified: true },
   { name: "Parasail",          ats: "greenhouse", token: "parasail",         verified: true },
-  { name: "AssemblyAI",        ats: "greenhouse", token: "assemblyai",       verified: true },
-  { name: "Mithril",           ats: "greenhouse", token: "mithril",          verified: true },
+  { name: "Mithril",           ats: "greenhouse", token: "mithril",          verified: true }, // watch-seed
 
   // ── Ashby ──
   { name: "Cursor",            ats: "ashby",      token: "cursor",           verified: true },
@@ -53,31 +61,22 @@ export const companies = [
   { name: "Perplexity",        ats: "ashby",      token: "perplexity",       verified: true },
   { name: "Modal",             ats: "ashby",      token: "modal",            verified: true },
   { name: "Cohere",            ats: "ashby",      token: "cohere",           verified: true },
-  { name: "Magic.dev",         ats: "ashby",      token: "magic.dev",        verified: true }, // keep the dot
-  { name: "Liquid AI",         ats: "ashby",      token: "Liquid-AI",        verified: true }, // case-sensitive
+  { name: "Magic.dev",         ats: "ashby",      token: "magic.dev",        verified: true }, // keep the dot; watch-seed
+  { name: "Liquid AI",         ats: "ashby",      token: "Liquid-AI",        verified: true }, // case-sensitive; watch-seed
   { name: "d-Matrix",          ats: "ashby",      token: "d-matrix",         verified: true },
   { name: "FriendliAI",        ats: "ashby",      token: "friendliai",       verified: true },
-  { name: "Cognition",         ats: "ashby",      token: "cognition",        verified: true },
-  { name: "Physical Intelligence", ats: "ashby",  token: "physicalintelligence", verified: true },
-  { name: "Featherless AI",    ats: "ashby",      token: "featherlessai",    verified: true },
+  { name: "Cognition",         ats: "ashby",      token: "cognition",        verified: true }, // watch-seed
+  { name: "Physical Intelligence", ats: "ashby",  token: "physicalintelligence", verified: true }, // watch-seed
+  { name: "Featherless AI",    ats: "ashby",      token: "featherlessai",    verified: true }, // watch-seed
   { name: "Inworld AI",        ats: "ashby",      token: "inworld-ai",       verified: true },
-  { name: "Poolside",          ats: "ashby",      token: "poolside",         verified: true },
+  { name: "Poolside",          ats: "ashby",      token: "poolside",         verified: true }, // watch-seed
   { name: "Crusoe",            ats: "ashby",      token: "crusoe",           verified: true },
-  { name: "TensorWave",        ats: "ashby",      token: "tensorwave",       verified: true },
-  { name: "Sieve",             ats: "ashby",      token: "sieve",            verified: true },
-  { name: "Runway",            ats: "ashby",      token: "runway-ml",        verified: true }, // not 'runway'
-  { name: "Pinecone",          ats: "ashby",      token: "pinecone",         verified: true },
-  { name: "Reka AI",           ats: "ashby",      token: "reka",             verified: true },
-  { name: "Axelera AI",        ats: "ashby",      token: "axelera",          verified: true },
-  { name: "LanceDB",           ats: "ashby",      token: "lancedb",          verified: true },
-  { name: "Pika",              ats: "ashby",      token: "pika",             verified: true },
-  { name: "Chalk",             ats: "ashby",      token: "chalk",            verified: true },
-  { name: "Braintrust",        ats: "ashby",      token: "braintrust",       verified: true },
+  { name: "TensorWave",        ats: "ashby",      token: "tensorwave",       verified: true }, // watch-seed
+  { name: "Sieve",             ats: "ashby",      token: "sieve",            verified: true }, // watch-seed
+  { name: "Runway",            ats: "ashby",      token: "runway-ml",        verified: true }, // not 'runway'; watch-seed
+  { name: "Reka AI",           ats: "ashby",      token: "reka",             verified: true }, // watch-seed
   { name: "Krea",              ats: "ashby",      token: "krea",             verified: true },
-  { name: "Suno",              ats: "ashby",      token: "suno",             verified: true },
-  { name: "Eventual (Daft)",   ats: "ashby",      token: "eventualcomputing",verified: true }, // not 'eventual'
 
   // ── Lever ──
   { name: "Mistral AI",        ats: "lever",      token: "mistral",          verified: true },
-  { name: "Zilliz",            ats: "lever",      token: "zilliz",           verified: true },
 ];
