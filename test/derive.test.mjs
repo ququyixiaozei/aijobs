@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   kebab, isRemote, locShort, regionOf, parseSalary, hasVisa, companyColor, timeAgo, deriveLevel, countryOf,
+  postedDateOf, activeDateOf, isBroadSalary,
 } from "../lib/derive.js";
 
 test("kebab normalizes punctuation/whitespace (drives dedup keys + slugs)", () => {
@@ -66,6 +67,24 @@ test("countryOf maps locations to ISO codes for JobPosting (or '' when unsure)",
   assert.equal(countryOf("Amsterdam, Netherlands"), "NL");
   assert.equal(countryOf("Tokyo, Japan"), "JP");
   assert.equal(countryOf("Atlantis"), ""); // no false guess
+});
+
+test("postedDateOf uses real first-published; activeDateOf uses the most-recent signal", () => {
+  // updatedAt is the bulk-touched ATS field; postedAt is the honest posting date
+  const j = { postedAt: "2025-03-14T00:00:00Z", updatedAt: "2026-05-29T00:00:00Z" };
+  assert.equal(postedDateOf(j), new Date("2025-03-14T00:00:00Z").getTime()); // NOT the bulk updatedAt
+  assert.equal(activeDateOf(j), new Date("2026-05-29T00:00:00Z").getTime()); // freshness keeps active posts
+  assert.equal(postedDateOf({}), 0);
+  assert.equal(activeDateOf({}), 0);
+});
+
+test("isBroadSalary flags placeholder-wide ranges (>=2.3x), keeps real bands", () => {
+  assert.equal(isBroadSalary(100, 500), true); // 5.0x — Tenstorrent legal placeholder
+  assert.equal(isBroadSalary(280, 850), true); // 3.0x
+  assert.equal(isBroadSalary(165, 242), false); // 1.47x — real band
+  assert.equal(isBroadSalary(160, 230), false); // 1.44x
+  assert.equal(isBroadSalary(0, 500), false); // no floor → not a usable range anyway
+  assert.equal(isBroadSalary(200, 0), false);
 });
 
 test("timeAgo buckets (now injectable for determinism)", () => {

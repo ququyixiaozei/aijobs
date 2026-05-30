@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
   if (!c) return { title: "Not found" };
   const count = getBrowserJobs().filter((j) => (j.cats || []).includes(category)).length;
   return {
-    title: `${c.name} — WarpJobs`,
+    title: `${c.name} — AI Infra Jobs`,
     description: c.blurb || `Open ${c.name.toLowerCase()} at AI labs and infrastructure startups. Refreshed daily.`,
     alternates: { canonical: `/${category}/` },
     // thin slices (e.g. ml-systems when the live count dips under the floor) drop out

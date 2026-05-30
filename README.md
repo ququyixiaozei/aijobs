@@ -1,4 +1,4 @@
-# warpjobs
+# AI Infra Jobs
 
 **Live site → [warpjobs.com](https://warpjobs.com)**
 

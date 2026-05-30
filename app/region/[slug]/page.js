@@ -15,7 +15,7 @@ const REGIONS = {
   europe: {
     regions: ["EU", "UK"],
     where: "Europe",
-    title: "GPU, AI-Chip & ML-Infrastructure Jobs in Europe — WarpJobs",
+    title: "GPU, AI-Chip & ML-Infrastructure Jobs in Europe — AI Infra Jobs",
     h1: "GPU, AI-chip & ML-infrastructure jobs in Europe",
     description:
       "Open GPU, accelerator, ML-systems and performance engineering roles across Europe — UK AI-silicon (Graphcore, Tenstorrent) and continental labs and GPU-cloud providers. Refreshed daily.",

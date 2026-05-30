@@ -9,7 +9,7 @@ const SITE = process.env.SITE_URL || "https://warpjobs.com";
 const LEVELS = {
   senior: {
     level: "senior",
-    title: "Senior GPU, CUDA & ML-Infrastructure Engineer Jobs — WarpJobs",
+    title: "Senior GPU, CUDA & ML-Infrastructure Engineer Jobs — AI Infra Jobs",
     h1: "Senior GPU, CUDA & ML-infrastructure engineer roles",
     description:
       "Open senior-level GPU, CUDA, ML-systems, inference and performance engineering roles at AI labs and infrastructure startups. Refreshed daily.",
@@ -19,7 +19,7 @@ const LEVELS = {
   },
   staff: {
     level: "staff",
-    title: "Staff-Level GPU, Inference & ML-Systems Engineer Jobs — WarpJobs",
+    title: "Staff-Level GPU, Inference & ML-Systems Engineer Jobs — AI Infra Jobs",
     h1: "Staff & principal accelerator and ML-systems roles",
     description:
       "Open staff- and principal-level GPU, accelerator, inference and ML-systems engineering roles at AI labs and infrastructure startups. Refreshed daily.",

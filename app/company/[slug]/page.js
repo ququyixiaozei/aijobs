@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
   const c = getCompanyBySlug(slug);
   if (!c) return { title: "Not found" };
   return {
-    title: `${c.name} — GPU & ML-Systems Jobs · WarpJobs`,
+    title: `${c.name} — GPU & ML-Systems Jobs · AI Infra Jobs`,
     description: `Open GPU, CUDA, ML-systems, inference and performance engineering roles at ${c.name}. Refreshed daily; apply directly on ${c.name}'s site.`,
     alternates: { canonical: `/company/${slug}/` },
     // single-/low-job company wrappers stay live+follow but out of the index (thin)
@@ -66,7 +66,7 @@ export default async function CompanyPage({ params }) {
                 <a href={`${BP}/${top.slug}/`}>{top.name.replace(" Jobs", "").toLowerCase()}</a>
                 {" "}({top.n} of {c.count}){stats.salCount ? `, and ${stats.salCount} disclose a salary band ($${stats.salLo}K–$${stats.salHi}K)` : ""}
                 {stats.visa ? `; ${stats.visa} mention visa sponsorship or relocation` : ""}. Apply on {c.name}&apos;s
-                own site — WarpJobs links out and never handles applications.
+                own site — this board links out and never handles applications.
               </p>
             </section>
           ) : null}

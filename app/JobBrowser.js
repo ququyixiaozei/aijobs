@@ -8,6 +8,22 @@ const LEVELS = [["senior", "senior"], ["staff", "staff+"], ["manager", "manager"
 const RECENCY = [[0, "any time"], [7, "≤7d"], [30, "≤30d"]];
 const DAY = 86400000;
 
+// Keep the default (recency) view from letting one company blanket the first screen:
+// preserve near-recency order but never allow >2 consecutive rows from one company.
+function spreadByCompany(sorted, maxRun = 2) {
+  const out = [];
+  const pending = sorted.slice();
+  while (pending.length) {
+    let idx = 0;
+    if (out.length >= maxRun && out[out.length - 1].company === out[out.length - maxRun].company) {
+      const alt = pending.findIndex((j) => j.company !== out[out.length - 1].company);
+      if (alt >= 0) idx = alt;
+    }
+    out.push(pending.splice(idx, 1)[0]);
+  }
+  return out;
+}
+
 function useLocalSet(key) {
   const [set, setSet] = useState(() => new Set());
   useEffect(() => {
@@ -95,7 +111,7 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
       if (cat && !(j.cats || []).includes(cat)) return false;
       if (regions.size && !regions.has(j.region)) return false;
       if (visaOnly && !j.visa) return false;
-      if (minSal && !(j.salMin >= minSal)) return false;
+      if (minSal && (j.salBroad || !(j.salMin >= minSal))) return false;
       if (levels.size && !levels.has(j.level)) return false;
       if (recencyDays && !(j.ts && Date.now() - j.ts <= recencyDays * DAY)) return false;
       if (starredOnly && !stars.has(j.slug)) return false;
@@ -105,10 +121,11 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
       }
       return true;
     });
+    if (sort === "new") return spreadByCompany([...r].sort((a, b) => b.ts - a.ts));
     const cmp = {
       company: (a, b) => a.company.localeCompare(b.company) || b.ts - a.ts,
-      salary: (a, b) => (b.salMin || 0) - (a.salMin || 0) || b.ts - a.ts,
-      new: (a, b) => b.ts - a.ts,
+      // broad placeholder ranges (salBroad) sort to the bottom, never above real bands
+      salary: (a, b) => (a.salBroad ? 1 : 0) - (b.salBroad ? 1 : 0) || (b.salMin || 0) - (a.salMin || 0) || b.ts - a.ts,
     }[sort];
     return [...r].sort(cmp);
   }, [jobs, q, cat, regions, visaOnly, minSal, levels, recencyDays, starredOnly, stars, sort]);
@@ -179,7 +196,7 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
               <span className="jt">{j.title}</span>
               <span className="jc">{j.company}</span>
               <span className="jl">{j.locations[0] || (j.remote ? "Remote" : "—")}{j.locations.length > 1 ? <span className="more">+{j.locations.length - 1}</span> : null}</span>
-              <span className={"js" + (j.sal ? "" : " none")}>{j.sal || "—"}</span>
+              <span className={"js" + (j.sal ? "" : " none") + (j.salBroad ? " broad" : "")} title={j.salBroad ? "Broad posted range — excluded from salary sort/filter" : undefined}>{j.sal || "—"}{j.salBroad ? <span className="bcaret">~</span> : null}</span>
               <span className={"jd" + (j.age === "today" ? " today" : "")}>{j.age}</span>
             </a>
           </div>

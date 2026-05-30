@@ -10,7 +10,7 @@ export const revalidate = 3600;
 export async function generateMetadata() {
   const count = getRemoteJobs().length;
   return {
-    title: "Remote GPU, Inference & ML-Systems Jobs (Updated Daily) — WarpJobs",
+    title: "Remote GPU, Inference & ML-Systems Jobs (Updated Daily) — AI Infra Jobs",
     description:
       "Remote GPU, CUDA, ML-systems, inference and performance engineering roles at AI labs and infrastructure startups — and an honest look at how rare remote really is in this niche. Refreshed daily.",
     alternates: { canonical: "/remote/" },

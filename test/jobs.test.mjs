@@ -6,7 +6,7 @@ import {
 } from "../lib/jobs.js";
 
 // browser-shaped job factory (matches getBrowserJobs() output that statsFor consumes)
-const J = (o) => ({ company: "X", cats: [], salMin: 0, salMax: 0, remote: false, visa: false, level: "", ...o });
+const J = (o = {}) => ({ company: "X", cats: [], salMin: 0, salMax: 0, salBroad: false, sal: o.salMin ? `$${o.salMin}K` : "", remote: false, visa: false, level: "", ...o });
 
 test("index thresholds are the single source of truth (sitemap + robots agree)", () => {
   assert.equal(isIndexableCompany(MIN_INDEX_COMPANY - 1), false);
@@ -59,4 +59,14 @@ test("statsFor salary band falls back to salMin when salMax missing", () => {
   const s = statsFor([J({ salMin: 150, salMax: 0 })]);
   assert.equal(s.salLo, 150);
   assert.equal(s.salHi, 150);
+});
+
+test("statsFor: broad ranges count as disclosed but are excluded from the band", () => {
+  const s = statsFor([
+    J({ company: "Real", salMin: 160, salMax: 230, sal: "$160K–$230K" }),
+    J({ company: "Broad", salMin: 100, salMax: 500, sal: "$100K–$500K", salBroad: true }),
+  ]);
+  assert.equal(s.salCount, 2); // both posted a range
+  assert.equal(s.salLo, 160); // band drawn from the reliable one only — broad excluded
+  assert.equal(s.salHi, 230);
 });

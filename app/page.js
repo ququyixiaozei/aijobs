@@ -14,8 +14,8 @@ export default function Home() {
   const websiteLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "WarpJobs",
-    alternateName: "AI Infra Jobs",
+    name: "AI Infra Jobs",
+    alternateName: "WarpJobs",
     url: SITE + "/",
     description: "Curated GPU, CUDA, ML-systems, inference and performance engineering jobs at AI labs and infrastructure startups.",
     potentialAction: {

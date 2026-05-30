@@ -1,7 +1,7 @@
 import { getCompaniesLite, BP } from "../../lib/jobs.js";
 
 export const metadata = {
-  title: "Companies Hiring — WarpJobs",
+  title: "Companies Hiring — AI Infra Jobs",
   description: "AI labs and infrastructure companies with open GPU, CUDA, ML-systems, inference and performance engineering roles.",
   alternates: { canonical: "/companies/" },
 };

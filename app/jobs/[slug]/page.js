@@ -69,7 +69,7 @@ export default async function JobPage({ params }) {
     employmentType: "FULL_TIME",
     identifier: { "@type": "PropertyValue", name: job.company, value: String(job.sourceId) },
     hiringOrganization: { "@type": "Organization", name: job.company },
-    ...(job.salMin
+    ...(job.salMin && !job.salBroad
       ? { baseSalary: { "@type": "MonetaryAmount", currency: "USD", value: { "@type": "QuantitativeValue", minValue: job.salMin * 1000, maxValue: (job.salMax || job.salMin) * 1000, unitText: "YEAR" } } }
       : {}),
     ...(job.remote
@@ -113,7 +113,7 @@ export default async function JobPage({ params }) {
           <div className="facts">
             <a className="fact co" href={`${BP}/company/${kebab(job.company)}/`}>{job.company}</a>
             {job.remote ? <span className="fact rem">Remote</span> : job.locShort ? <span className="fact">{job.locShort}</span> : null}
-            {job.salText ? <span className="fact sal">{job.salText}</span> : null}
+            {job.salText ? <span className="fact sal" title={job.salBroad ? "Broad posted range (e.g. legal min–max), not a precise band" : undefined}>{job.salText}{job.salBroad ? " · broad" : ""}</span> : null}
             {job.postedAt ? <span className="fact dim">posted {exactDate(job.postedAt)} · {timeAgo(job.ts)} ago</span> : null}
           </div>
         </div>

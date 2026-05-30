@@ -28,7 +28,7 @@ export const metadata = {
     "A curated, daily-refreshed board of GPU, CUDA, ML-systems, inference and performance engineering jobs at AI labs and infrastructure startups.",
   referrer: "strict-origin-when-cross-origin",
   openGraph: {
-    siteName: "WarpJobs",
+    siteName: "AI Infra Jobs",
     title: "AI Infra Jobs — GPU, CUDA & ML-Systems Engineering Roles",
     description:
       "Curated GPU, CUDA, ML-systems, inference & performance engineering roles at AI labs and infra startups. Daily-refreshed.",
@@ -69,8 +69,11 @@ export default function RootLayout({ children }) {
         <footer className="site-footer">
           <div className="container">
             <p>
-              Aggregated from public company career pages (Greenhouse · Lever · Ashby APIs). Listings link to the
-              original posting — we don&apos;t store applications or personal data.
+              Aggregated from public company career pages (Greenhouse · Lever · Ashby APIs); every listing links to
+              the original posting. No accounts, no cookies, no analytics, no tracking — your ★saved roles stay in
+              this browser only (localStorage) and are never sent anywhere. The site is static with no backend that
+              could receive an application or personal data (served by GitHub Pages, which may log requests per its
+              own policy).
             </p>
             <p>
               Auto-refreshed daily via CI{built ? ` · last build ${new Date(built).toISOString().slice(0, 16).replace("T", " ")} UTC` : ""}. Subscribe:{" "}

@@ -1,6 +1,6 @@
-# WarpJobs
+# AI Infra Jobs (warpjobs.com)
 
-> A curated, daily-refreshed job board for GPU, CUDA, ML-systems, inference and performance-engineering roles at AI labs and infrastructure startups. Listings are aggregated directly from each company's public ATS feed (Greenhouse, Lever, Ashby) and link to the original posting — WarpJobs stores no applications or personal data.
+> A curated, daily-refreshed job board for GPU, CUDA, ML-systems, inference and performance-engineering roles at AI labs and infrastructure startups. Listings are aggregated directly from each company's public ATS feed (Greenhouse, Lever, Ashby) and link to the original posting — the site stores no applications or personal data.
 
 ## Key pages
 - [All open roles](https://warpjobs.com/): the full live board, refreshed daily.
