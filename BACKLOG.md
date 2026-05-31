@@ -61,6 +61,15 @@ Single source of truth for what's done / pending. Status: ✅ done · 🔧 in pr
 | B-84 | **SEO indexing (#8)**: JobPosting JSON-LD is on every job page (validThrough+addressCountry fixed in D085). New-domain indexing takes weeks regardless; **submitting the sitemap in Google Search Console is the user's gating step** (needs their Google account) — can't be automated. | ⏳ user-gated |
 | B-85 | **Recruiter intake (#9)**: GitHub-issue is fine for the *technical* seeker-side feedback (stale link / add company — that audience uses GitHub, and it's the most anonymity-compatible zero-backend option). The *recruiter* "Post a role" flow genuinely shouldn't need GitHub → proper fix is a free hosted form (Tally/Formspree) = a one-time user setup. Flagged, not fake-fixed. | ⏳ user-gated |
 
+## Autonomous cycle — next SEO depth-asset, workflow-vetted (2026-05-31, D088)
+> Judge-panel + adversarial-pre-mortem workflow (20 agents) on "what's the single highest-leverage next SEO move". Verdict: **minimal-fix-then-wait** — the asset is at the right MVP+; build exactly two things, then STOP and read GSC. Three other proposed moves were verified **already shipped** (busywork), ItemList = schema-theater, permutation pages = doorway risk the guardrail already blocks.
+
+| id | item | status |
+|----|------|--------|
+| B-86 | **Region/country coverage fix (Move 1, data-quality)**: `regionOf` + `countryOf` missed Bay-Area cities (Sunnyvale/Santa Clara/San Jose/San Mateo/Milpitas/Bellevue), bare-city forms, Serbia, umlaut Zürich, Korea/Taiwan/Turkey/several EU countries. **`Other` region 23→4** (only genuinely-ambiguous "North America"/Turkey/2 pure-Toronto left); US filter +14 jobs, Europe hub +5; `addressCountry` now emitted on ~15 more leaf JobPostings (Google-for-Jobs eligibility). +2 regression test blocks (29 tests pass). | ✅ |
+| B-87 | **`/salaries` comp data-hub (Move 2, depth)**: one substantive page — median base pay by specialty / level / company over the 64 live disclosed non-broad ranges (`getSalaryReport()`, re-derived at build, never hardcoded). Honesty rails: shows `n` per row, suppresses segments <3, excludes ≥2.3× placeholder bands, USD-noted. Differentiated insight incumbents don't segment: frontier labs (~$445K) vs GPU-cloud (~$203K). Indexability + sitemap entry auto-gated on live sample size (same guardrail philosophy). Linked from `/companies-hiring` hubnav + `StatStrip` (every hub). | ✅ |
+| B-88 | **Deferred (re-confirmed do-NOT-build now)**: ItemList/CollectionPage JSON-LD (no rich-result for job collections = schema-theater); `/level/manager` (12), standalone `/region/uk` (11), `/gpu-kernel-jobs`, tech-tag/city crosses (doorway risk on zero-authority domain — revisit only if GSC shows the demand). Per the workflow: after these two, STOP building; feature-churn while waiting for the crawl is the named trap. | 🧊 gated on GSC demand |
+
 ## Security & launch hardening (2026-05-30)
 | id | item | status |
 |----|------|--------|

@@ -19,6 +19,8 @@ lib/
                        dedupes (same company+normalized-title → 1 row, locations[]),
                        exposes getAllJobs / getBrowserJobs (slim) / getCategoriesLite / getJobBySlug,
                        company+region+level+remote slicers, statsFor() aggregator,
+                       getSalaryReport() (median comp by specialty/level/company over
+                       reliable non-broad bands; segments <MIN_SALARY_N suppressed),
                        and the isIndexable* thresholds (see Conventions)
         │
 app/ (Next.js 15, output: 'export' → static HTML)
@@ -30,6 +32,7 @@ app/ (Next.js 15, output: 'export' → static HTML)
   [category]/        per-category landing (stat-strip + per-category editorial + JobBrowser)
   company/[slug]/    per-company hub (+ /companies index)
   region/[slug]/     region hubs (europe); level/[slug]/ level hubs (senior, staff); remote/  page
+  salaries/          comp data-hub: median pay by specialty/level/company (getSalaryReport); index+sitemap gated on live sample size
   jobs/[slug]/       leaf page + JobPosting JSON-LD (future-dated validThrough + addressCountry) + related-roles
   sitemap.js robots.js feed.xml/route.js jobs.json/route.js  (force-static)
   (public/llms.txt   curated entry-point for LLM/AI-Overview crawlers)
