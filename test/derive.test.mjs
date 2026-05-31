@@ -32,6 +32,15 @@ test("regionOf buckets", () => {
   assert.equal(regionOf("Mars"), "Other");
 });
 
+test("regionOf covers Bay Area cities + EU cities that previously fell through to Other", () => {
+  // these were live "Other" rows: city without a comma-prefixed state, or a non-listed EU locale
+  assert.equal(regionOf("Sunnyvale CA or Toronto Canada"), "US"); // primary loc = Sunnyvale
+  assert.equal(regionOf("Santa Clara"), "US");
+  assert.equal(regionOf("San Jose"), "US");
+  assert.equal(regionOf("Belgrade, Serbia"), "EU");
+  assert.equal(regionOf("Zürich, CH"), "EU"); // umlaut form
+});
+
 test("parseSalary handles K-ranges and full numbers", () => {
   const a = parseSalary("<p>Comp: $165K - $220K</p>");
   assert.deepEqual([a.text, a.min, a.max], ["$165K–$220K", 165, 220]);
@@ -67,6 +76,17 @@ test("countryOf maps locations to ISO codes for JobPosting (or '' when unsure)",
   assert.equal(countryOf("Amsterdam, Netherlands"), "NL");
   assert.equal(countryOf("Tokyo, Japan"), "JP");
   assert.equal(countryOf("Atlantis"), ""); // no false guess
+});
+
+test("countryOf fills the leaf-JobPosting addressCountry gaps that shipped empty", () => {
+  assert.equal(countryOf("Seoul"), "KR");
+  assert.equal(countryOf("New Taipei City, Taiwan"), "TW");
+  assert.equal(countryOf("Belgrade, Serbia"), "RS");
+  assert.equal(countryOf("Santa Clara"), "US");
+  assert.equal(countryOf("San Jose"), "US");
+  assert.equal(countryOf("Istanbul, Turkey"), "TR");
+  assert.equal(countryOf("Toronto, ON"), "CA");
+  assert.equal(countryOf("North America"), ""); // still genuinely ambiguous → no guess
 });
 
 test("postedDateOf uses real first-published; activeDateOf uses the most-recent signal", () => {

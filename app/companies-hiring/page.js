@@ -114,7 +114,8 @@ export default function CompaniesHiring() {
 
       <p className="hubnav">
         Browse by cut:{" "}
-        <a href={`${BP}/remote/`}>Remote</a> · <a href={`${BP}/region/europe/`}>Europe</a> ·{" "}
+        <a href={`${BP}/salaries/`}>Salaries</a> · <a href={`${BP}/remote/`}>Remote</a> ·{" "}
+        <a href={`${BP}/region/europe/`}>Europe</a> ·{" "}
         <a href={`${BP}/level/senior/`}>Senior</a> · <a href={`${BP}/level/staff/`}>Staff</a> ·{" "}
         {categories.map((c, i) => (
           <span key={c.slug}>{i ? " · " : ""}<a href={`${BP}/${c.slug}/`}>{c.name.replace(" Jobs", "")}</a></span>

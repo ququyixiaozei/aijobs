@@ -1,6 +1,6 @@
 import {
   getAllJobs, getCategoriesLite, getCompaniesLite,
-  getJobsByRegion, getJobsByLevel, getRemoteJobs,
+  getJobsByRegion, getJobsByLevel, getRemoteJobs, getSalaryReport,
   isIndexableCompany, isIndexableSlice,
 } from "../lib/jobs.js";
 
@@ -18,6 +18,7 @@ export default function sitemap() {
   const cos = getCompaniesLite().filter((c) => isIndexableCompany(c.count));
 
   const hubs = [{ url: `${SITE}/companies-hiring/`, changeFrequency: "daily", priority: 0.9 }];
+  if (isIndexableSlice(getSalaryReport().overall.n)) hubs.push({ url: `${SITE}/salaries/`, changeFrequency: "weekly", priority: 0.7 });
   if (isIndexableSlice(getRemoteJobs().length)) hubs.push({ url: `${SITE}/remote/`, changeFrequency: "daily", priority: 0.7 });
   if (isIndexableSlice(getJobsByRegion(["EU", "UK"]).length)) hubs.push({ url: `${SITE}/region/europe/`, changeFrequency: "daily", priority: 0.7 });
   for (const lvl of ["senior", "staff"]) {

@@ -25,6 +25,7 @@ export default function StatStrip({ stats, showCats = false }) {
       ) : null}
       <p className="statnote">
         Observed across current open postings, refreshed daily — not a survey. Salary band is drawn only from roles that publish a range.
+        {" "}<a href={`${BP}/salaries/`}>Salary breakdown →</a>
       </p>
     </div>
   );
