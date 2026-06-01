@@ -61,6 +61,21 @@ Single source of truth for what's done / pending. Status: ✅ done · 🔧 in pr
 | B-84 | **SEO indexing (#8)**: JobPosting JSON-LD is on every job page (validThrough+addressCountry fixed in D085). New-domain indexing takes weeks regardless; **submitting the sitemap in Google Search Console is the user's gating step** (needs their Google account) — can't be automated. | ⏳ user-gated |
 | B-85 | **Recruiter intake (#9)**: GitHub-issue is fine for the *technical* seeker-side feedback (stale link / add company — that audience uses GitHub, and it's the most anonymity-compatible zero-backend option). The *recruiter* "Post a role" flow genuinely shouldn't need GitHub → proper fix is a free hosted form (Tally/Formspree) = a one-time user setup. Flagged, not fake-fixed. | ⏳ user-gated |
 
+## 4-lens product review — confirmed fixes (2026-06-01, D091)
+> 4-persona workflow (PM / software-expert / casual-user / actual-user) × 10 = 40 critiques → partner/expert synthesis verified vs REAL code (killed 6 non-issues w/ evidence, deferred 6, 3 eyeball). 8 fixes shipped (commit f4d7a9a, 31 tests, build green, live-verified on Tenstorrent).
+
+| id | item | status |
+|----|------|--------|
+| B-89 | **$0K–$0K salary band (high — on a live-ranking page)**: `/company/[slug]` editorial + `StatStrip` printed "$0K–$0K" when salCount>0 but all bands broad (salLo=0). Numeric band now gated on a reliable (non-broad) range; else "(mostly broad legal ranges)". `statsFor` exposes `reliableCount`. Verified gone on `/company/tenstorrent`. | ✅ |
+| B-90 | **Company navigational-intent SEO**: GSC shows the real ranking demand is "{company}" queries (tenstorrent 29 / sambanova 18) at 0 clicks. Title → "{Company} Careers — N GPU & ML-systems jobs"; curated factual blurb (`lib/company-meta.js`, ~55 cos) above the list + in `hiringOrganization.description`. Corroborated by all 4 personas. | ✅ |
+| B-91 | **Salary-filter silent hide**: a $X+ floor silently dropped ~115 undisclosed-salary roles (incl. OpenAI/Anthropic). Now shows the hidden count + a show/hide toggle (client-side, no backend). | ✅ |
+| B-92 | **Tech-stack tags + description search**: allowlist tags (CUDA/Triton/vLLM/Rust/NCCL…) derived from `descriptionHtml` → search haystack + rendered on job pages + `JobPosting.skills`. (Dense list-row rendering deferred = eyeball.) | ✅ |
+| B-93 | **regionOf multi-location mis-bucket**: "Amsterdam…; Remote - United States" bucketed US (contradicting the displayed city); now classify on the PRIMARY segment, fall back to full string. +2 tests. | ✅ |
+| B-94 | **a11y**: restored search-input focus ring (was `outline:none`) + skip-to-content link + `#main` target on the content container. (Ring contrast = founder eyeball.) | ✅ |
+| B-95 | **Post-a-role issue Form**: `.github/ISSUE_TEMPLATE/post-a-role.yml` (Company / ATS dropdown / board token / careers URL) replaces the blank issue; header CTA → `?template=post-a-role.yml`. Zero-backend. | ✅ |
+| B-96 | **Over-length titles**: `/salaries` + `/companies-hiring` 83→<60 chars, keyword-first. | ✅ |
+| B-97 | **Deferred/rejected (real, later or no-value)**: ItemList JSON-LD = **REJECTED** (schema-theater — no job-collection rich result; consistent w/ D088); OG share image (needs design asset + eyeball); "new since last visit" loop; per-slice RSS; hub-nav promotion; slug-collision CI assert; multi-Place jobLocation; JobPosting enrichment (hiringOrg.url / derived employmentType / noindex-when-empty-desc). Gate: traffic or eyeball. | 🧊 |
+
 ## Autonomous cycle — next SEO depth-asset, workflow-vetted (2026-05-31, D088)
 > Judge-panel + adversarial-pre-mortem workflow (20 agents) on "what's the single highest-leverage next SEO move". Verdict: **minimal-fix-then-wait** — the asset is at the right MVP+; build exactly two things, then STOP and read GSC. Three other proposed moves were verified **already shipped** (busywork), ItemList = schema-theater, permutation pages = doorway risk the guardrail already blocks.
 

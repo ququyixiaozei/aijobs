@@ -14,7 +14,8 @@ ingest/ (Node ESM, no deps, runs in CI daily)
 data/jobs.json       generated feed (committed by CI; the single data artifact)
         │
 lib/
-  derive.js          ← PURE, IO-free helpers (parse/normalize/format, countryOf) — unit-tested
+  derive.js          ← PURE, IO-free helpers (parse/normalize/format, countryOf, deriveTags) — unit-tested
+  company-meta.js    ← hand-curated one-line factual company blurbs keyed by kebab(name) (company page + hiringOrganization.description)
   jobs.js            ← reads data/jobs.json, derives fields, freshness-archives (>90d),
                        dedupes (same company+normalized-title → 1 row, locations[]),
                        exposes getAllJobs / getBrowserJobs (slim) / getCategoriesLite / getJobBySlug,
