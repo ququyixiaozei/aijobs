@@ -27,6 +27,10 @@ a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; }
 .container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
 
+/* Skip-to-content (a11y bypass block) — visually hidden until keyboard-focused */
+.skip { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--accent); color: #06140a; font-family: var(--font-mono); font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 0 0 6px 0; }
+.skip:focus { left: 0; top: 0; }
+
 /* Header */
 .site-header { position: sticky; top: 0; z-index: 10; background: rgba(10,11,13,.82); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
 .site-header .container { display: flex; align-items: center; height: 52px; }
@@ -38,6 +42,7 @@ button { font-family: inherit; cursor: pointer; }
 .hero { padding: 28px 0 12px; max-width: var(--readw); }
 .hero h1 { margin: 0 0 var(--s2); font-size: 26px; line-height: 1.15; font-weight: 640; letter-spacing: -0.022em; }
 .hero p { margin: 0; color: var(--fg-2); }
+.co-blurb { margin: 0 0 var(--s2) !important; color: var(--fg) !important; font-size: 15px; }
 .hero .back, .detail .back { font-family: var(--font-mono); font-size: 12.5px; color: var(--fg-3); }
 .hero .back:hover, .detail .back:hover { color: var(--accent); }
 
@@ -45,7 +50,7 @@ button { font-family: inherit; cursor: pointer; }
 .controls { margin: 8px 0; }
 .search { width: 100%; padding: 9px 12px; font-size: 14px; font-family: var(--font-mono); color: var(--fg); background: var(--bg-soft); border: 1px solid var(--border-strong); border-radius: var(--r); }
 .search::placeholder { color: var(--fg-3); }
-.search:focus { outline: none; border-color: var(--accent); }
+.search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
 .control-row { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s1); margin-top: var(--s2); }
 .control-row .spacer { flex: 1; }
 .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-right: 2px; }
@@ -64,6 +69,8 @@ button { font-family: inherit; cursor: pointer; }
 .pill.active b { color: var(--accent-bright); }
 
 .result-meta { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); margin: var(--s4) 0 0; padding-bottom: var(--s2); border-bottom: 1px solid var(--border-strong); }
+.metalink { background: none; border: 0; padding: 0; color: var(--accent); font-family: var(--font-mono); font-size: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.metalink:hover { color: var(--accent-bright); }
 
 /* Job grid — aligned columns */
 .jobgrid { margin-top: 2px; }
@@ -107,6 +114,8 @@ button { font-family: inherit; cursor: pointer; }
 .fact.rem { color: var(--accent); }
 .fact.sal { color: var(--fg); border: 1px solid var(--border-strong); border-radius: 5px; padding: 1px 7px; }
 .fact.dim { color: var(--fg-3); }
+.jtags { display: flex; flex-wrap: wrap; gap: 5px; margin: var(--s3) 0 0; }
+.jtag { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-2); background: var(--bg-elev); border: 1px solid var(--border); border-radius: 5px; padding: 1px 7px; }
 .apply { display: inline-block; background: var(--accent); color: #06140a; font-weight: 650; padding: 9px 18px; border-radius: var(--r); font-size: 14px; transition: background .12s, transform .05s; }
 .apply:hover { background: var(--accent-bright); }
 .apply:active { transform: translateY(1px); }

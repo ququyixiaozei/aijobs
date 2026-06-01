@@ -6,13 +6,15 @@ const BP = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export default function StatStrip({ stats, showCats = false }) {
   const s = stats;
-  const band = s.salCount ? `$${s.salLo}K–$${s.salHi}K` : "—";
+  // Only show the numeric band when a RELIABLE (non-broad) range exists (salLo>0).
+  // Otherwise salLo/salHi are 0 (all disclosed bands were broad placeholders) → never "$0K–$0K".
+  const band = s.salLo ? `$${s.salLo}K–$${s.salHi}K` : "";
   return (
     <div className="statstrip">
       <dl className="stats">
         <div><dt>open roles</dt><dd>{s.total}</dd></div>
         <div><dt>companies</dt><dd>{s.companies}</dd></div>
-        <div><dt>list salary</dt><dd>{s.salCount}{s.salCount ? <span className="sub"> · {band}</span> : null}</dd></div>
+        <div><dt>list salary</dt><dd>{s.salCount}{band ? <span className="sub"> · {band}</span> : null}</dd></div>
         <div><dt>visa mention</dt><dd>{s.visa}</dd></div>
         <div><dt>remote</dt><dd>{s.remote}</dd></div>
       </dl>

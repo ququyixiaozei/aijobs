@@ -1,0 +1,49 @@
+name: Post a role
+description: List your company's GPU / ML-systems / inference roles — free, pulled from your public ATS.
+title: "Post a role: "
+labels: ["job-post"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We pull roles **directly from your public ATS feed** (Greenhouse / Lever / Ashby) — give us your board token and your GPU / CUDA / ML-systems / inference / performance-engineering roles appear within a day, **free**. No account, no fee, no application is ever handled here — every listing links straight to your own page.
+  - type: input
+    id: company
+    attributes:
+      label: Company name
+      placeholder: Acme AI
+    validations:
+      required: true
+  - type: dropdown
+    id: ats
+    attributes:
+      label: ATS (applicant tracking system)
+      options:
+        - Greenhouse
+        - Lever
+        - Ashby
+        - Other / not sure
+    validations:
+      required: true
+  - type: input
+    id: token
+    attributes:
+      label: Board token / slug
+      description: "The board identifier in your careers URL — e.g. boards.greenhouse.io/<TOKEN>, jobs.lever.co/<TOKEN>, jobs.ashbyhq.com/<TOKEN>."
+      placeholder: acme-ai
+    validations:
+      required: true
+  - type: input
+    id: careers_url
+    attributes:
+      label: Careers page URL (optional)
+      placeholder: https://acme.ai/careers
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else (optional)
+      placeholder: Specific roles to highlight, hiring focus, etc.
+    validations:
+      required: false

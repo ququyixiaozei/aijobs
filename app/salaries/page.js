@@ -10,7 +10,7 @@ const k = (v) => (v ? `$${v}K` : "—");
 export function generateMetadata() {
   const r = getSalaryReport();
   return {
-    title: "AI Infrastructure & GPU Engineer Salaries — What AI-Infra Companies Pay (Live Data)",
+    title: "GPU & AI-Infra Engineer Salaries (Live Data) — AI Infra Jobs",
     description:
       `Median pay for GPU, CUDA, inference, ML-systems and performance engineers — segmented by specialty, level and company, ` +
       `from ${r.overall.n} live disclosed salary ranges across AI-infrastructure employers. Refreshed daily.`,

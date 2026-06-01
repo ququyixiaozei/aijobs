@@ -9,7 +9,7 @@ const SITE = process.env.SITE_URL || "https://warpjobs.com";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Which AI Labs & Infra Startups Are Hiring GPU / Inference Engineers — AI Infra Jobs",
+  title: "AI Labs & Infra Startups Hiring GPU Engineers — AI Infra Jobs",
   description:
     "A live, daily-refreshed leaderboard of the AI labs and infrastructure startups hiring GPU, CUDA, ML-systems, inference and performance engineers — ranked by open roles, with the specialty, salary and visa mix for each.",
   alternates: { canonical: "/companies-hiring/" },

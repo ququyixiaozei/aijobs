@@ -54,6 +54,7 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
   const [recencyDays, setRecencyDays] = useState(0);
   const [sort, setSort] = useState("new");
   const [starredOnly, setStarredOnly] = useState(false);
+  const [showNoSal, setShowNoSal] = useState(false); // when a salary floor is set, re-include undisclosed-salary roles
   const [density, setDensity] = useState("compact"); // B-22: dense by default (heavy scanners)
   const [stars, toggleStar] = useLocalSet("aijobs:stars");
   const [visited, , addVisited] = useLocalSet("aijobs:visited");
@@ -103,32 +104,43 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
   const toggleRegion = (r) => setRegions((p) => { const n = new Set(p); n.has(r) ? n.delete(r) : n.add(r); return n; });
   const toggleLevel = (l) => setLevels((p) => { const n = new Set(p); n.has(l) ? n.delete(l) : n.add(l); return n; });
   const anyFilter = q || regions.size || visaOnly || minSal || levels.size || recencyDays || starredOnly;
-  const clearAll = () => { setQ(""); setRegions(new Set()); setVisaOnly(false); setMinSal(0); setLevels(new Set()); setRecencyDays(0); setStarredOnly(false); };
+  const clearAll = () => { setQ(""); setRegions(new Set()); setVisaOnly(false); setMinSal(0); setLevels(new Set()); setRecencyDays(0); setStarredOnly(false); setShowNoSal(false); };
 
-  const results = useMemo(() => {
+  const { results, noSal } = useMemo(() => {
     const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
+    let noSalCount = 0;
     const r = jobs.filter((j) => {
       if (cat && !(j.cats || []).includes(cat)) return false;
       if (regions.size && !regions.has(j.region)) return false;
       if (visaOnly && !j.visa) return false;
-      if (minSal && (j.salBroad || !(j.salMin >= minSal))) return false;
       if (levels.size && !levels.has(j.level)) return false;
       if (recencyDays && !(j.ts && Date.now() - j.ts <= recencyDays * DAY)) return false;
       if (starredOnly && !stars.has(j.slug)) return false;
       if (tokens.length) {
-        const hay = (j.title + " " + j.company + " " + (j.locations || []).join(" ")).toLowerCase();
+        // tech-stack tags (derived from the description) join the haystack so "triton"/"rust"
+        // hits a generically-titled role whose body is that work.
+        const hay = (j.title + " " + j.company + " " + (j.locations || []).join(" ") + " " + (j.tags || []).join(" ")).toLowerCase();
         if (!tokens.every((t) => hay.includes(t))) return false;
+      }
+      // Salary floor: a broad placeholder ($100K–$500K) never satisfies a floor; an
+      // undisclosed band is counted and hidden by default, restorable via the toggle —
+      // so a $200K+ filter doesn't silently drop OpenAI/Anthropic roles that posted no number.
+      if (minSal) {
+        if (j.salBroad) return false;
+        if (!j.salMin) { noSalCount++; if (!showNoSal) return false; }
+        else if (j.salMin < minSal) return false;
       }
       return true;
     });
-    if (sort === "new") return spreadByCompany([...r].sort((a, b) => b.ts - a.ts));
-    const cmp = {
-      company: (a, b) => a.company.localeCompare(b.company) || b.ts - a.ts,
-      // broad placeholder ranges (salBroad) sort to the bottom, never above real bands
-      salary: (a, b) => (a.salBroad ? 1 : 0) - (b.salBroad ? 1 : 0) || (b.salMin || 0) - (a.salMin || 0) || b.ts - a.ts,
-    }[sort];
-    return [...r].sort(cmp);
-  }, [jobs, q, cat, regions, visaOnly, minSal, levels, recencyDays, starredOnly, stars, sort]);
+    const sorted = sort === "new"
+      ? spreadByCompany([...r].sort((a, b) => b.ts - a.ts))
+      : [...r].sort({
+          company: (a, b) => a.company.localeCompare(b.company) || b.ts - a.ts,
+          // broad placeholder ranges (salBroad) sort to the bottom, never above real bands
+          salary: (a, b) => (a.salBroad ? 1 : 0) - (b.salBroad ? 1 : 0) || (b.salMin || 0) - (a.salMin || 0) || b.ts - a.ts,
+        }[sort]);
+    return { results: sorted, noSal: noSalCount };
+  }, [jobs, q, cat, regions, visaOnly, minSal, levels, recencyDays, starredOnly, stars, sort, showNoSal]);
 
   return (
     <div className={"browser " + density}>
@@ -185,6 +197,12 @@ export default function JobBrowser({ jobs, cats, initialCat = "", generatedAt })
       <div className="result-meta" aria-live="polite">
         {results.length} role{results.length === 1 ? "" : "s"}
         {generatedAt ? ` · refreshed ${new Date(generatedAt).toISOString().slice(0, 16).replace("T", " ")} UTC` : ""}
+        {minSal && noSal ? (
+          <>
+            {" · "}{showNoSal ? `incl. ${noSal} with no listed salary` : `${noSal} with no listed salary hidden`}{" "}
+            <button className="metalink" onClick={() => setShowNoSal((v) => !v)} aria-pressed={showNoSal}>{showNoSal ? "hide" : "show"}</button>
+          </>
+        ) : null}
       </div>
 
       <div className="jobgrid">

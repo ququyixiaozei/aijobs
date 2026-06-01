@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   kebab, isRemote, locShort, regionOf, parseSalary, hasVisa, companyColor, timeAgo, deriveLevel, countryOf,
-  postedDateOf, activeDateOf, isBroadSalary,
+  postedDateOf, activeDateOf, isBroadSalary, deriveTags,
 } from "../lib/derive.js";
 
 test("kebab normalizes punctuation/whitespace (drives dedup keys + slugs)", () => {
@@ -39,6 +39,20 @@ test("regionOf covers Bay Area cities + EU cities that previously fell through t
   assert.equal(regionOf("San Jose"), "US");
   assert.equal(regionOf("Belgrade, Serbia"), "EU");
   assert.equal(regionOf("Zürich, CH"), "EU"); // umlaut form
+});
+
+test("regionOf classifies on the PRIMARY segment, not a later one (multi-location)", () => {
+  // displayed city is Amsterdam → must bucket EU, not US via a later '; Remote - United States'
+  assert.equal(regionOf("Amsterdam, Netherlands; Remote - Europe; Remote - United States"), "EU");
+  assert.equal(regionOf("Europe; Remote, California, United States; UAE"), "EU");
+  assert.equal(regionOf("Remote; San Francisco, CA"), "US"); // primary 'remote' unclassifiable → fall back to full string
+});
+
+test("deriveTags extracts allowlisted tech-stack from the description body", () => {
+  const tags = deriveTags("<p>Write CUDA and Triton kernels; experience with vLLM and PyTorch.</p>");
+  assert.ok(tags.includes("CUDA") && tags.includes("Triton") && tags.includes("vLLM") && tags.includes("PyTorch"));
+  assert.deepEqual(deriveTags("We value teamwork and clear communication."), []); // no false positives
+  assert.deepEqual(deriveTags(""), []);
 });
 
 test("parseSalary handles K-ranges and full numbers", () => {

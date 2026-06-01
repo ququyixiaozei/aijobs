@@ -1,6 +1,7 @@
 import { getAllJobs, getJobBySlug, getBrowserJobs, timeAgo, exactDate, companyHue, BP } from "../../../lib/jobs.js";
 import { getCategory } from "../../../ingest/niche.config.mjs";
 import { kebab, countryOf } from "../../../lib/derive.js";
+import { COMPANY_BLURB } from "../../../lib/company-meta.js";
 import { ld } from "../../../lib/jsonld.js";
 import { notFound } from "next/navigation";
 
@@ -68,7 +69,7 @@ export default async function JobPage({ params }) {
     validThrough: validThrough(job.postedAt),
     employmentType: "FULL_TIME",
     identifier: { "@type": "PropertyValue", name: job.company, value: String(job.sourceId) },
-    hiringOrganization: { "@type": "Organization", name: job.company },
+    hiringOrganization: { "@type": "Organization", name: job.company, ...(COMPANY_BLURB[kebab(job.company)] ? { description: COMPANY_BLURB[kebab(job.company)] } : {}) },
     ...(job.salMin && !job.salBroad
       ? { baseSalary: { "@type": "MonetaryAmount", currency: "USD", value: { "@type": "QuantitativeValue", minValue: job.salMin * 1000, maxValue: (job.salMax || job.salMin) * 1000, unitText: "YEAR" } } }
       : {}),
@@ -86,6 +87,7 @@ export default async function JobPage({ params }) {
           },
         }
       : {}),
+    ...(job.tags && job.tags.length ? { skills: job.tags.join(", ") } : {}),
     url: job.url,
   };
   const breadcrumbLd = {
@@ -116,6 +118,9 @@ export default async function JobPage({ params }) {
             {job.salText ? <span className="fact sal" title={job.salBroad ? "Broad posted range (e.g. legal min–max), not a precise band" : undefined}>{job.salText}{job.salBroad ? " · broad" : ""}</span> : null}
             {job.postedAt ? <span className="fact dim">posted {exactDate(job.postedAt)} · {timeAgo(job.ts)} ago</span> : null}
           </div>
+          {job.tags && job.tags.length ? (
+            <div className="jtags">{job.tags.map((t) => <span key={t} className="jtag">{t}</span>)}</div>
+          ) : null}
         </div>
       </div>
 

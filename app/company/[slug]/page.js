@@ -1,5 +1,6 @@
 import JobBrowser from "../../JobBrowser.js";
 import { getJobsByCompany, getCompaniesLite, getCompanyBySlug, getMeta, statsFor, isIndexableCompany, robotsFor, BP } from "../../../lib/jobs.js";
+import { COMPANY_BLURB } from "../../../lib/company-meta.js";
 import StatStrip from "../../StatStrip.js";
 import { ld } from "../../../lib/jsonld.js";
 import { notFound } from "next/navigation";
@@ -18,8 +19,8 @@ export async function generateMetadata({ params }) {
   const c = getCompanyBySlug(slug);
   if (!c) return { title: "Not found" };
   return {
-    title: `${c.name} — GPU & ML-Systems Jobs · AI Infra Jobs`,
-    description: `Open GPU, CUDA, ML-systems, inference and performance engineering roles at ${c.name}. Refreshed daily; apply directly on ${c.name}'s site.`,
+    title: `${c.name} Careers — ${c.count} GPU & ML-systems job${c.count === 1 ? "" : "s"}`,
+    description: `${COMPANY_BLURB[slug] ? COMPANY_BLURB[slug] + " " : ""}${c.count} open GPU, CUDA, ML-systems, inference & performance engineering role${c.count === 1 ? "" : "s"} at ${c.name}, refreshed daily — apply on ${c.name}'s own site.`,
     alternates: { canonical: `/company/${slug}/` },
     // single-/low-job company wrappers stay live+follow but out of the index (thin)
     robots: robotsFor(isIndexableCompany(c.count)),
@@ -34,6 +35,7 @@ export default async function CompanyPage({ params }) {
   const meta = getMeta();
   const stats = statsFor(jobs);
   const top = stats.byCat[0];
+  const blurb = COMPANY_BLURB[slug];
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -50,6 +52,7 @@ export default async function CompanyPage({ params }) {
       <section className="hero">
         <p><a href={`${BP}/companies/`} className="back">← all companies</a></p>
         <h1>{c.name}</h1>
+        {blurb ? <p className="co-blurb">{blurb}</p> : null}
         <p>
           {c.count} open GPU, ML-systems, inference &amp; performance engineering role{c.count === 1 ? "" : "s"} at {c.name},
           refreshed daily — each links to {c.name}&apos;s own application page.
@@ -64,7 +67,7 @@ export default async function CompanyPage({ params }) {
               <p>
                 {c.name}&apos;s open engineering roles here skew toward{" "}
                 <a href={`${BP}/${top.slug}/`}>{top.name.replace(" Jobs", "").toLowerCase()}</a>
-                {" "}({top.n} of {c.count}){stats.salCount ? `, and ${stats.salCount} disclose a salary band ($${stats.salLo}K–$${stats.salHi}K)` : ""}
+                {" "}({top.n} of {c.count}){stats.salCount ? `, and ${stats.salCount} disclose a salary band${stats.salLo ? ` ($${stats.salLo}K–$${stats.salHi}K)` : " (mostly broad legal ranges)"}` : ""}
                 {stats.visa ? `; ${stats.visa} mention visa sponsorship or relocation` : ""}. Apply on {c.name}&apos;s
                 own site — this board links out and never handles applications.
               </p>

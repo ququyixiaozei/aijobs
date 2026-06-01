@@ -53,6 +53,7 @@ export default function RootLayout({ children }) {
         <meta httpEquiv="Content-Security-Policy" content={CSP} />
       </head>
       <body>
+        <a href="#main" className="skip">Skip to roles</a>
         <header className="site-header">
           <div className="container">
             <a href={`${BP}/`} className="brand">
@@ -60,11 +61,11 @@ export default function RootLayout({ children }) {
               ai-infra-jobs
               <span className="sub">/ gpu · ml-systems</span>
             </a>
-            <a className="post-role" href={`${REPO}/issues/new?labels=job-post&title=${encodeURIComponent("Post a role: ")}`} target="_blank" rel="noopener noreferrer">Post a role →</a>
+            <a className="post-role" href={`${REPO}/issues/new?template=post-a-role.yml`} target="_blank" rel="noopener noreferrer">Post a role →</a>
           </div>
         </header>
 
-        <div className="container">{children}</div>
+        <div className="container" id="main">{children}</div>
 
         <footer className="site-footer">
           <div className="container">
