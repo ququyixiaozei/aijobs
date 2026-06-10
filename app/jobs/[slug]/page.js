@@ -1,6 +1,6 @@
 import { getAllJobs, getJobBySlug, getBrowserJobs, timeAgo, exactDate, companyHue, BP } from "../../../lib/jobs.js";
 import { getCategory } from "../../../ingest/niche.config.mjs";
-import { kebab, countryOf } from "../../../lib/derive.js";
+import { kebab, countryOf, countryNameOf } from "../../../lib/derive.js";
 import { COMPANY_BLURB } from "../../../lib/company-meta.js";
 import { ld } from "../../../lib/jsonld.js";
 import { notFound } from "next/navigation";
@@ -73,8 +73,27 @@ export default async function JobPage({ params }) {
     ...(job.salMin && !job.salBroad
       ? { baseSalary: { "@type": "MonetaryAmount", currency: "USD", value: { "@type": "QuantitativeValue", minValue: job.salMin * 1000, maxValue: (job.salMax || job.salMin) * 1000, unitText: "YEAR" } } }
       : {}),
+    // Google: a TELECOMMUTE posting is only eligible with applicantLocationRequirements
+    // and/or jobLocation alongside it — emit whichever we can derive, never guess.
     ...(job.remote
-      ? { jobLocationType: "TELECOMMUTE" }
+      ? {
+          jobLocationType: "TELECOMMUTE",
+          ...(countryNameOf(countryOf(job.location))
+            ? { applicantLocationRequirements: { "@type": "Country", name: countryNameOf(countryOf(job.location)) } }
+            : {}),
+          ...(job.locShort && job.locShort !== "Remote"
+            ? {
+                jobLocation: {
+                  "@type": "Place",
+                  address: {
+                    "@type": "PostalAddress",
+                    addressLocality: job.locShort,
+                    ...(countryOf(job.location) ? { addressCountry: countryOf(job.location) } : {}),
+                  },
+                },
+              }
+            : {}),
+        }
       : job.locShort
       ? {
           jobLocation: {
@@ -88,6 +107,7 @@ export default async function JobPage({ params }) {
         }
       : {}),
     ...(job.tags && job.tags.length ? { skills: job.tags.join(", ") } : {}),
+    directApply: false, // applying happens on the company ATS, not on this page
     url: job.url,
   };
   const breadcrumbLd = {

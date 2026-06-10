@@ -2,8 +2,16 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   kebab, isRemote, locShort, regionOf, parseSalary, hasVisa, companyColor, timeAgo, deriveLevel, countryOf,
-  postedDateOf, activeDateOf, isBroadSalary, deriveTags,
+  countryNameOf, postedDateOf, activeDateOf, isBroadSalary, deriveTags,
 } from "../lib/derive.js";
+
+test("countryNameOf maps countryOf codes to Google-style names (remote eligibility chain)", () => {
+  assert.equal(countryNameOf("US"), "USA");
+  assert.equal(countryNameOf("GB"), "United Kingdom");
+  assert.equal(countryNameOf(countryOf("Remote - US")), "USA"); // the chain page.js uses
+  assert.equal(countryNameOf(""), ""); // underivable stays empty — never guess
+  assert.equal(countryNameOf("XX"), "");
+});
 
 test("kebab normalizes punctuation/whitespace (drives dedup keys + slugs)", () => {
   assert.equal(kebab("Senior Engineer - ML Kernels & Runtime"), "senior-engineer-ml-kernels-runtime");
