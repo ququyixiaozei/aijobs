@@ -152,3 +152,23 @@ git commit -m "update companies/jobs"
 git push
 ```
 推送后 Vercel 自动重新部署。(GitHub Action 每天也会自动做这件事。)
+
+---
+
+## 步骤 14 · Google Indexing API(职位页快速收录,15 分钟,¥0)
+> 为什么:GSC 数据显示 28 天 0 条 job-listing 富结果曝光 = 职位页基本没被 Google 及时抓取。Indexing API 是 Google 官方给 JobPosting 页面开的快速收录通道(推送后分钟级抓取)。代码已就位(`ingest/google-indexing.mjs`),只缺一把钥匙(服务账号),配好后 CI 每天自动推送,你不用再管。
+
+1. 打开 https://console.cloud.google.com/ (用和 Search Console 同一个 Google 账号登录);
+2. 顶部项目选择器 → **New Project** → 名字随意(如 `warpjobs-indexing`)→ **Create**;
+3. 搜索框搜 **"Web Search Indexing API"** → 点进去 → **Enable**;
+4. 左侧菜单 **IAM & Admin → Service Accounts** → **Create Service Account** → 名字随意(如 `indexing-bot`)→ **Create and Continue** → 角色跳过(**不需要**任何 GCP 角色)→ **Done**;
+5. 点进刚建的服务账号 → **Keys** 标签 → **Add Key → Create new key → JSON** → 会下载一个 `.json` 文件(**这是密钥,别发给任何人**);
+6. 复制服务账号的邮箱(形如 `indexing-bot@warpjobs-indexing.iam.gserviceaccount.com`);
+7. 打开 https://search.google.com/search-console → 选 warpjobs.com → 左下 **Settings(设置)→ Users and permissions(用户和权限)→ Add user** → 粘贴那个服务账号邮箱 → 权限选 **Owner(所有者)**(必须是 Owner,Full 不够)→ 添加;
+8. 打开仓库 https://github.com/ququyixiaozei/aijobs → **Settings → Secrets and variables → Actions → New repository secret**:
+   - Name 填 `GOOGLE_INDEXING_SA_KEY`
+   - Secret 粘贴**整个 JSON 文件的内容**(记事本打开第 5 步下载的文件,全选复制)
+   - **Add secret**;
+9. 完成。下次 CI 跑(每天 06:00 UTC,或手动 Actions → deploy → Run workflow)就会自动推送;之后看 Actions 日志里 `gindex: pushed N notifications` 字样确认生效。
+
+> 验证信号(2–4 周):Search Console → Performance → **Search Appearance** 出现 "Job listing" 行 = 进了 Google for Jobs;仍为空 = 该通道也证伪。

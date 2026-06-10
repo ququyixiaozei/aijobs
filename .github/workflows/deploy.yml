@@ -39,6 +39,20 @@ jobs:
       - name: Ping IndexNow (Bing/Yandex instant indexing — no-op for Google)
         continue-on-error: true
         run: node ingest/indexnow.mjs
+      - name: Google Indexing API push (JobPosting URLs; silent no-op without secret)
+        continue-on-error: true
+        env:
+          GOOGLE_INDEXING_SA_KEY: ${{ secrets.GOOGLE_INDEXING_SA_KEY }}
+        run: node ingest/google-indexing.mjs
+      - name: Commit indexing state
+        continue-on-error: true
+        run: |
+          git config user.name "ingest-bot"
+          git config user.email "ingest@users.noreply.github.com"
+          git add data/gindex-state.json
+          git commit -m "chore: google indexing state" || echo "no changes"
+          git pull --rebase || true
+          git push || echo "nothing to push"
       - run: echo "warpjobs.com" > out/CNAME    # GitHub Pages custom domain
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
