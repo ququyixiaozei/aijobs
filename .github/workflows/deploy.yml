@@ -39,9 +39,23 @@ jobs:
       - name: Ping IndexNow (Bing/Yandex instant indexing — no-op for Google)
         continue-on-error: true
         run: node ingest/indexnow.mjs
-      - name: Google Indexing API push (JobPosting URLs; silent no-op without secret)
+      # Keyless auth via Workload Identity Federation — the org policy
+      # iam.disableServiceAccountKeyCreation blocks JSON keys, not WIF.
+      # Runs only when the two repo VARIABLES are set; never blocks deploy.
+      - name: Auth to Google via WIF (no-op unless repo vars set)
+        if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
+        continue-on-error: true
+        id: gauth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/indexing
+      - name: Google Indexing API push (JobPosting URLs; silent no-op without auth)
         continue-on-error: true
         env:
+          GOOGLE_INDEXING_ACCESS_TOKEN: ${{ steps.gauth.outputs.access_token }}
           GOOGLE_INDEXING_SA_KEY: ${{ secrets.GOOGLE_INDEXING_SA_KEY }}
         run: node ingest/google-indexing.mjs
       - name: Commit indexing state

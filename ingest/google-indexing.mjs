@@ -68,9 +68,17 @@ async function publish(token, url, type) {
   return res.status;
 }
 
-async function main() {
+// Two auth paths: a pre-minted OAuth token (Workload Identity Federation in CI —
+// survives orgs that enforce iam.disableServiceAccountKeyCreation) or a classic
+// service-account JSON key. Either absent → silent no-op.
+async function resolveToken() {
+  if (process.env.GOOGLE_INDEXING_ACCESS_TOKEN) return process.env.GOOGLE_INDEXING_ACCESS_TOKEN;
   const raw = process.env.GOOGLE_INDEXING_SA_KEY;
-  if (!raw) { console.log("gindex: GOOGLE_INDEXING_SA_KEY not set — skipping (no-op)"); return; }
+  if (!raw) return null;
+  return getAccessToken(JSON.parse(raw));
+}
+
+async function main() {
   const live = jobUrlsFromSitemap();
   if (!live.length) return;
 
@@ -81,7 +89,8 @@ async function main() {
 
   if (!toAdd.length && !toDelete.length) { console.log("gindex: nothing new to push"); return; }
 
-  const token = await getAccessToken(JSON.parse(raw));
+  const token = await resolveToken();
+  if (!token) { console.log("gindex: no auth (GOOGLE_INDEXING_ACCESS_TOKEN / GOOGLE_INDEXING_SA_KEY) — skipping (no-op)"); return; }
   let budget = DAILY_CAP, ok = 0, quotaHit = false;
 
   for (const [list, type, onOk] of [

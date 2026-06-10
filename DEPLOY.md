@@ -172,3 +172,41 @@ git push
 9. 完成。下次 CI 跑(每天 06:00 UTC,或手动 Actions → deploy → Run workflow)就会自动推送;之后看 Actions 日志里 `gindex: pushed N notifications` 字样确认生效。
 
 > 验证信号(2–4 周):Search Console → Performance → **Search Appearance** 出现 "Job listing" 行 = 进了 Google for Jobs;仍为空 = 该通道也证伪。
+
+---
+
+## 步骤 14-B · 无密钥版(遇到「服务账号密钥创建功能已停用 / iam.disableServiceAccountKeyCreation」就走这条,~15 分钟)
+> 你的 GCP 账号所在组织禁止创建 JSON 密钥(Google 新组织的默认安全政策)。**不用关政策、不用密钥**:改用 Workload Identity Federation(GitHub Actions 直接联合认证,Google 官方推荐,更安全)。代码已支持,照做即可。
+
+1. 打开 https://console.cloud.google.com/ → 右上角点 **„激活 Cloud Shell"**(终端图标),等浏览器底部出现命令行;
+2. 把下面整块粘贴进去回车(**只需改第一行的项目 ID** 为你建的项目;其余别动):
+```bash
+PROJECT_ID="warpjobs-indexing"   # ← 改成你的项目 ID(控制台顶部项目选择器里能看到)
+REPO="ququyixiaozei/aijobs"
+SA_NAME="indexing-bot"
+
+gcloud config set project "$PROJECT_ID"
+PROJECT_NUMBER=$(gcloud projects describe "$PROJECT_ID" --format='value(projectNumber)')
+gcloud services enable indexing.googleapis.com iamcredentials.googleapis.com sts.googleapis.com
+gcloud iam service-accounts create "$SA_NAME" --display-name="indexing-bot" || true
+SA_EMAIL="$SA_NAME@$PROJECT_ID.iam.gserviceaccount.com"
+gcloud iam workload-identity-pools create github-pool --location=global --display-name="GitHub Actions" || true
+gcloud iam workload-identity-pools providers create-oidc github-provider \
+  --location=global --workload-identity-pool=github-pool \
+  --issuer-uri="https://token.actions.githubusercontent.com" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository" \
+  --attribute-condition="assertion.repository=='$REPO'" || true
+gcloud iam service-accounts add-iam-policy-binding "$SA_EMAIL" \
+  --role="roles/iam.workloadIdentityUser" \
+  --member="principalSet://iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/github-pool/attribute.repository/$REPO"
+echo "===== 把下面两行的值填进 GitHub(见第 3 步)====="
+echo "GCP_WORKLOAD_IDENTITY_PROVIDER=projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
+echo "GCP_SERVICE_ACCOUNT=$SA_EMAIL"
+```
+3. 打开 https://github.com/ququyixiaozei/aijobs → **Settings → Secrets and variables → Actions → 切到 „Variables" 标签(不是 Secrets)** → **New repository variable**,逐个添加上一步打印的两条:
+   - Name `GCP_WORKLOAD_IDENTITY_PROVIDER`,Value = `projects/...github-provider` 那一长串;
+   - Name `GCP_SERVICE_ACCOUNT`,Value = `indexing-bot@<项目ID>.iam.gserviceaccount.com`;
+4. **Search Console 授权(同原步骤 14 第 7 步)**:https://search.google.com/search-console → warpjobs.com → Settings → Users and permissions → Add user → 粘贴上面的服务账号邮箱 → 权限 **Owner**;
+5. 完成。手动触发一次验证:仓库 → **Actions → deploy → Run workflow**;跑完点进日志,看 `Google Indexing API push` 一步出现 `gindex: pushed N notifications` = 生效(首跑会推 ~170 条)。
+
+> 安全性说明:这条路**没有任何密钥文件存在任何地方**,GitHub 仓库里存的两个值是公开无害的资源名;认证被锁定为「只有 ququyixiaozei/aijobs 这个仓库的 Actions」能用,比 JSON 密钥更安全。
