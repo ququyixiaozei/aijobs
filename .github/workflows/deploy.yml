@@ -20,7 +20,7 @@ jobs:
       SITE_URL: https://warpjobs.com
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with: { node-version: "20" }
       - run: npm ci
       # Keyless auth via Workload Identity Federation — the org policy
@@ -94,7 +94,7 @@ jobs:
       # emails, so this is the only working path). Idempotent; never blocks.
       - uses: actions/checkout@v4
         if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
         with: { node-version: "20" }
       - name: Auth to Google via WIF
