@@ -206,7 +206,7 @@ echo "GCP_SERVICE_ACCOUNT=$SA_EMAIL"
 3. 打开 https://github.com/ququyixiaozei/aijobs → **Settings → Secrets and variables → Actions → 切到 „Variables" 标签(不是 Secrets)** → **New repository variable**,逐个添加上一步打印的两条:
    - Name `GCP_WORKLOAD_IDENTITY_PROVIDER`,Value = `projects/266507878903/locations/global/workloadIdentityPools/github-pool/providers/github-provider` 那一长串;
    - Name `GCP_SERVICE_ACCOUNT`,Value = `indexing-bot@project-d98736f4-84e1-4d48-933.iam.gserviceaccount.com`;
-4. **Search Console 授权(注意:不要用新版「用户和权限→添加用户」,它对服务账号邮箱会报「找不到电子邮件」)**。走旧版验证页加**委托所有者**(官方 Indexing API 文档指定的路径):打开 https://www.google.com/webmasters/verification/home (用验证 warpjobs.com 的那个 Google 账号)→ 点列表中的 warpjobs.com 进入「验证详情」→ 页面底部 **„添加所有者 / Add an owner"** → 粘贴服务账号邮箱(`indexing-bot@<项目ID>.iam.gserviceaccount.com`)→ 确定。加完回 Search Console → Settings → 用户和权限,能看到它已是 Owner;
+4. **Search Console 授权(两个坑都绕开:① 新版「用户和权限→添加用户」对服务账号报「找不到电子邮件」——不要用;② 旧版验证页只列「网址前缀」资源,「域名」资源不显示)**。完整路径:(a) Search Console 左上属性下拉 → **+ 添加资源** → 选**「网址前缀」** → `https://warpjobs.com/` → 因 DNS 已验证通常自动通过(没过就选「域名提供商」方式,秒过);(b) 打开旧版验证页 https://www.google.com/webmasters/verification/home → 点 `https://warpjobs.com/` 进「验证详情」→ 底部 **„添加所有者 / Add an owner"** → 粘贴服务账号邮箱(`indexing-bot@<项目ID>.iam.gserviceaccount.com`)。前缀资源与域名资源并存无副作用;服务账号是前缀资源的委托所有者即可让 Indexing API 对全站 URL 生效;
 5. 完成。手动触发一次验证:仓库 → **Actions → deploy → Run workflow**;跑完点进日志,看 `Google Indexing API push` 一步出现 `gindex: pushed N notifications` = 生效(首跑会推 ~170 条)。
 
 > 安全性说明:这条路**没有任何密钥文件存在任何地方**,GitHub 仓库里存的两个值是公开无害的资源名;认证被锁定为「只有 ququyixiaozei/aijobs 这个仓库的 Actions」能用,比 JSON 密钥更安全。
