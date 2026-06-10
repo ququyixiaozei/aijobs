@@ -65,7 +65,7 @@ async function publish(token, url, type) {
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     body: JSON.stringify({ url, type }),
   });
-  return res.status;
+  return { status: res.status, body: res.status === 200 ? "" : (await res.text()).slice(0, 400) };
 }
 
 // Two auth paths: a pre-minted OAuth token (Workload Identity Federation in CI —
@@ -99,11 +99,12 @@ async function main() {
   ]) {
     for (const u of list) {
       if (budget <= 0 || quotaHit) break;
-      const status = await publish(token, u, type);
+      const r = await publish(token, u, type);
       budget--;
-      if (status === 200) { ok++; onOk(u); }
-      else if (status === 429) { quotaHit = true; console.log("gindex: quota exhausted — rest rolls to next run"); }
-      else console.log(`gindex: ${type} ${u} -> HTTP ${status}`);
+      if (r.status === 200) { ok++; onOk(u); }
+      else if (r.status === 429) { quotaHit = true; console.log(`gindex: 429 quota — rest rolls to next run. Detail: ${r.body}`); }
+      else console.log(`gindex: ${type} ${u} -> HTTP ${r.status}: ${r.body}`);
+      await new Promise((s) => setTimeout(s, 250)); // stay under per-minute limits
     }
   }
 
