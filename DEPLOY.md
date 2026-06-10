@@ -1,4 +1,4 @@
-# 部署运行手册 — 一步步,可复制粘贴
+﻿# 部署运行手册 — 一步步,可复制粘贴
 
 > 从上到下照做即可。**命令直接复制粘贴到 PowerShell**(按 Win 键搜 “PowerShell” 打开)。
 > 涉及网页的步骤写了详细点击。预计 1–2 小时,现金成本 ≈ 一个域名(约 $10–12)。
@@ -181,7 +181,7 @@ git push
 1. 打开 https://console.cloud.google.com/ → 右上角点 **„激活 Cloud Shell"**(终端图标),等浏览器底部出现命令行;
 2. 把下面整块粘贴进去回车(**只需改第一行的项目 ID** 为你建的项目;其余别动):
 ```bash
-PROJECT_ID="warpjobs-indexing"   # ← 改成你的项目 ID(控制台顶部项目选择器里能看到)
+PROJECT_ID="project-d98736f4-84e1-4d48-933"   # ← 改成你的项目 ID(控制台顶部项目选择器里能看到)
 REPO="ququyixiaozei/aijobs"
 SA_NAME="indexing-bot"
 
@@ -204,9 +204,9 @@ echo "GCP_WORKLOAD_IDENTITY_PROVIDER=projects/$PROJECT_NUMBER/locations/global/w
 echo "GCP_SERVICE_ACCOUNT=$SA_EMAIL"
 ```
 3. 打开 https://github.com/ququyixiaozei/aijobs → **Settings → Secrets and variables → Actions → 切到 „Variables" 标签(不是 Secrets)** → **New repository variable**,逐个添加上一步打印的两条:
-   - Name `GCP_WORKLOAD_IDENTITY_PROVIDER`,Value = `projects/...github-provider` 那一长串;
-   - Name `GCP_SERVICE_ACCOUNT`,Value = `indexing-bot@<项目ID>.iam.gserviceaccount.com`;
-4. **Search Console 授权(同原步骤 14 第 7 步)**:https://search.google.com/search-console → warpjobs.com → Settings → Users and permissions → Add user → 粘贴上面的服务账号邮箱 → 权限 **Owner**;
+   - Name `GCP_WORKLOAD_IDENTITY_PROVIDER`,Value = `projects/266507878903/locations/global/workloadIdentityPools/github-pool/providers/github-provider` 那一长串;
+   - Name `GCP_SERVICE_ACCOUNT`,Value = `indexing-bot@project-d98736f4-84e1-4d48-933.iam.gserviceaccount.com`;
+4. **Search Console 授权(注意:不要用新版「用户和权限→添加用户」,它对服务账号邮箱会报「找不到电子邮件」)**。走旧版验证页加**委托所有者**(官方 Indexing API 文档指定的路径):打开 https://www.google.com/webmasters/verification/home (用验证 warpjobs.com 的那个 Google 账号)→ 点列表中的 warpjobs.com 进入「验证详情」→ 页面底部 **„添加所有者 / Add an owner"** → 粘贴服务账号邮箱(`indexing-bot@<项目ID>.iam.gserviceaccount.com`)→ 确定。加完回 Search Console → Settings → 用户和权限,能看到它已是 Owner;
 5. 完成。手动触发一次验证:仓库 → **Actions → deploy → Run workflow**;跑完点进日志,看 `Google Indexing API push` 一步出现 `gindex: pushed N notifications` = 生效(首跑会推 ~170 条)。
 
 > 安全性说明:这条路**没有任何密钥文件存在任何地方**,GitHub 仓库里存的两个值是公开无害的资源名;认证被锁定为「只有 ququyixiaozei/aijobs 这个仓库的 Actions」能用,比 JSON 密钥更安全。
