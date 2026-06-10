@@ -108,7 +108,9 @@ export default async function JobPage({ params }) {
       : {}),
     ...(job.tags && job.tags.length ? { skills: job.tags.join(", ") } : {}),
     directApply: false, // applying happens on the company ATS, not on this page
-    url: job.url,
+    // OUR page, not the ATS page — pointing url at Greenhouse/Lever hands the
+    // dedup cluster to the canonical and erases us from the apply-option list.
+    url: `${SITE}/jobs/${slug}/`,
   };
   const breadcrumbLd = {
     "@context": "https://schema.org",

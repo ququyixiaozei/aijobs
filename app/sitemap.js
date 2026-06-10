@@ -17,7 +17,10 @@ export default function sitemap() {
   const cats = getCategoriesLite().filter((c) => isIndexableSlice(c.count));
   const cos = getCompaniesLite().filter((c) => isIndexableCompany(c.count));
 
-  const hubs = [{ url: `${SITE}/companies-hiring/`, changeFrequency: "daily", priority: 0.9 }];
+  const hubs = [
+    { url: `${SITE}/companies-hiring/`, changeFrequency: "daily", priority: 0.9 },
+    { url: `${SITE}/post-a-job/`, changeFrequency: "monthly", priority: 0.5 },
+  ];
   if (isIndexableSlice(getSalaryReport().overall.n)) hubs.push({ url: `${SITE}/salaries/`, changeFrequency: "weekly", priority: 0.7 });
   if (isIndexableSlice(getRemoteJobs().length)) hubs.push({ url: `${SITE}/remote/`, changeFrequency: "daily", priority: 0.7 });
   if (isIndexableSlice(getJobsByRegion(["EU", "UK"]).length)) hubs.push({ url: `${SITE}/region/europe/`, changeFrequency: "daily", priority: 0.7 });

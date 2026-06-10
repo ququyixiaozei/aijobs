@@ -3,7 +3,7 @@
 // dedupes, and writes data/jobs.json (the static source the Next.js site reads).
 // Designed to run on a daily Vercel Cron / GitHub Action later.
 
-import { writeFile, mkdir } from "node:fs/promises";
+import { writeFile, readFile, mkdir } from "node:fs/promises";
 import { fetchers } from "./sources.mjs";
 import { companies } from "./companies.mjs";
 import { matchesNiche, niche } from "./niche.config.mjs";
@@ -12,6 +12,21 @@ import { sanitizeJobHtml } from "./sanitize.mjs";
 async function run() {
   const all = [];
   const report = [];
+
+  // Pin postedAt to the EARLIEST date ever seen per sourceId. ATS "re-publish"
+  // events would otherwise churn datePosted on live pages — which Google's
+  // job-posting spam policy reads as freshness manipulation.
+  const firstSeen = new Map();
+  try {
+    const prev = JSON.parse(await readFile(new URL("../data/jobs.json", import.meta.url), "utf8"));
+    for (const j of prev.jobs || []) if (j.sourceId && j.postedAt) firstSeen.set(j.sourceId, j.postedAt);
+  } catch { /* first run / missing file — nothing to pin against */ }
+  const pinPostedAt = (id, postedAt) => {
+    const prev = firstSeen.get(id);
+    if (!prev) return postedAt;
+    if (!postedAt) return prev;
+    return new Date(prev) <= new Date(postedAt) ? prev : postedAt;
+  };
 
   for (const c of companies) {
     const fn = fetchers[c.ats];
@@ -27,6 +42,7 @@ async function run() {
           source: c.ats,
           descriptionHtml: sanitizeJobHtml(j.descriptionHtml), // untrusted ATS HTML → allowlist
           url: /^https?:\/\//i.test(j.url || "") ? j.url : "", // defense-in-depth: only http(s) apply links
+          postedAt: pinPostedAt(j.sourceId, j.postedAt),
         }));
       all.push(...matched);
       report.push(`OK   ${c.name} [${c.ats}/${c.token}]: ${raw.length} jobs → ${matched.length} ${niche.slug}`);
