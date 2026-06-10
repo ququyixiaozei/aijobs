@@ -210,3 +210,17 @@ echo "GCP_SERVICE_ACCOUNT=$SA_EMAIL"
 5. 完成。手动触发一次验证:仓库 → **Actions → deploy → Run workflow**;跑完点进日志,看 `Google Indexing API push` 一步出现 `gindex: pushed N notifications` = 生效(首跑会推 ~170 条)。
 
 > 安全性说明:这条路**没有任何密钥文件存在任何地方**,GitHub 仓库里存的两个值是公开无害的资源名;认证被锁定为「只有 ququyixiaozei/aijobs 这个仓库的 Actions」能用,比 JSON 密钥更安全。
+
+---
+
+## 步骤 14-C · 所有者添加的最终兜底(UI 全失效时;~5 分钟,之后全自动)
+> 实测:新版 Search Console「添加用户」拒收服务账号邮箱,旧版验证页已下线跳转 → 改为**服务账号经 Site Verification API 自验**:CI 自动申请验证文件→随站点部署→部署后自动调用 insert 成为所有者。代码已就位,你只差两步:
+
+1. Cloud Shell 里启用 Site Verification API(一行):
+```bash
+gcloud services enable siteverification.googleapis.com --project="$PROJECT_ID"
+```
+2. 仓库 → **Actions → deploy → Run workflow** 跑一次:build 阶段日志应出现 `siteverify: wrote public/googleXXXX.html`,deploy 阶段日志出现 **`siteverify: SA is now a verified owner ✓`** = 验证完成;
+3. **再跑一次**(或等次日 cron):这次 `Google Indexing API push` 步骤出现 `gindex: pushed N notifications`(~170 条)= 全链路打通,以后每天自动。
+
+> 原理:验证文件 token 对 (服务账号, 站点) 是恒定值,CI 每次构建都会写入并随站点发布(保持验证不失效);insert 幂等,验证过后每次部署只是确认一遍。Search Console 的"所有权验证"页里会看到该服务账号以"HTML 文件"方式列为所有者。

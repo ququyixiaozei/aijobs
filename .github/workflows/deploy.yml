@@ -23,22 +23,6 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: "20" }
       - run: npm ci
-      - name: Unit tests (gate — broken logic blocks deploy)
-        run: npm test
-      - name: Refresh jobs feed (US runner reaches all ATSs)
-        run: node ingest/run.mjs
-      - name: Commit refreshed feed
-        continue-on-error: true
-        run: |
-          git config user.name "ingest-bot"
-          git config user.email "ingest@users.noreply.github.com"
-          git add data/jobs.json
-          git commit -m "chore: refresh jobs feed" || echo "no changes"
-          git push || echo "nothing to push"
-      - run: npm run build
-      - name: Ping IndexNow (Bing/Yandex instant indexing — no-op for Google)
-        continue-on-error: true
-        run: node ingest/indexnow.mjs
       # Keyless auth via Workload Identity Federation — the org policy
       # iam.disableServiceAccountKeyCreation blocks JSON keys, not WIF.
       # Runs only when the two repo VARIABLES are set; never blocks deploy.
@@ -51,7 +35,32 @@ jobs:
           workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
           token_format: access_token
-          access_token_scopes: https://www.googleapis.com/auth/indexing
+          access_token_scopes: https://www.googleapis.com/auth/indexing,https://www.googleapis.com/auth/siteverification
+      - name: Unit tests (gate — broken logic blocks deploy)
+        run: npm test
+      - name: Refresh jobs feed (US runner reaches all ATSs)
+        run: node ingest/run.mjs
+      - name: Commit refreshed feed
+        continue-on-error: true
+        run: |
+          git config user.name "ingest-bot"
+          git config user.email "ingest@users.noreply.github.com"
+          git add data/jobs.json
+          git commit -m "chore: refresh jobs feed" || echo "no changes"
+          git push || echo "nothing to push"
+      - name: Site-verification token file (SA self-verify, step 1/2; no-op without auth)
+        continue-on-error: true
+        env:
+          GOOGLE_INDEXING_ACCESS_TOKEN: ${{ steps.gauth.outputs.access_token }}
+        run: |
+          node ingest/google-site-verify.mjs token
+          git config user.name "ingest-bot"
+          git config user.email "ingest@users.noreply.github.com"
+          git add public/google*.html 2>/dev/null && git commit -m "chore: site-verification token file" && git push || echo "no token change"
+      - run: npm run build
+      - name: Ping IndexNow (Bing/Yandex instant indexing — no-op for Google)
+        continue-on-error: true
+        run: node ingest/indexnow.mjs
       - name: Google Indexing API push (JobPosting URLs; silent no-op without auth)
         continue-on-error: true
         env:
@@ -80,3 +89,28 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      # SA self-verify step 2/2: with the token file now LIVE, webResource.insert
+      # makes the service account a verified owner (Search Console UI rejects SA
+      # emails, so this is the only working path). Idempotent; never blocks.
+      - uses: actions/checkout@v4
+        if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
+      - uses: actions/setup-node@v4
+        if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
+        with: { node-version: "20" }
+      - name: Auth to Google via WIF
+        if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
+        continue-on-error: true
+        id: gauth2
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/siteverification
+      - name: Site-verification insert (SA becomes owner once token file is live)
+        if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
+        continue-on-error: true
+        env:
+          SITE_URL: https://warpjobs.com
+          GOOGLE_INDEXING_ACCESS_TOKEN: ${{ steps.gauth2.outputs.access_token }}
+        run: node ingest/google-site-verify.mjs insert
