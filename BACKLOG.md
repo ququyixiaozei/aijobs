@@ -3,6 +3,15 @@
 Single source of truth for what's done / pending. Status: ✅ done · 🔧 in progress · ⏳ deferred (needs ongoing infra) · 🧊 later.
 **Convention:** every change references its id in the commit message, e.g. `fix(B-21): salary column placeholder`.
 
+## Google-for-Jobs eligibility + distribution rails (2026-06-10)
+> Re-review finding: 28 days of GSC showed ZERO job-listing rich-result impressions (Search Appearance report empty) — Google for Jobs was never actually reached. Two markup gaps + the never-built Indexing API push are the cheapest untested levers; organic ranking (D102) stays falsified.
+
+| id | item | status |
+|----|------|--------|
+| B-66 | **JobPosting remote eligibility fix**: TELECOMMUTE postings (69/231) carried neither `applicantLocationRequirements` nor `jobLocation` → ineligible per Google docs. Now emit `applicantLocationRequirements` (via new `countryNameOf`, unit-tested) + `jobLocation` when derivable; `directApply: false` added (link-out is not on-page apply). | ✅ |
+| B-67 | **Google Indexing API pipeline** (`ingest/google-indexing.mjs` + deploy.yml step): zero-dep RS256 JWT, pushes new `/jobs/` URLs as URL_UPDATED + vanished ones as URL_DELETED, 190/day cap, state in `data/gindex-state.json` (CI-committed). Silent no-op until the `GOOGLE_INDEXING_SA_KEY` repo secret exists (user setup: DEPLOY.md 步骤 14). | ✅ code · ⏳ user secret |
+| B-68 | **Aggregator submission feed** `/jobs-feed.xml` (Indeed-style `<source><job>` XML, CDATA-safe, `<url>` → our leaf pages so accepted sources send click traffic here). Enables Jooble/Talent/WhatJobs-class source submissions (submission forms = user-side). | ✅ |
+
 ## Product QA + SEO + features pass (2026-05-30)
 > All UI changes are **build- and HTML-verified but not browser-eyeballed** (no browser in this env) — please spot-check the live site visually.
 
