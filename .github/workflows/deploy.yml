@@ -61,7 +61,10 @@ jobs:
       - name: Ping IndexNow (Bing/Yandex instant indexing — no-op for Google)
         continue-on-error: true
         run: node ingest/indexnow.mjs
+      # schedule/dispatch only — code-push bursts must not burn the 200/day quota
+      # (failed requests count too; learned 2026-06-10 when pre-ownership 403s ate 194/200)
       - name: Google Indexing API push (JobPosting URLs; silent no-op without auth)
+        if: ${{ github.event_name != 'push' }}
         continue-on-error: true
         env:
           GOOGLE_INDEXING_ACCESS_TOKEN: ${{ steps.gauth.outputs.access_token }}
