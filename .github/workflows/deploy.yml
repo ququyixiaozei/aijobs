@@ -19,7 +19,7 @@ jobs:
       # custom domain at root (warpjobs.com) — no basePath
       SITE_URL: https://warpjobs.com
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
         with: { node-version: "20" }
       - run: npm ci
@@ -95,7 +95,7 @@ jobs:
       # SA self-verify step 2/2: with the token file now LIVE, webResource.insert
       # makes the service account a verified owner (Search Console UI rejects SA
       # emails, so this is the only working path). Idempotent; never blocks.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
       - uses: actions/setup-node@v4
         if: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
