@@ -1,7 +1,7 @@
 {
   "niche": "ai-infra",
   "name": "AI Infrastructure & GPU Engineering Jobs",
-  "generatedAt": "2026-06-20T08:57:02.693Z",
+  "generatedAt": "2026-06-21T09:50:49.712Z",
   "count": 247,
   "jobs": [
     {
@@ -647,10 +647,10 @@
       "source": "ashby"
     },
     {
-      "sourceId": "gh-graphcore-8533907002",
+      "sourceId": "gh-graphcore-8533906002",
       "title": "Senior Systems Engineer – Performance & Reliability (Analysis)",
-      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8533907002",
-      "location": "London, UK",
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8533906002",
+      "location": "Bristol, UK",
       "postedAt": "2026-05-02T10:17:39-04:00",
       "updatedAt": "2026-06-16T07:20:05-04:00",
       "department": "System QA",
@@ -660,10 +660,10 @@
       "source": "greenhouse"
     },
     {
-      "sourceId": "gh-graphcore-8533906002",
+      "sourceId": "gh-graphcore-8533907002",
       "title": "Senior Systems Engineer – Performance & Reliability (Analysis)",
-      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8533906002",
-      "location": "Bristol, UK",
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8533907002",
+      "location": "London, UK",
       "postedAt": "2026-05-02T10:17:39-04:00",
       "updatedAt": "2026-06-16T07:20:05-04:00",
       "department": "System QA",
