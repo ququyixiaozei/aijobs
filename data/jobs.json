@@ -1,8 +1,8 @@
 {
   "niche": "ai-infra",
   "name": "AI Infrastructure & GPU Engineering Jobs",
-  "generatedAt": "2026-06-21T09:50:49.712Z",
-  "count": 247,
+  "generatedAt": "2026-06-22T11:55:14.450Z",
+  "count": 246,
   "jobs": [
     {
       "sourceId": "gh-cerebrassystems-7779234003",
@@ -631,20 +631,6 @@
       "company": "CoreWeave",
       "companyToken": "coreweave",
       "source": "greenhouse"
-    },
-    {
-      "sourceId": "ash-cursor-e46dd189-16d2-4a0f-bfb8-207eb403f92f",
-      "title": "Data Scientist, Performance and Reliability",
-      "url": "https://jobs.ashbyhq.com/cursor/e46dd189-16d2-4a0f-bfb8-207eb403f92f",
-      "location": "San Francisco",
-      "postedAt": "2026-05-05T00:00:02.031+00:00",
-      "updatedAt": "2026-05-05T00:00:02.031+00:00",
-      "department": "Data",
-      "descriptionHtml": "<p>Our mission is to automate coding. The first step in our journey is to build the best tool for professional programmers, using a combination of inventive research, design, and engineering. Our organization is very flat, and our team is small and talent dense. We particularly like people who are truth-seeking, passionate, and creative. We enjoy spirited debate, crazy ideas, and shipping code.</p><p><strong>About the role</strong></p><p>Cursor is building the best way to develop software with AI. As an early member of our data science team, you'll help define the way the company uses data to make decisions and deliver a high quality experience to millions of users across billions of user&lt;&gt;AI interactions.</p><p></p><p><strong>What you’ll do</strong></p><ul><li><p>Design and operationalize metrics that measure the stability of product surfaces and the agent harness</p></li><li><p>Build a measurement and rollout framework to prevent, detect, and root cause performance regressions</p></li><li><p>Partner with engineers on data tooling that enables self-serve analysis</p></li><li><p>Identify performance and reliability experiences that disproportionately cause user frustration</p></li></ul><p></p><p><strong>You may be a fit if</strong></p><ul><li><p>You have 5+ years of experience as a data scientist at a high growth company</p></li><li><p>You’ve operationalized a north star performance metric across a pillar</p></li><li><p>You have experience building and operationalizing data tooling for non-data users</p></li><li><p>You enjoy working directly with engineering on measurement and strategy</p></li><li><p>You’re experienced in experimentation and causal inference</p></li><li><p>You're happy to work across the stack and help us build the foundations of data at Cursor</p></li></ul>",
-      "remote": false,
-      "company": "Cursor",
-      "companyToken": "cursor",
-      "source": "ashby"
     },
     {
       "sourceId": "gh-graphcore-8533906002",
