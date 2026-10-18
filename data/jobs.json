@@ -1,8 +1,8 @@
 {
   "niche": "ai-infra",
   "name": "AI Infrastructure & GPU Engineering Jobs",
-  "generatedAt": "2026-10-17T10:14:38.204Z",
-  "count": 219,
+  "generatedAt": "2026-10-18T10:29:52.378Z",
+  "count": 218,
   "jobs": [
     {
       "sourceId": "ash-primeintellect-3103e1a4-2515-4ae0-a2f0-784e25d30cfe",
@@ -925,20 +925,6 @@
       "company": "Nebius",
       "companyToken": "nebius",
       "source": "greenhouse"
-    },
-    {
-      "sourceId": "ash-Liquid-AI-ec3912e6-3751-4b5a-8769-4509bdd750c4",
-      "title": "Member of Technical Staff - GPU Infrastructure Engineer",
-      "url": "https://jobs.ashbyhq.com/Liquid-AI/ec3912e6-3751-4b5a-8769-4509bdd750c4",
-      "location": "San Francisco",
-      "postedAt": "2026-07-28T23:30:36.161+00:00",
-      "updatedAt": "2026-07-28T23:30:36.161+00:00",
-      "department": "Research & Engineering",
-      "descriptionHtml": "<h2><strong>About Liquid AI</strong></h2><p>Spun out of MIT CSAIL, we build general-purpose AI systems that run efficiently across deployment targets, from data center accelerators to on-device hardware, ensuring low latency, minimal memory usage, privacy, and reliability. We partner with enterprises across consumer electronics, automotive, life sciences, and financial services. We are scaling rapidly and need exceptional people to help us get there.</p><p></p><h2><strong>The Opportunity</strong></h2><p>Our Cluster Infrastructure team owns the compute environments that power foundation model training and research at Liquid AI. We are looking for a hands-on software engineer to keep our GPU clusters reliable, improve resource efficiency, and build the tooling that allows researchers to focus on model development rather than infrastructure.</p><p>This role matters because infrastructure issues can delay training by days, while improvements in utilization, storage management, and automation can significantly increase research velocity and reduce compute costs. You will work closely with researchers and infrastructure engineers, owning problems from immediate operational response through long-term platform improvements.</p><p></p><h2><strong>What We’re Looking For</strong></h2><p>We need someone who:</p><ul><li><p><strong>Brings order to complex systems:</strong> You identify root causes and build durable fixes rather than repeatedly firefighting.</p></li><li><p><strong>Is an engineer first:</strong> You can go deep across Linux, networking, storage, schedulers, and distributed systems.</p></li><li><p><strong>Balances operations and engineering:</strong> You handle urgent issues while steadily replacing manual work with automation.</p></li><li><p><strong>Owns outcomes:</strong> You communicate clearly, prioritize effectively, and drive problems to resolution across internal teams and external providers.</p></li></ul><p></p><h2><strong>The Work</strong></h2><ul><li><p>Own the reliability and operation of the GPU clusters used for training and research.</p></li><li><p>Debug issues across compute, storage, networking, schedulers, and distributed workloads.</p></li><li><p>Improve CPU, GPU, and storage utilization through better tooling and automation.</p></li><li><p>Onboard and migrate workloads across GPU providers and hardware platforms.</p></li><li><p>Build monitoring, validation, and platform abstractions that reduce operational work for researchers.</p></li><li><p>Contribute to the longer-term architecture of Liquid AI’s training infrastructure and GPU platform.</p></li></ul><p></p><h2><strong>Desired Experience</strong></h2><h3><strong>Must-have</strong></h3><ul><li><p>Strong software engineering experience, with the ability to build production-quality infrastructure tooling and automation.</p></li><li><p>Deep knowledge of distributed systems, Linux, networking, and storage.</p></li><li><p>Experience operating a shared compute cluster or distributed training platform.</p></li><li><p>A track record of supporting production users and turning recurring failures into durable solutions.</p></li><li><p>The technical depth to partner effectively with senior research and infrastructure engineers.</p></li></ul><h3><strong>Nice-to-have</strong></h3><ul><li><p>Experience with SLURM, Kubernetes, Ray, Hadoop, or another distributed compute platform.</p></li><li><p>Experience supporting GPU, HPC, or large-scale AI training infrastructure.</p></li><li><p>Experience with distributed storage, cluster schedulers, cloud providers, or infrastructure control planes.</p></li></ul><p></p><h2><strong>What Success Looks Like (Year One)</strong></h2><ol><li><p>Researchers spend less time resolving infrastructure and resource-allocation issues.</p></li><li><p>GPU, CPU, and storage resources are used more efficiently across the fleet.</p></li><li><p>Recurring operational problems are replaced with automation, monitoring, and dependable platform tooling.</p></li><li><p>Liquid AI has the beginnings of a durable internal platform that hides infrastructure complexity from researchers.</p></li></ol><p></p><h2><strong>What We Offer</strong></h2><ul><li><p><strong>High-impact ownership:</strong> Own infrastructure that directly affects how quickly and efficiently we train foundation models.</p></li><li><p><strong>Compensation:</strong> Competitive base salary with equity in a unicorn-stage company.</p></li><li><p><strong>Health:</strong> We pay 100% of medical, dental, and vision premiums for employees and dependents.</p></li><li><p><strong>Financial:</strong> 401(k) matching up to 4% of base pay.</p></li><li><p><strong>Time Off:</strong> Unlimited PTO plus company-wide Refill Days throughout the year.</p></li></ul>",
-      "remote": true,
-      "company": "Liquid AI",
-      "companyToken": "Liquid-AI",
-      "source": "ashby"
     },
     {
       "sourceId": "ash-d-matrix-7b4b1167-1d63-4d35-b9cb-02e4ddab8436",
