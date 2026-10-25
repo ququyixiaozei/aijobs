@@ -1,9 +1,22 @@
 {
   "niche": "ai-infra",
   "name": "AI Infrastructure & GPU Engineering Jobs",
-  "generatedAt": "2026-10-24T10:23:22.547Z",
-  "count": 222,
+  "generatedAt": "2026-10-25T10:51:04.902Z",
+  "count": 223,
   "jobs": [
+    {
+      "sourceId": "ash-perplexity-2a5aa5f6-596b-45c3-84db-ac0b96363f93",
+      "title": "Member of Technical Staff (Software Engineer, Training Infrastructure)",
+      "url": "https://jobs.ashbyhq.com/perplexity/2a5aa5f6-596b-45c3-84db-ac0b96363f93",
+      "location": "San Francisco",
+      "postedAt": "2026-10-24T14:37:33.612+00:00",
+      "updatedAt": "2026-10-24T14:37:33.612+00:00",
+      "department": "AI Research & Systems",
+      "descriptionHtml": "<p>Perplexity is seeking software engineers to join our <strong>Training Infrastructure</strong> team. We’re responsible for the large-scale RL and agent evaluation platforms that enable Perplexity to train state-of-the-art models and optimize agent harnesses.</p><p>We are full-stack engineers with a broad remit. If you join us, you’ll build the distributed systems that orchestrate AI workloads across global-scale compute infrastructure. You’ll also define novel user and agent interfaces for designing, managing, and launching experiments. You’ll create tools that make experiment results legible to humans and agents alike, enabling everything from ad-hoc experiment retrospectives to closed-loop autoresearch. And much more!</p><p>A strong candidate will possess both experience and passion for solving difficult problems at the intersection of AI, distributed systems, and research acceleration.</p><p></p><h2><strong>Qualifications</strong></h2><ul><li><p>2+ years of experience developing and shipping distributed systems for compute-intensive workloads, with a focus on reliability, scalability, and performance.</p></li><li><p>Proficiency in a general-purpose backend language such as Python, Rust, C++, or Go, and experience with cloud infrastructure and container orchestration, such as AWS and Kubernetes.</p></li><li><p>Familiarity with reinforcement learning (RL), agent evaluation, or ML infrastructure, and an interest in building systems that accelerate experimentation and model development.</p></li><li><p>BS, MS, or PhD in Computer Science, Engineering, or a related field, or equivalent practical experience.</p></li></ul><p></p><h2><strong>Why Perplexity is different</strong></h2><ul><li><p><strong>Craftsmanship</strong>. We build high quality, tasteful products targeting both the AI native and AI curious.</p></li><li><p><strong>Ownership</strong>. You identify the problem, design the solution and ship it.</p></li><li><p><strong>Entrepreneurship</strong>. We think like founders, act with urgency, and hustle to deliver for each other and our users.</p></li><li><p><strong>Scholarship</strong>. Work among highly talented peers, pursuing knowledge and truth, upleveling ourselves, our teams, and our products.</p></li><li><p><strong>Partnership</strong>. We amplify each others' strengths, break down silos, and give selflessly to help our colleagues deliver excellence.</p></li></ul>",
+      "company": "Perplexity",
+      "companyToken": "perplexity",
+      "source": "ashby"
+    },
     {
       "sourceId": "gh-graphcore-8911255002",
       "title": "Software Engineer - Triton",
