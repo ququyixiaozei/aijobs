@@ -81,7 +81,7 @@ jobs:
           git push || echo "nothing to push"
       - run: echo "warpjobs.com" > out/CNAME    # GitHub Pages custom domain
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with: { path: ./out }
   deploy:
     needs: build
