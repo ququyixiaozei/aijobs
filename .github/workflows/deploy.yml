@@ -91,7 +91,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
       # SA self-verify step 2/2: with the token file now LIVE, webResource.insert
       # makes the service account a verified owner (Search Console UI rejects SA
       # emails, so this is the only working path). Idempotent; never blocks.
