@@ -1,8 +1,8 @@
 {
   "niche": "ai-infra",
   "name": "AI Infrastructure & GPU Engineering Jobs",
-  "generatedAt": "2026-11-27T16:15:36.102Z",
-  "count": 199,
+  "generatedAt": "2026-11-28T15:08:17.828Z",
+  "count": 197,
   "jobs": [
     {
       "sourceId": "gh-nebius-5028371101",
@@ -2158,32 +2158,6 @@
       "company": "CoreWeave",
       "companyToken": "coreweave",
       "source": "greenhouse"
-    },
-    {
-      "sourceId": "ash-featherlessai-2cc24de9-a81d-4a67-a1f5-bfbdeb8322a6",
-      "title": "AI Researcher — Inference Optimization",
-      "url": "https://jobs.ashbyhq.com/featherlessai/2cc24de9-a81d-4a67-a1f5-bfbdeb8322a6",
-      "location": "Remote (world)",
-      "postedAt": "2026-01-23T02:23:44.624+00:00",
-      "updatedAt": "2026-01-23T02:23:44.624+00:00",
-      "department": "Research",
-      "descriptionHtml": "<h3><strong>Role Overview</strong></h3><p>We are seeking an <strong>AI Researcher with deep experience in inference optimization</strong> to design, evaluate, and deploy high-performance inference systems for large-scale machine learning models. You will work at the intersection of <strong>model architecture, systems engineering, and hardware-aware optimization</strong>, improving latency, throughput, and cost efficiency across real-world production environments.</p><p></p><h3><strong>Key Responsibilities</strong></h3><ul><li><p>Research and develop techniques to <strong>optimize inference performance</strong> for large neural networks.</p></li><li><p>Improve <strong>latency, throughput, memory efficiency, and cost per inference</strong>.</p></li><li><p>Design and evaluate <strong>model-level optimizations</strong> (quantization, pruning, KV-cache optimization, architecture-aware simplifications).</p></li><li><p>Implement <strong>systems-level optimizations</strong> (dynamic batching, kernel fusion, multi-GPU inference, prefill vs decode optimization).</p></li><li><p>Benchmark inference workloads across hardware accelerators.</p></li><li><p>Collaborate with engineering teams to <strong>deploy optimized inference pipelines</strong>.</p></li><li><p>Translate research insights into <strong>production-ready improvements</strong>.</p><p></p></li></ul><h3><strong>Required Qualifications</strong></h3><ul><li><p>Strong background in <strong>machine learning, deep learning, or AI systems</strong>.</p></li><li><p>Hands-on experience optimizing inference for <strong>large-scale models</strong>.</p></li><li><p>Proficiency in <strong>Python</strong> and modern ML frameworks (e.g., PyTorch).</p></li><li><p>Experience with inference tooling (e.g., Triton, TensorRT, vLLM, ONNX Runtime).</p></li><li><p>Ability to design experiments and communicate results clearly.</p></li></ul><p></p><h3><strong>Preferred / Nice-to-Have Qualifications</strong></h3><ul><li><p>Experience deploying <strong>production inference systems at scale</strong>.</p></li><li><p>Familiarity with <strong>distributed and multi-GPU inference</strong>.</p></li><li><p>Experience contributing to <strong>open-source ML or inference frameworks</strong>.</p></li><li><p><strong>Authorship or co-authorship of peer-reviewed research papers</strong> in machine learning, systems, or related fields.</p></li><li><p>Experience working close to hardware (CUDA, ROCm, profiling tools).</p></li></ul><p></p><h3><strong>What Success Looks Like</strong></h3><ul><li><p>Measurable gains in <strong>latency, throughput, and cost efficiency</strong>.</p></li><li><p>Optimized inference systems running reliably in production.</p></li><li><p>Research ideas successfully translated into deployable systems.</p></li><li><p>Clear benchmarks and documentation that inform product decisions.</p></li></ul><p></p><h3><strong>Relevant Research Areas (Bonus)</strong></h3><ul><li><p>Long-context inference optimization</p></li><li><p>Speculative decoding</p></li><li><p>KV-cache compression and paging</p></li><li><p>Efficient decoding strategies</p></li><li><p>Hardware-aware inference design</p></li></ul>",
-      "company": "Featherless AI",
-      "companyToken": "featherlessai",
-      "source": "ashby"
-    },
-    {
-      "sourceId": "ash-featherlessai-1762b15b-9c0b-4a20-a2b3-ed12c8222156",
-      "title": "Machine Learning Engineer — Inference Optimization",
-      "url": "https://jobs.ashbyhq.com/featherlessai/1762b15b-9c0b-4a20-a2b3-ed12c8222156",
-      "location": "Remote (world)",
-      "postedAt": "2026-01-22T05:35:09.808+00:00",
-      "updatedAt": "2026-01-22T05:35:09.808+00:00",
-      "department": "Research",
-      "descriptionHtml": "<h3>About the Role</h3><p>We’re looking for a Machine Learning Engineer to own and push the limits of <strong>model inference performance at scale</strong>. You’ll work at the intersection of research and production—turning cutting-edge models into fast, reliable, and cost-efficient systems that serve real users.</p><p>This role is ideal for someone who enjoys deep technical work, profiling systems down to the kernel/GPU level, and translating research ideas into production-grade performance gains.</p><p></p><h3>What You’ll Do</h3><ul><li><p>Optimize inference latency, throughput, and cost for large-scale ML models in production</p></li><li><p>Profile and bottleneck GPU/CPU inference pipelines (memory, kernels, batching, IO)</p></li><li><p>Implement and tune techniques such as:</p><ul><li><p>Quantization (fp16, bf16, int8, fp8)</p></li><li><p>KV-cache optimization &amp; reuse</p></li><li><p>Speculative decoding, batching, and streaming</p></li><li><p>Model pruning or architectural simplifications for inference</p></li></ul></li><li><p>Collaborate with research engineers to productionize new model architectures</p></li><li><p>Build and maintain inference-serving systems (e.g. Triton, custom runtimes, or bespoke stacks)</p></li><li><p>Benchmark performance across hardware (NVIDIA / AMD GPUs, CPUs) and cloud setups</p></li><li><p>Improve system reliability, observability, and cost efficiency under real workloads</p></li></ul><p></p><h3>What We’re Looking For</h3><ul><li><p>Strong experience in <strong>ML inference optimization</strong> or high-performance ML systems</p></li><li><p>Solid understanding of deep learning internals (attention, memory layout, compute graphs)</p></li><li><p>Hands-on experience with PyTorch (or similar) and model deployment</p></li><li><p>Familiarity with GPU performance tuning (CUDA, ROCm, Triton, or kernel-level optimizations)</p></li><li><p>Experience scaling inference for real users (not just research benchmarks)</p></li><li><p>Comfortable working in fast-moving startup environments with ownership and ambiguity</p></li></ul><p></p><h3>Nice to Have</h3><ul><li><p>Experience with LLM or long-context model inference</p></li><li><p>Knowledge of inference frameworks (TensorRT, ONNX Runtime, vLLM, Triton)</p></li><li><p>Experience optimizing across different hardware vendors</p></li><li><p>Open-source contributions in ML systems or inference tooling</p></li><li><p>Background in distributed systems or low-latency services</p></li></ul><p></p><h3>Why Join Us</h3><ul><li><p>Real ownership over performance-critical systems</p></li><li><p>Direct impact on product reliability and unit economics</p></li><li><p>Close collaboration with research, infra, and product</p></li><li><p>Competitive compensation + meaningful equity at Series A</p></li><li><p>A team that cares about engineering quality, not hype</p></li></ul>",
-      "company": "Featherless AI",
-      "companyToken": "featherlessai",
-      "source": "ashby"
     },
     {
       "sourceId": "ash-etched-610c3836-9798-46ea-931a-02bb95b29467",
